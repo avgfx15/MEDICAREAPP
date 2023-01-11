@@ -4,4 +4,5 @@ export class UserModel {
   mobile: number = 0;
   password: string = '';
   role: number = 0;
+  id: string = '';
 }
