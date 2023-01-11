@@ -14,7 +14,12 @@ exports.signupvalidator = [
 ];
 
 //` Signin Validator with Message
-exports.signinvalidator = [];
+exports.signinvalidator = [
+  check("email").isEmail().normalizeEmail().withMessage("email is required"),
+  check("password")
+    .isLength({ min: 6 })
+    .withMessage("Password must be 6 characters long"),
+];
 
 //` Validator Result Error Message
 exports.validatorResult = async (req, res, next) => {

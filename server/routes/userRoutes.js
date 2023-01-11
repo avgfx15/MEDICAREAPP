@@ -1,8 +1,9 @@
 const express = require("express");
 const userRoute = express.Router();
-const { test, signup } = require("../controllers/userControllers");
+const { test, signup, signin } = require("../controllers/userControllers");
 const {
   signupvalidator,
+  signinvalidator,
   validatorResult,
 } = require("../middlewares/validators");
 
@@ -12,5 +13,6 @@ userRoute.get("/test", test);
 //` New User Signup route
 
 userRoute.post("/signup", signupvalidator, validatorResult, signup);
+userRoute.post("/signin", signinvalidator, validatorResult, signin);
 
 module.exports = userRoute;

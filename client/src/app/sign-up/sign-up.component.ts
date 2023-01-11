@@ -1,4 +1,3 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserModel } from '../models/user-model';
@@ -23,6 +22,7 @@ export class SignUpComponent implements OnInit {
     /* TODO document why this method 'ngOnInit' is empty */
   }
 
+  //` Sign Up Form
   signUp(signUpFormData: UserModel) {
     this.signupServices.SignupForm(signUpFormData).subscribe((res) => {
       this.resData = res;
@@ -44,5 +44,21 @@ export class SignUpComponent implements OnInit {
         }
       }
     });
+  }
+
+  //` Sign In Form
+  signIn(signInFormData: UserModel) {
+    this.signupServices.SignInForm(signInFormData).subscribe((res) => {
+      this.resData = res;
+      if (res) {
+        this.resData = res;
+        console.log(res);
+      }
+    });
+  }
+
+  //` Toggle between Sign Up and Sign In form
+  openToggleForm() {
+    this.isSignUp = !this.isSignUp;
   }
 }

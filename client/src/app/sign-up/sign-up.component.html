@@ -1,6 +1,7 @@
 <div class="signup">
   <div class="container align-self-center">
-    <h2 class="mb-3 text-center">Sign Up Form</h2>
+    <h2 class="mb-3 text-center" *ngIf="isSignUp">Sign Up Form</h2>
+    <h2 class="mb-3 text-center" *ngIf="!isSignUp">Sign In Form</h2>
     <div
       class="alert alert-primary"
       role="alert"
@@ -72,16 +73,24 @@
       </div>
       <div class="d-grid gap-2 d-md-block">
         <button class="btn btn-primary me-3 px-4 py-2">Submit</button>
-        <p>Already Have an Account<a>Sign In</a></p>
+        <span class="text-black fs-5 ms-3"
+          >Not Have an Account<a
+            class="fw-bolder text-black text-decoration-none"
+            (click)="openToggleForm()"
+            role="button"
+          >
+            Sign In
+          </a></span
+        >
       </div>
     </form>
 
     <!-- If Already Sign Up then Only Display Sign In -->
 
     <form
-      #signupForm="ngForm"
-      (ngSubmit)="signUp(signupForm.value)"
-      *ngIf="isSignUp"
+      #signInForm="ngForm"
+      (ngSubmit)="signIn(signInForm.value)"
+      *ngIf="!isSignUp"
     >
       <div class="input-group mb-3">
         <span class="input-group-text" id="basic-addon1"
@@ -114,6 +123,15 @@
       </div>
       <div class="d-grid gap-2 d-md-block">
         <button class="btn btn-primary me-3 px-4 py-2">Submit</button>
+        <span class="text-black fs-5 ms-3"
+          >Not Have an Account<a
+            class="fw-bolder text-black text-decoration-none"
+            (click)="openToggleForm()"
+            role="button"
+          >
+            Sign Up
+          </a></span
+        >
       </div>
     </form>
   </div>

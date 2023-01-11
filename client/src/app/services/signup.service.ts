@@ -21,4 +21,15 @@ export class SignupService {
       httpOptions
     );
   }
+
+  SignInForm(signInFormData: UserModel): Observable<UserModel> {
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+    };
+    return this.httpClient.post<UserModel>(
+      'http://localhost:3700/route/user/signin',
+      signInFormData,
+      httpOptions
+    );
+  }
 }
