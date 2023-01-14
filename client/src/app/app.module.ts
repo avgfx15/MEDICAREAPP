@@ -10,6 +10,10 @@ import { HomeComponent } from './home/home.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { FooterComponent } from './footer/footer.component';
 import { FormsModule } from '@angular/forms';
+import { AdminHomeComponent } from './admin/admin-home/admin-home.component';
+import { SellerHomeComponent } from './seller/seller-home/seller-home.component';
+import { UserHomeComponent } from './user/user-home/user-home.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -18,8 +22,17 @@ import { FormsModule } from '@angular/forms';
     HomeComponent,
     SignUpComponent,
     FooterComponent,
+    AdminHomeComponent,
+    SellerHomeComponent,
+    UserHomeComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule,
+    RouterModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })

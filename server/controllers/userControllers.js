@@ -97,9 +97,12 @@ exports.signin = async (req, res) => {
             .json({ errorMessage: "No token available", resStatus: false });
         }
         const { _id, name, email, role } = user;
-        res
-          .status(200)
-          .json({ token: token, user: { _id, name, email, role } });
+        res.status(200).json({
+          token: token,
+          user: { _id, name, email, role },
+          successMessage: `${user.role}` + ` Sign In Successfully`,
+          resStatus: true,
+        });
       }
     );
   } catch (error) {
