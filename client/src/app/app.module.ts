@@ -14,6 +14,7 @@ import { AdminHomeComponent } from './admin/admin-home/admin-home.component';
 import { SellerHomeComponent } from './seller/seller-home/seller-home.component';
 import { UserHomeComponent } from './user/user-home/user-home.component';
 import { RouterModule } from '@angular/router';
+import { AllUsersComponent } from './admin/all-users/all-users.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { RouterModule } from '@angular/router';
     AdminHomeComponent,
     SellerHomeComponent,
     UserHomeComponent,
+    AllUsersComponent,
   ],
   imports: [
     BrowserModule,

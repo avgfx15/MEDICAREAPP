@@ -6,6 +6,7 @@ import { HomeComponent } from './home/home.component';
 import { SellerHomeComponent } from './seller/seller-home/seller-home.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { UserHomeComponent } from './user/user-home/user-home.component';
+import { AllUsersComponent } from './admin/all-users/all-users.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -13,6 +14,11 @@ const routes: Routes = [
   {
     path: 'admin',
     component: AdminHomeComponent,
+    canActivate: [UserAuthGuard],
+  },
+  {
+    path: 'admin/users',
+    component: AllUsersComponent,
     canActivate: [UserAuthGuard],
   },
   {

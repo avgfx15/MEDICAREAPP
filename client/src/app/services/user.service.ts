@@ -8,7 +8,11 @@ import { Router } from '@angular/router';
   providedIn: 'root',
 })
 export class UserService {
+  changeMenu(role: string) {
+    throw new Error('Method not implemented.');
+  }
   resData: any = {};
+  role = new BehaviorSubject<string>('');
   resStatus = new BehaviorSubject<boolean>(false);
   errorMessage = new BehaviorSubject<string>('');
   successMessage = new BehaviorSubject<string>('');
@@ -49,6 +53,8 @@ export class UserService {
             const token = this.resData.token;
             const role = this.resData.user.role;
             this.isUserLoggedIn.next(true);
+            this.role.next(role);
+
             this.successMessage.next(this.resData.successMessage);
             localStorage.setItem('userData', JSON.stringify(this.resData));
             if (token && role === 'admin') {
@@ -94,5 +100,16 @@ export class UserService {
         }
       }
     }
+  }
+
+  //` isUserLoggedIn or not create function
+  isLoggedIn(): boolean {
+    return JSON.parse(localStorage.getItem('userData') || '{}');
+  }
+
+  //` Logout clear localstorage data
+  logout() {
+    localStorage.removeItem('userData');
+    this.router.navigate(['/']);
   }
 }

@@ -3,7 +3,7 @@
     <a class="navbar-brand px-3 fs-4 text-dark fw-bolder" routerLink="/"
       >Medicare</a
     >
-    <form class="d-flex col-md-6" role="search">
+    <form *ngIf="menuType === 'default'" class="d-flex col-md-6" role="search">
       <div class="input-group me-3 text-center">
         <input
           type="text"
@@ -26,35 +26,118 @@
     >
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ms-auto me-5 fs-5 mb-2 mb-lg-0 text-dark">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">
-            <i class="fa-sharp fa-solid fa-cart-shopping"></i>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" routerLink="/">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/signup">Sign Up / Sign In</a>
-        </li>
-        <!-- <li class="nav-item">
-          <a class="nav-link" routerLink="/signup">Users</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/signup">Sellers</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/signup">Product List</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/signup">Add To Products</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/signup">Dashboard</a>
-        </li> -->
-      </ul>
+    <div [ngSwitch]="menuType">
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul
+          class="navbar-nav ms-auto me-5 fs-5 mb-2 mb-lg-0 text-dark"
+          *ngSwitchCase="'default'"
+        >
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">
+              <i class="fa-sharp fa-solid fa-cart-shopping"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" routerLink="/"
+              >Home</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/signup">Sign Up / Sign In</a>
+          </li>
+        </ul>
+
+        <!-- Admin Navbar  -->
+
+        <ul
+          class="navbar-nav ms-auto me-5 fs-5 mb-2 mb-lg-0 text-dark"
+          *ngSwitchCase="'admin'"
+        >
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" routerLink="/">{{
+              userName | titlecase
+            }}</a>
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link active"
+              aria-current="page"
+              routerLink="/admin/users"
+              >Users</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/signup">Sellers</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/signup">Products</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/signup">Orders</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/signup" (click)="logout()"
+              >Logout</a
+            >
+          </li>
+        </ul>
+
+        <!-- Seller MenuType Navbar  -->
+
+        <ul
+          class="navbar-nav ms-auto me-5 fs-5 mb-2 mb-lg-0 text-dark"
+          *ngSwitchCase="'seller'"
+        >
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" routerLink="/">
+              {{ userName | titlecase }}
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/signup">Product List</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/signup">Add Product</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/signup">Orders</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/signup" (click)="logout()"
+              >Logout</a
+            >
+          </li>
+        </ul>
+
+        <!-- Seller MenuType Navbar  -->
+
+        <ul
+          class="navbar-nav ms-auto me-5 fs-5 mb-2 mb-lg-0 text-dark"
+          *ngSwitchCase="'user'"
+        >
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" routerLink="/">
+              {{ userName | titlecase }}
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/signup">Cart</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/signup">Orders</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/signup">Dashboard</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/signup" (click)="logout()"
+              >Logout</a
+            >
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </nav>
