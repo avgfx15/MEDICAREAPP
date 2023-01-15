@@ -27,7 +27,7 @@ export class UserService {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
     };
     return this.httpClient.post<UserModel>(
-      'http://localhost:3700/route/user/signup',
+      'http://localhost:3700/route/signup',
       signupFormData,
       httpOptions
     );
@@ -35,11 +35,9 @@ export class UserService {
 
   SignInForm(signInFormData: UserModel) {
     this.httpClient
-      .post<UserModel>(
-        'http://localhost:3700/route/user/signin',
-        signInFormData,
-        { observe: 'response' }
-      )
+      .post<UserModel>('http://localhost:3700/route/signin', signInFormData, {
+        observe: 'response',
+      })
       .subscribe((res) => {
         this.resData = res.body;
         if (this.resData) {

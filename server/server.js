@@ -16,7 +16,7 @@ app.use(cors());
 app.use(morgan("dev"));
 app.use(express.json());
 
-app.use("/route/user", userRoute);
+app.use("/route", userRoute);
 
 app.get("/", (req, res) => res.send("Hello World!"));
 app.listen(port, () =>
