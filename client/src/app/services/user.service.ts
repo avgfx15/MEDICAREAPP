@@ -49,18 +49,16 @@ export class UserService {
         this.userRole.next(this.resData.user.role);
         /// Get successMessage from Server side if navigate properly
         this.successMessage.next(this.resData.successMessage);
+        console.log(this.resData.successMessage);
         /// Get errorMessage from Server side if not navigate or resStatus is false then show errorMessage and navigate to login page again from sign up page
         this.errorMessage.next(this.resData.errorMessage);
+        console.log(this.resData);
         console.log(this.resData.errorMessage);
 
         /// If token is available then store User data in localstorage and send feedback to user-auth-guard to access secure route
         if (this.resData.token && this.resData.resStatus) {
           this.isUserLoggedIn.next(true);
           localStorage.setItem('userData', JSON.stringify(this.resData));
-          localStorage.setItem(
-            'userRole',
-            JSON.stringify(this.resData.user.role)
-          );
         } else {
           /// If no token send feedback to auth-guard to restrict to access secure route
 
@@ -69,18 +67,26 @@ export class UserService {
       });
   }
 
+  //` user is logged in
+
   //` reload or refresh page reloaduser again
   reloadUser() {
-    if (localStorage.getItem('userRole')) {
-      this.isUserLoggedIn.next(true);
-      const role = localStorage.getItem('userRole');
-      if (role === 'admin') {
+    this.isUserLoggedIn.next(true);
+    const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+    const role = userData.user.role;
+    switch (role) {
+      case 'admin':
         this.router.navigate(['admin']);
-      } else if (role === 'seller') {
+        break;
+      case 'seller':
         this.router.navigate(['seller']);
-      } else if (role === 'user') {
+        break;
+      case 'user':
         this.router.navigate(['user']);
-      }
+        break;
+      default:
+        this.router.navigate(['']);
+        break;
     }
   }
 }

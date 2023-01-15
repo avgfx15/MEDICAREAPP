@@ -135,8 +135,6 @@ export class SignUpComponent implements OnInit {
           }
         });
       } else {
-        console.log(resStatus);
-
         /// If Status is false then show message from backend restrict to access secure route
         this.isDisabled = true;
         this.success = false;
