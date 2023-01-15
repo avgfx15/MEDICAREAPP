@@ -9,8 +9,6 @@ import { Router } from '@angular/router';
 })
 export class UserService {
   resData: any = {};
-  token = new BehaviorSubject<string>('');
-  userRole = new BehaviorSubject<string>('');
   resStatus = new BehaviorSubject<boolean>(false);
   errorMessage = new BehaviorSubject<string>('');
   successMessage = new BehaviorSubject<string>('');
@@ -39,30 +37,31 @@ export class UserService {
         { observe: 'response' }
       )
       .subscribe((res) => {
-        /// Get Response in resData
         this.resData = res.body;
-        /// Check token from Server side First check token in this service page
-        this.token.next(this.resData.token);
-        /// Send resStatus for Further Action in signup page if true then navigate as per userRoles page
-        this.resStatus.next(this.resData.resStatus);
-        /// Get userRole from Server side for future navigation from sign up page
-        this.userRole.next(this.resData.user.role);
-        /// Get successMessage from Server side if navigate properly
-        this.successMessage.next(this.resData.successMessage);
-        console.log(this.resData.successMessage);
-        /// Get errorMessage from Server side if not navigate or resStatus is false then show errorMessage and navigate to login page again from sign up page
-        this.errorMessage.next(this.resData.errorMessage);
-        console.log(this.resData);
-        console.log(this.resData.errorMessage);
+        if (this.resData) {
+          const resStatus = this.resData.resStatus;
 
-        /// If token is available then store User data in localstorage and send feedback to user-auth-guard to access secure route
-        if (this.resData.token && this.resData.resStatus) {
-          this.isUserLoggedIn.next(true);
-          localStorage.setItem('userData', JSON.stringify(this.resData));
-        } else {
-          /// If no token send feedback to auth-guard to restrict to access secure route
-
-          this.isUserLoggedIn.next(false);
+          if (!resStatus) {
+            this.isUserLoggedIn.next(false);
+            this.errorMessage.next(this.resData.errorMessage);
+            this.router.navigate(['signup']);
+          } else {
+            const token = this.resData.token;
+            const role = this.resData.user.role;
+            this.isUserLoggedIn.next(true);
+            this.successMessage.next(this.resData.successMessage);
+            localStorage.setItem('userData', JSON.stringify(this.resData));
+            if (token && role === 'admin') {
+              this.router.navigate(['admin']);
+              console.log('admin');
+            } else if (token && role === 'seller') {
+              this.router.navigate(['seller']);
+              console.log('seller');
+            } else {
+              this.router.navigate(['user']);
+              console.log('user');
+            }
+          }
         }
       });
   }
@@ -71,22 +70,29 @@ export class UserService {
 
   //` reload or refresh page reloaduser again
   reloadUser() {
-    this.isUserLoggedIn.next(true);
-    const userData = JSON.parse(localStorage.getItem('userData') || '{}');
-    const role = userData.user.role;
-    switch (role) {
-      case 'admin':
-        this.router.navigate(['admin']);
-        break;
-      case 'seller':
-        this.router.navigate(['seller']);
-        break;
-      case 'user':
-        this.router.navigate(['user']);
-        break;
-      default:
-        this.router.navigate(['']);
-        break;
+    if (localStorage.getItem('userData')) {
+      const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+      const role = userData.user.role;
+      if (!role && !userData) {
+        this.isUserLoggedIn.next(false);
+        this.router.navigate(['signup']);
+      } else {
+        this.isUserLoggedIn.next(true);
+        switch (role) {
+          case 'admin':
+            this.router.navigate(['admin']);
+            break;
+          case 'seller':
+            this.router.navigate(['seller']);
+            break;
+          case 'user':
+            this.router.navigate(['user']);
+            break;
+          default:
+            this.router.navigate(['']);
+            break;
+        }
+      }
     }
   }
 }

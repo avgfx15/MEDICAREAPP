@@ -1,7 +1,7 @@
 <div class="signup">
   <div class="container align-self-center">
-    <h2 class="mb-3 text-center" *ngIf="isSignUp">Sign Up Form</h2>
-    <h2 class="mb-3 text-center" *ngIf="!isSignUp">Sign In Form</h2>
+    <h2 class="mb-3 text-center" *ngIf="!isSignUp">Sign Up Form</h2>
+    <h2 class="mb-3 text-center" *ngIf="isSignUp">Sign In Form</h2>
     <div
       class="alert alert-primary"
       role="alert"
@@ -13,7 +13,7 @@
     <form
       #signupForm="ngForm"
       (ngSubmit)="signUp(signupForm.value)"
-      *ngIf="isSignUp"
+      *ngIf="!isSignUp"
     >
       <div class="input-group mb-3">
         <span class="input-group-text" id="basic-addon1"
@@ -90,7 +90,7 @@
     <form
       #signInForm="ngForm"
       (ngSubmit)="signIn(signInForm.value)"
-      *ngIf="!isSignUp"
+      *ngIf="isSignUp"
     >
       <div class="input-group mb-3">
         <span class="input-group-text" id="basic-addon1"
