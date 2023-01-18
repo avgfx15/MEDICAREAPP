@@ -13,8 +13,12 @@ export class HeaderComponent {
     private router: Router,
     public userService: UserService
   ) {}
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    /* TODO document why this method 'ngOnInit' is empty */
+  }
+  userData = JSON.parse(localStorage.getItem('userData') || '{}');
 
+  userName = this.userData?.user?.name;
   public isUserLoggedIn() {
     return this.userAuthService.userLoggedIn();
   }

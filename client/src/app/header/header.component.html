@@ -53,14 +53,14 @@
 
           <!-- Admin Navbar  -->
 
-          <!-- <li class="nav-item" *ngIf="userService.roleMatch(['admin'])">
+          <li class="nav-item" *ngIf="userService.roleMatch(['admin'])">
             <a
               class="nav-link active"
               aria-current="page"
               routerLink="/admin"
               >{{ userName | titlecase }}</a
             >
-          </li> -->
+          </li>
           <li class="nav-item" *ngIf="userService.roleMatch(['admin'])">
             <a
               class="nav-link active"
