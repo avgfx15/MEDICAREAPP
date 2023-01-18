@@ -3,14 +3,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { UserModel } from '../models/user-model';
 import { Router } from '@angular/router';
+import { UserAuthService } from './user-auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  changeMenu(role: string) {
-    throw new Error('Method not implemented.');
-  }
+  baseUrl = 'http://localhost:3700/';
   resData: any = {};
   role = new BehaviorSubject<string>('');
   resStatus = new BehaviorSubject<boolean>(false);
@@ -18,96 +17,54 @@ export class UserService {
   successMessage = new BehaviorSubject<string>('');
   isUserLoggedIn = new BehaviorSubject<boolean>(false);
 
-  constructor(private httpClient: HttpClient, private router: Router) {
+  constructor(
+    private httpClient: HttpClient,
+    private router: Router,
+    private userAuthService: UserAuthService
+  ) {
     /* TODO document why this constructor is empty */
   }
-
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+  };
+  //` Sign Up Function
   SignupForm(signupFormData: UserModel): Observable<UserModel> {
-    const httpOptions = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
-    };
     return this.httpClient.post<UserModel>(
-      'http://localhost:3700/route/signup',
+      this.baseUrl + 'route/signup',
       signupFormData,
-      httpOptions
+      this.httpOptions
     );
   }
 
+  //` Sign In Function
+  //
+
   SignInForm(signInFormData: UserModel) {
-    this.httpClient
-      .post<UserModel>('http://localhost:3700/route/signin', signInFormData, {
-        observe: 'response',
-      })
-      .subscribe((res) => {
-        this.resData = res.body;
-        if (this.resData) {
-          const resStatus = this.resData.resStatus;
-
-          if (!resStatus) {
-            this.isUserLoggedIn.next(false);
-            this.errorMessage.next(this.resData.errorMessage);
-            this.router.navigate(['signup']);
-          } else {
-            const token = this.resData.token;
-            const role = this.resData.user.role;
-            this.isUserLoggedIn.next(true);
-            this.role.next(role);
-
-            this.successMessage.next(this.resData.successMessage);
-            localStorage.setItem('userData', JSON.stringify(this.resData));
-            if (token && role === 'admin') {
-              this.router.navigate(['admin']);
-              console.log('admin');
-            } else if (token && role === 'seller') {
-              this.router.navigate(['seller']);
-              console.log('seller');
-            } else {
-              this.router.navigate(['user']);
-              console.log('user');
-            }
-          }
-        }
-      });
+    return this.httpClient.post(
+      this.baseUrl + 'route/signin',
+      signInFormData,
+      this.httpOptions
+    );
   }
 
-  //` user is logged in
+  // //` reload or refresh page reloaduser again
 
-  //` reload or refresh page reloaduser again
-  reloadUser() {
-    if (localStorage.getItem('userData')) {
-      const userData = JSON.parse(localStorage.getItem('userData') || '{}');
-      const role = userData.user.role;
-      if (!role && !userData) {
-        this.isUserLoggedIn.next(false);
-        this.router.navigate(['signup']);
-      } else {
-        this.isUserLoggedIn.next(true);
-        switch (role) {
-          case 'admin':
-            this.router.navigate(['admin']);
-            break;
-          case 'seller':
-            this.router.navigate(['seller']);
-            break;
-          case 'user':
-            this.router.navigate(['user']);
-            break;
-          default:
-            this.router.navigate(['']);
-            break;
+  //` Match user role for navbar
+  roleMatch(allowRole: any): boolean {
+    let isMatch = false;
+    const userRole = this.userAuthService.getRole();
+    if (userRole != null && userRole) {
+      for (let i of allowRole) {
+        if (userRole === i) {
+          isMatch = true;
+          return isMatch;
+        } else {
+          return isMatch;
         }
       }
+      return isMatch;
+    } else {
+      return isMatch;
     }
-  }
-
-  //` isUserLoggedIn or not create function
-  isLoggedIn(): boolean {
-    return JSON.parse(localStorage.getItem('userData') || '{}');
-  }
-
-  //` Logout clear localstorage data
-  logout() {
-    localStorage.removeItem('userData');
-    this.router.navigate(['/']);
   }
 }

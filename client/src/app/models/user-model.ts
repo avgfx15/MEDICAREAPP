@@ -6,3 +6,8 @@ export class UserModel {
   role: number = 0;
   id: string = '';
 }
+
+export class SignIn {
+  email: string = '';
+  password: string = '';
+}

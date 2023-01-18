@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserModel } from '../models/user-model';
-
+import { UserAuthService } from '../services/user-auth.service';
 import { UserService } from '../services/user.service';
+import { Observable } from 'rxjs';
+import { HeaderComponent } from '../header/header.component';
 
 @Component({
   selector: 'app-sign-up',
@@ -17,12 +19,15 @@ export class SignUpComponent implements OnInit {
   showMsg: string = '';
   errorMsg: string = '';
   isSignUp: boolean = true;
-  constructor(private userService: UserService, private router: Router) {
+  constructor(
+    private userService: UserService,
+    private userAuthService: UserAuthService,
+    private router: Router
+  ) {
     /* TODO document /* TODO document why this method 'ngOnInit' is empty */
   }
   ngOnInit(): void {
     /* TODO document why this method 'ngOnInit' is empty */
-    this.userService.reloadUser();
   }
 
   //` Sign Up Form
@@ -50,19 +55,37 @@ export class SignUpComponent implements OnInit {
   }
 
   //` Sign In Form
+
   signIn(signInFormData: UserModel) {
-    this.userService.SignInForm(signInFormData);
-    this.isDisabled = true;
-    this.success = false;
-    this.userService.errorMessage.subscribe((errorMsg) => {
-      this.showMsg = errorMsg;
-    });
-    this.userService.successMessage.subscribe((successMsg) => {
-      this.showMsg = successMsg;
-    });
-    setTimeout(() => {
-      this.isDisabled = false;
-    }, 3000);
+    this.userService.SignInForm(signInFormData).subscribe(
+      (res: any) => {
+        if (res.resStatus === false) {
+          this.isDisabled = true;
+          this.success = false;
+          this.showMsg = res.errorMessage;
+          setTimeout(() => {
+            this.isDisabled = false;
+          }, 3000);
+        } else {
+          this.userAuthService.setUserData(res);
+          this.userAuthService.setToken(res.token);
+          this.userAuthService.setRole(res.user.role);
+          const role = res.user.role;
+          if (role === 'admin') {
+            this.router.navigate(['/admin']);
+          } else if (role === 'seller') {
+            this.router.navigate(['/seller']);
+          } else if (role === 'user') {
+            this.router.navigate(['/user']);
+          } else {
+            this.router.navigate(['']);
+          }
+        }
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   //` Toggle between Sign Up and Sign In form

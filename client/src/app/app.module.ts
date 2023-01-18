@@ -15,6 +15,13 @@ import { SellerHomeComponent } from './seller/seller-home/seller-home.component'
 import { UserHomeComponent } from './user/user-home/user-home.component';
 import { RouterModule } from '@angular/router';
 import { AllUsersComponent } from './admin/all-users/all-users.component';
+import { AllSellersComponent } from './admin/all-sellers/all-sellers.component';
+
+import { ForbiddenComponent } from './forbidden/forbidden.component';
+import { AboutComponent } from './about/about.component';
+import { ContactComponent } from './contact/contact.component';
+import { AllproductlistComponent } from './admin/allproductlist/allproductlist.component';
+import { AllordersComponent } from './admin/allorders/allorders.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +34,12 @@ import { AllUsersComponent } from './admin/all-users/all-users.component';
     SellerHomeComponent,
     UserHomeComponent,
     AllUsersComponent,
+    AllSellersComponent,
+    ForbiddenComponent,
+    AboutComponent,
+    ContactComponent,
+    AllproductlistComponent,
+    AllordersComponent,
   ],
   imports: [
     BrowserModule,

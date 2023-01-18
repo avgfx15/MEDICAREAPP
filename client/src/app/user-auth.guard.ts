@@ -12,6 +12,9 @@ import { UserService } from './services/user.service';
   providedIn: 'root',
 })
 export class UserAuthGuard implements CanActivate {
+  getRole() {
+    throw new Error('Method not implemented.');
+  }
   constructor(private userService: UserService) {}
   canActivate(
     route: ActivatedRouteSnapshot,
