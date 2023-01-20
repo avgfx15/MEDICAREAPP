@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserModel } from '../models/user-model';
+import { SignIn, UserModel } from '../models/user-model';
 import { UserAuthService } from '../services/user-auth.service';
 import { UserService } from '../services/user.service';
 import { Observable } from 'rxjs';
@@ -15,10 +15,9 @@ export class SignUpComponent implements OnInit {
   resData: any = {};
   isDisabled: boolean = false;
   success: boolean = false;
-  userRole: string = '';
   showMsg: string = '';
-  errorMsg: string = '';
   isSignUp: boolean = true;
+
   constructor(
     private userService: UserService,
     private userAuthService: UserAuthService,
@@ -31,10 +30,15 @@ export class SignUpComponent implements OnInit {
   }
 
   //` Sign Up Form
+  /// SignupForm service from UserService and then Subscribe
   signUp(signUpFormData: UserModel) {
+    /// If response from backend then subscribe
     this.userService.SignupForm(signUpFormData).subscribe((res) => {
+      /// Store response in resData variavle
       this.resData = res;
+      /// If getting response from backend then progress
       if (res) {
+        /// check if response status false from backend then display errorMessage from backend
         if (this.resData.resStatus === false) {
           this.isDisabled = true;
           this.success = false;
@@ -43,11 +47,13 @@ export class SignUpComponent implements OnInit {
             this.isDisabled = false;
           }, 3000);
         } else {
+          /// check if response status true from backend then display successMessage from backend and then navigate to signin form
           this.isDisabled = true;
           this.success = true;
           this.showMsg = this.resData.successMessage;
           setTimeout(() => {
-            this.router.navigate(['/']);
+            this.isDisabled = false;
+            this.openToggleForm();
           }, 3000);
         }
       }
@@ -56,9 +62,12 @@ export class SignUpComponent implements OnInit {
 
   //` Sign In Form
 
-  signIn(signInFormData: UserModel) {
+  /// SignupForm service from UserService and then Subscribe
+  signIn(signInFormData: SignIn) {
+    /// If response from backend then subscribe
     this.userService.SignInForm(signInFormData).subscribe(
       (res: any) => {
+        /// check if response status false from backend then display errorMessage from backend
         if (res.resStatus === false) {
           this.isDisabled = true;
           this.success = false;
@@ -67,21 +76,30 @@ export class SignUpComponent implements OnInit {
             this.isDisabled = false;
           }, 3000);
         } else {
+          /// check if response status true from backend then store userData in localstorage
           this.userAuthService.setUserData(res);
+          /// Store token in a extra variable in localstorage
           this.userAuthService.setToken(res.token);
+          /// Store token in a extra variable in localstorage
           this.userAuthService.setRole(res.user.role);
+          /// Get user role from backend response
           const role = res.user.role;
+          /// If user role is admin then navigate to admin home page
           if (role === 'admin') {
             this.router.navigate(['/admin']);
+            /// If user role is seller then navigate to seller home page
           } else if (role === 'seller') {
             this.router.navigate(['/seller']);
+            /// If user role is user then navigate to user home page
           } else if (role === 'user') {
             this.router.navigate(['/user']);
+            /// If no user role then navigate to home page
           } else {
             this.router.navigate(['']);
           }
         }
       },
+      /// if any error then get error in console log
       (error) => {
         console.log(error);
       }

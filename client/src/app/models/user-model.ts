@@ -1,3 +1,4 @@
+/// Sign Up Moel
 export class UserModel {
   name: string = '';
   email: string = '';
@@ -7,6 +8,7 @@ export class UserModel {
   id: string = '';
 }
 
+/// Sign In model
 export class SignIn {
   email: string = '';
   password: string = '';

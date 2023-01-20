@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { UserModel } from '../models/user-model';
+import { Observable } from 'rxjs';
+import { SignIn, UserModel } from '../models/user-model';
 import { Router } from '@angular/router';
 import { UserAuthService } from './user-auth.service';
 
@@ -10,12 +10,6 @@ import { UserAuthService } from './user-auth.service';
 })
 export class UserService {
   baseUrl = 'http://localhost:3700/';
-  resData: any = {};
-  role = new BehaviorSubject<string>('');
-  resStatus = new BehaviorSubject<boolean>(false);
-  errorMessage = new BehaviorSubject<string>('');
-  successMessage = new BehaviorSubject<string>('');
-  isUserLoggedIn = new BehaviorSubject<boolean>(false);
 
   constructor(
     private httpClient: HttpClient,
@@ -37,13 +31,16 @@ export class UserService {
   }
 
   //` Sign In Function
-  //
 
-  SignInForm(signInFormData: UserModel) {
-    return this.httpClient.post(
+  requestHeaders = new HttpHeaders({
+    'No-Auth': 'true',
+  });
+
+  SignInForm(signInFormData: SignIn): Observable<SignIn> {
+    return this.httpClient.post<SignIn>(
       this.baseUrl + 'route/signin',
       signInFormData,
-      this.httpOptions
+      { headers: this.requestHeaders }
     );
   }
 

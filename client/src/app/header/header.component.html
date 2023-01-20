@@ -52,6 +52,7 @@
           </li>
 
           <!-- Admin Navbar  -->
+          <!-- User sign in as an admin then using role match function with *ngIf display navigation link  -->
 
           <li class="nav-item" *ngIf="userService.roleMatch(['admin'])">
             <a
@@ -80,37 +81,39 @@
           </li>
 
           <!-- Seller MenuType Navbar  -->
+          <!-- User sign in as an seller then using role match function with *ngIf display navigation link  -->
 
-          <!-- <li class="nav-item" *ngIf="userService.roleMatch(['seller'])">
-            <a class="nav-link active" aria-current="page" routerLink="/">
+          <li class="nav-item" *ngIf="userService.roleMatch(['seller'])">
+            <a class="nav-link active" aria-current="page" routerLink="/seller">
               {{ userName | titlecase }}
             </a>
-          </li> -->
-          <li class="nav-item" *ngIf="userService.roleMatch(['seller'])">
-            <a class="nav-link" routerLink="/signup">Product List</a>
           </li>
           <li class="nav-item" *ngIf="userService.roleMatch(['seller'])">
-            <a class="nav-link" routerLink="/signup">Add Product</a>
+            <a class="nav-link" routerLink="/productlist">Product List</a>
           </li>
           <li class="nav-item" *ngIf="userService.roleMatch(['seller'])">
-            <a class="nav-link" routerLink="/signup">Orders</a>
+            <a class="nav-link" routerLink="/addproduct">Add Product</a>
+          </li>
+          <li class="nav-item" *ngIf="userService.roleMatch(['seller'])">
+            <a class="nav-link" routerLink="/orders">Orders</a>
           </li>
 
           <!-- User MenuType Navbar  -->
+          <!-- User sign in as an user then using role match function with *ngIf display navigation link  -->
 
-          <!-- <li class="nav-item" *ngIf="userService.roleMatch(['user'])">
-            <a class="nav-link active" aria-current="page" routerLink="/">
+          <li class="nav-item" *ngIf="userService.roleMatch(['user'])">
+            <a class="nav-link active" aria-current="page" routerLink="/user">
               {{ userName | titlecase }}
             </a>
-          </li> -->
-          <li class="nav-item" *ngIf="userService.roleMatch(['user'])">
-            <a class="nav-link" routerLink="/signup">Cart</a>
           </li>
           <li class="nav-item" *ngIf="userService.roleMatch(['user'])">
-            <a class="nav-link" routerLink="/signup">Orders</a>
+            <a class="nav-link" routerLink="/cart">Cart</a>
           </li>
           <li class="nav-item" *ngIf="userService.roleMatch(['user'])">
-            <a class="nav-link" routerLink="/signup">Dashboard</a>
+            <a class="nav-link" routerLink="/myorder">My Orders</a>
+          </li>
+          <li class="nav-item" *ngIf="userService.roleMatch(['user'])">
+            <a class="nav-link" routerLink="/dashboard">Dashboard</a>
           </li>
           <li class="nav-item">
             <a

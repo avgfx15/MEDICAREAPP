@@ -16,13 +16,17 @@ export class HeaderComponent {
   ngOnInit(): void {
     /* TODO document why this method 'ngOnInit' is empty */
   }
+  /// Display User name after login in Navbar
+  /// Get userdata and user name from local storage
   userData = JSON.parse(localStorage.getItem('userData') || '{}');
-
   userName = this.userData?.user?.name;
+
+  /// If User logged in then disable signin Navigation link and display logout navigationlink
   public isUserLoggedIn() {
     return this.userAuthService.userLoggedIn();
   }
 
+  /// On logout clear userData from local storage and navigate to home page
   logout() {
     this.userAuthService.clearStorage();
     this.router.navigate(['']);

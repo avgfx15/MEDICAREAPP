@@ -11,36 +11,59 @@ import { AboutComponent } from './about/about.component';
 import { ContactComponent } from './contact/contact.component';
 import { AllproductlistComponent } from './admin/allproductlist/allproductlist.component';
 import { AllordersComponent } from './admin/allorders/allorders.component';
+import { AuthGuard } from './auth/auth.guard';
+import { ForbiddenComponent } from './forbidden/forbidden.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'signin', component: SignUpComponent },
   { path: 'about', component: AboutComponent },
   { path: 'contact', component: ContactComponent },
+  { path: 'forbidden', component: ForbiddenComponent },
+  //` Admin routes
   {
     path: 'admin',
     component: AdminHomeComponent,
+    canActivate: [AuthGuard],
+    data: { role: 'admin' },
   },
-  {
-    path: 'seller',
-    component: SellerHomeComponent,
-  },
-  { path: 'user', component: UserHomeComponent },
   {
     path: 'admin/allusers',
     component: AllUsersComponent,
+    canActivate: [AuthGuard],
+    data: { role: 'admin' },
   },
   {
     path: 'admin/allsellers',
     component: AllSellersComponent,
+    canActivate: [AuthGuard],
+    data: { role: 'admin' },
   },
   {
     path: 'admin/allproductlist',
     component: AllproductlistComponent,
+    canActivate: [AuthGuard],
+    data: { role: 'admin' },
   },
   {
     path: 'admin/allorders',
     component: AllordersComponent,
+    canActivate: [AuthGuard],
+    data: { role: 'admin' },
+  },
+  //` Seller routes
+  {
+    path: 'seller',
+    component: SellerHomeComponent,
+    canActivate: [AuthGuard],
+    data: { role: 'seller' },
+  },
+  //` User routes
+  {
+    path: 'user',
+    component: UserHomeComponent,
+    canActivate: [AuthGuard],
+    data: { role: 'user' },
   },
 ];
 
