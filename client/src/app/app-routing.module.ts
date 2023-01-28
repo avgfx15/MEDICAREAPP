@@ -13,6 +13,11 @@ import { AllproductlistComponent } from './admin/allproductlist/allproductlist.c
 import { AllordersComponent } from './admin/allorders/allorders.component';
 import { AuthGuard } from './auth/auth.guard';
 import { ForbiddenComponent } from './forbidden/forbidden.component';
+import { SellerproductlistComponent } from './seller/sellerproductlist/sellerproductlist.component';
+import { SellerOrdersComponent } from './seller/seller-orders/seller-orders.component';
+import { AddnewproductComponent } from './seller/addnewproduct/addnewproduct.component';
+import { CartComponent } from './user/cart/cart.component';
+import { MyordersComponent } from './user/myorders/myorders.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -58,10 +63,41 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     data: { role: 'seller' },
   },
+  {
+    path: 'seller/sellerproductlist',
+    component: SellerproductlistComponent,
+    canActivate: [AuthGuard],
+    data: { role: 'seller' },
+  },
+  {
+    path: 'seller/sellerorders',
+    component: SellerOrdersComponent,
+    canActivate: [AuthGuard],
+    data: { role: 'seller' },
+  },
+  {
+    path: 'seller/addnewproduct',
+    component: AddnewproductComponent,
+    canActivate: [AuthGuard],
+    data: { role: 'seller' },
+  },
+
   //` User routes
   {
     path: 'user',
     component: UserHomeComponent,
+    canActivate: [AuthGuard],
+    data: { role: 'user' },
+  },
+  {
+    path: 'cart',
+    component: CartComponent,
+    canActivate: [AuthGuard],
+    data: { role: 'user' },
+  },
+  {
+    path: 'myorder',
+    component: MyordersComponent,
     canActivate: [AuthGuard],
     data: { role: 'user' },
   },

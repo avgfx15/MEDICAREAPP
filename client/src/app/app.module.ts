@@ -26,6 +26,13 @@ import { AuthGuard } from './auth/auth.guard';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { UserService } from './services/user.service';
 
+import { SellerOrdersComponent } from './seller/seller-orders/seller-orders.component';
+
+import { AddnewproductComponent } from './seller/addnewproduct/addnewproduct.component';
+import { SellerproductlistComponent } from './seller/sellerproductlist/sellerproductlist.component';
+import { CartComponent } from './user/cart/cart.component';
+import { MyordersComponent } from './user/myorders/myorders.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,6 +50,11 @@ import { UserService } from './services/user.service';
     ContactComponent,
     AllproductlistComponent,
     AllordersComponent,
+    SellerOrdersComponent,
+    AddnewproductComponent,
+    SellerproductlistComponent,
+    CartComponent,
+    MyordersComponent,
   ],
   imports: [
     BrowserModule,
