@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { SignIn, UserModel } from '../models/user-model';
 import { Router } from '@angular/router';
 import { UserAuthService } from './user-auth.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +15,8 @@ export class UserService {
   constructor(
     private httpClient: HttpClient,
     private router: Router,
-    private userAuthService: UserAuthService
+    private userAuthService: UserAuthService,
+    private cookieService: CookieService
   ) {
     /* TODO document why this constructor is empty */
   }
@@ -50,6 +52,7 @@ export class UserService {
   roleMatch(allowRole: any): boolean {
     let isMatch = false;
     const userRole = this.userAuthService.getRole();
+
     if (userRole != null && userRole) {
       for (let i of allowRole) {
         if (userRole === i) {

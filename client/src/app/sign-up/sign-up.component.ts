@@ -3,8 +3,6 @@ import { Router } from '@angular/router';
 import { SignIn, UserModel } from '../models/user-model';
 import { UserAuthService } from '../services/user-auth.service';
 import { UserService } from '../services/user.service';
-import { Observable } from 'rxjs';
-import { HeaderComponent } from '../header/header.component';
 
 @Component({
   selector: 'app-sign-up',
@@ -65,8 +63,8 @@ export class SignUpComponent implements OnInit {
   /// SignupForm service from UserService and then Subscribe
   signIn(signInFormData: SignIn) {
     /// If response from backend then subscribe
-    this.userService.SignInForm(signInFormData).subscribe(
-      (res: any) => {
+    this.userService.SignInForm(signInFormData).subscribe({
+      next: (res: any) => {
         /// check if response status false from backend then display errorMessage from backend
         if (res.resStatus === false) {
           this.isDisabled = true;
@@ -82,6 +80,8 @@ export class SignUpComponent implements OnInit {
           this.userAuthService.setToken(res.token);
           /// Store token in a extra variable in localstorage
           this.userAuthService.setRole(res.user.role);
+          /// Set Cookie
+          this.userAuthService.setCookie();
           /// Get user role from backend response
           const role = res.user.role;
           /// If user role is admin then navigate to admin home page
@@ -100,10 +100,10 @@ export class SignUpComponent implements OnInit {
         }
       },
       /// if any error then get error in console log
-      (error) => {
+      error: (error) => {
         console.log(error);
-      }
-    );
+      },
+    });
   }
 
   //` Toggle between Sign Up and Sign In form

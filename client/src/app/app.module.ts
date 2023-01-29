@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { CookieService } from 'ngx-cookie-service';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -71,6 +72,7 @@ import { MyordersComponent } from './user/myorders/myorders.component';
       multi: true,
     },
     UserService,
+    CookieService,
   ],
   bootstrap: [AppComponent],
 })

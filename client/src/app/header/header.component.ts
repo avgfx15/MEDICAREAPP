@@ -29,6 +29,7 @@ export class HeaderComponent {
   /// On logout clear userData from local storage and navigate to home page
   logout() {
     this.userAuthService.clearStorage();
+    this.userAuthService.deleteAllCookies();
     this.router.navigate(['']);
   }
 }
