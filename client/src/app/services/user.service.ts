@@ -21,6 +21,7 @@ export class UserService {
     /* TODO document why this constructor is empty */
   }
   httpOptions = {
+    withCredentials: true,
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
   //` Sign Up Function
@@ -42,7 +43,7 @@ export class UserService {
     return this.httpClient.post<SignIn>(
       this.baseUrl + 'route/signin',
       signInFormData,
-      { headers: this.requestHeaders }
+      this.httpOptions
     );
   }
 

@@ -8,15 +8,20 @@ const port = config.port;
 // Database connection
 const dbConnect = require("./db/db");
 
-// Middlewares
+/// Middlewares
+
 const cors = require("cors");
-const morgan = require("morgan");
+const cookieParser = require("cookie-parser");
 const userRoute = require("./routes/userRoutes");
+const categoryRoute = require("./routes/categoryRoutes");
+
+///` Middleware
+app.use(cookieParser());
 app.use(cors());
-app.use(morgan("dev"));
 app.use(express.json());
 
 app.use("/route", userRoute);
+app.use("/api/category", categoryRoute);
 
 app.get("/", (req, res) => res.send("Hello World!"));
 app.listen(port, () =>

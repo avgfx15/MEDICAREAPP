@@ -47,18 +47,15 @@ export class UserAuthService {
   }
 
   /// Set cookie userId
-  public setCookie(): void {
-    const userData = JSON.parse(localStorage.getItem('userData') || '{}');
-    const userId = userData?.user?._id;
-    const token = userData?.token;
-    this.cookieService.set('userId', userId, { expires: 1 });
-    this.cookieService.set('token', token, { expires: 1 });
+  public setCookie(token: string) {
+    const tok = this.cookieService.set('token', `Cookie Saved ${token}`);
+    console.log(tok);
   }
 
   /// get Cookie userId
-  public getCookie() {
-    this.cookieService.get('userId');
-    this.cookieService.get('token ');
+
+  public getSingleCookie(key: string) {
+    this.cookieService.get(key);
   }
 
   /// Delete single cookie token or userId

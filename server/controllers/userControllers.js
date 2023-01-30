@@ -1,5 +1,6 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const cookieParser = require("cookie-parser");
 const config = require("../config/configSecret");
 const User = require("../models/userModel");
 
@@ -36,6 +37,7 @@ exports.signup = async (req, res) => {
       password: hashedPassword,
     });
     await user.save();
+
     res
       .status(201)
       .json({ successMessage: "User Saved", resStatus: true, user: user });
@@ -95,7 +97,9 @@ exports.signin = async (req, res) => {
             .status(500)
             .json({ errorMessage: "No token available", resStatus: false });
         }
+
         const { _id, name, email, role } = user;
+
         res.status(200).json({
           token: token,
           user: { _id, name, email, role },

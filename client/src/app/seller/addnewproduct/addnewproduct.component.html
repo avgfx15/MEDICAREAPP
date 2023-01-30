@@ -1,42 +1,63 @@
 <div class="container">
-  <div class="row">
-    <h4 class="text-center p-1 bg-warning mt-2">Seller Add New Product</h4>
-    <div class="d-grid gap-2 d-md-flex justify-content-md-center">
-      <!-- Button trigger modal -->
-      <div class="">
-        <button
-          type="button"
-          class="btn btn-primary"
-          data-bs-toggle="modal"
-          data-bs-target="#staticBackdrop"
-        >
-          Add Category
-        </button>
+  <h4 class="text-center py-2 bg-warning mt-2">Seller Add New Product</h4>
 
-        <!-- Modal -->
-        <div
-          class="modal fade"
-          id="staticBackdrop"
-          data-bs-backdrop="static"
-          data-bs-keyboard="false"
-          tabindex="-1"
-          aria-labelledby="staticBackdropLabel"
-          aria-hidden="true"
-        >
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">
-                  Modal title
-                </h1>
-                <button
-                  type="button"
-                  class="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
+  <div class="row text-center">
+    <!-- Button trigger modal Add Category -->
+
+    <div class="col-md-4">
+      <button
+        type="button"
+        class="btn btn-outline-info btn-block"
+        data-bs-toggle="modal"
+        data-bs-target="#addcategory"
+      >
+        <i class="fa-solid fa-plus"></i>
+        Add Category
+      </button>
+
+      <!-- Modal -->
+      <div
+        class="modal fade"
+        id="addcategory"
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
+        tabindex="-1"
+        aria-labelledby="staticBackdropLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header bg-info">
+              <h1 class="modal-title fs-5" id="addcategory">
+                Add New Category
+              </h1>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <form
+              #categoryForm="ngForm"
+              (ngSubmit)="addCategory(categoryForm.value)"
+            >
+              <div class="modal-body text-left">
+                <div class="mb-3">
+                  <label for="exampleFormControlInput1" class="form-label"
+                    >Category</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="exampleFormControlInput1"
+                    placeholder="Input Category"
+                    name="category"
+                    ngModel
+                  />
+                </div>
               </div>
-              <div class="modal-body">...</div>
+
               <div class="modal-footer">
                 <button
                   type="button"
@@ -45,70 +66,116 @@
                 >
                   Close
                 </button>
-                <button type="button" class="btn btn-primary">
-                  Understood
+                <button type="submit" class="btn btn-primary">
+                  Add Category
                 </button>
               </div>
-            </div>
+            </form>
           </div>
         </div>
       </div>
-      <div class="">
-        <button
-          type="button"
-          class="btn btn-primary"
-          data-bs-toggle="modal"
-          data-bs-target="#staticBackdrop"
-        >
-          Add Product
-        </button>
+    </div>
 
-        <!-- Modal -->
-        <div
-          class="modal fade"
-          id="staticBackdrop"
-          data-bs-backdrop="static"
-          data-bs-keyboard="false"
-          tabindex="-1"
-          aria-labelledby="staticBackdropLabel"
-          aria-hidden="true"
-        >
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">
-                  Modal title
-                </h1>
-                <button
-                  type="button"
-                  class="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
-              </div>
-              <div class="modal-body">...</div>
-              <div class="modal-footer">
-                <button
-                  type="button"
-                  class="btn btn-secondary"
-                  data-bs-dismiss="modal"
-                >
-                  Close
-                </button>
-                <button type="button" class="btn btn-primary">
-                  Understood
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <button class="btn btn-primary py-2 px-4 mx-3" type="button">
+    <!-- Button trigger modal Add Product -->
+
+    <div class="col-md-4">
+      <button
+        type="button"
+        class="btn btn-outline-warning btn-block"
+        data-bs-toggle="modal"
+        data-bs-target="#addproduct"
+      >
+        <i class="fa-solid fa-plus"></i>
         Add Product
       </button>
-      <button class="btn btn-primary py-2 px-4 mx-3" type="button">
+
+      <!-- Modal -->
+      <div
+        class="modal fade"
+        id="addproduct"
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
+        tabindex="-1"
+        aria-labelledby="staticBackdropLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header bg-warning">
+              <h1 class="modal-title fs-5" id="addproduct">Add New Product</h1>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">...</div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+              <button type="button" class="btn btn-primary">Add Product</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Button trigger modal View Product -->
+
+    <div class="col-md-4">
+      <button
+        type="button"
+        class="btn btn-outline-success btn-block"
+        data-bs-toggle="modal"
+        data-bs-target="#viewproduct"
+      >
+        <i class="fa-solid fa-credit-card"></i>
         View Product
       </button>
+
+      <!-- Modal -->
+      <div
+        class="modal fade"
+        id="viewproduct"
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
+        tabindex="-1"
+        aria-labelledby="staticBackdropLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header bg-success">
+              <h1 class="modal-title fs-5" id="viewproduct">View Product</h1>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">...</div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+              <button type="button" class="btn btn-primary">
+                View Product
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

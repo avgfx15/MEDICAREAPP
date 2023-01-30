@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 import { SignIn, UserModel } from '../models/user-model';
 import { UserAuthService } from '../services/user-auth.service';
 import { UserService } from '../services/user.service';
@@ -19,7 +20,8 @@ export class SignUpComponent implements OnInit {
   constructor(
     private userService: UserService,
     private userAuthService: UserAuthService,
-    private router: Router
+    private router: Router,
+    private cookieService: CookieService
   ) {
     /* TODO document /* TODO document why this method 'ngOnInit' is empty */
   }
@@ -81,7 +83,7 @@ export class SignUpComponent implements OnInit {
           /// Store token in a extra variable in localstorage
           this.userAuthService.setRole(res.user.role);
           /// Set Cookie
-          this.userAuthService.setCookie();
+          this.cookieService.set('mttoken', res.token);
           /// Get user role from backend response
           const role = res.user.role;
           /// If user role is admin then navigate to admin home page
