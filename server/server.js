@@ -14,13 +14,15 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const userRoute = require("./routes/userRoutes");
 const categoryRoute = require("./routes/categoryRoutes");
+const adminRoute = require("./routes/adminRoutes");
 
 ///` Middleware
-app.use(cookieParser());
 app.use(cors());
 app.use(express.json());
+app.use(cookieParser());
 
 app.use("/route", userRoute);
+app.use("/admin", adminRoute);
 app.use("/api/category", categoryRoute);
 
 app.get("/", (req, res) => res.send("Hello World!"));

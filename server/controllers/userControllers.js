@@ -55,7 +55,7 @@ exports.signin = async (req, res) => {
     const { email, password } = req.body;
 
     /// check user is exist or not by email
-    const user = await User.findOne({ email }).select("+password");
+    const user = await User.findOne({ email: email }).select("+password");
 
     if (!user) {
       return (
@@ -81,33 +81,30 @@ exports.signin = async (req, res) => {
     /// If password isMatch then Create token with payload user
     const payload = {
       user: {
-        _id: user._id,
+        id: user._id,
+        role: user.role,
+        name: user.name,
       },
     };
+    const token = await jwt.sign(payload, config.jwtSecret, {
+      expiresIn: config.jwtExpire,
+    });
 
-    await jwt.sign(
-      payload,
-      config.jwtSecret,
-      {
-        expiresIn: config.jwtExpire,
-      },
-      (err, token) => {
-        if (err) {
-          return res
-            .status(500)
-            .json({ errorMessage: "No token available", resStatus: false });
-        }
+    if (!token) {
+      res
+        .status(201)
+        .json({ errorMessage: "No token generated", resStatus: false });
+    }
+    res.cookie("serverCookie", token, { httpOnly: true });
 
-        const { _id, name, email, role } = user;
+    const { _id, name, mobile, role } = user;
 
-        res.status(200).json({
-          token: token,
-          user: { _id, name, email, role },
-          successMessage: `${user.role}` + ` Sign In Successfully`,
-          resStatus: true,
-        });
-      }
-    );
+    res.status(200).json({
+      token: token,
+      user: { _id, name, email, mobile, role },
+      successMessage: `${user.role}` + ` Sign In Successfully`,
+      resStatus: true,
+    });
   } catch (error) {
     return res
       .status(500)

@@ -15,11 +15,10 @@ export class SellerService {
 
   /// Add Category Api Service
   addCategory(category: string) {
-    console.log('Seller Service');
-
     return this.httpClient.post(
       'http://localhost:3700/api/category/test',
-      category
+      category,
+      this.httpOptions
     );
   }
 }

@@ -79,11 +79,12 @@ export class SignUpComponent implements OnInit {
           /// check if response status true from backend then store userData in localstorage
           this.userAuthService.setUserData(res);
           /// Store token in a extra variable in localstorage
-          this.userAuthService.setToken(res.token);
+          // this.userAuthService.setToken(res.token);
           /// Store token in a extra variable in localstorage
-          this.userAuthService.setRole(res.user.role);
+          // this.userAuthService.setRole(res.user.role);
           /// Set Cookie
-          this.cookieService.set('mttoken', res.token);
+          this.cookieService.set('jwt', res.token);
+          // this.userAuthService.setCookie('jwtToken', res.token);
           /// Get user role from backend response
           const role = res.user.role;
           /// If user role is admin then navigate to admin home page

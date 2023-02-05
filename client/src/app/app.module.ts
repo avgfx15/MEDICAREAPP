@@ -65,7 +65,6 @@ import { MyordersComponent } from './user/myorders/myorders.component';
     RouterModule,
   ],
   providers: [
-    CookieService,
     AuthGuard,
     {
       provide: HTTP_INTERCEPTORS,
@@ -73,6 +72,7 @@ import { MyordersComponent } from './user/myorders/myorders.component';
       multi: true,
     },
     UserService,
+    CookieService,
   ],
   bootstrap: [AppComponent],
 })

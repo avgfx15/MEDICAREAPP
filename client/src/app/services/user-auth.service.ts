@@ -47,15 +47,15 @@ export class UserAuthService {
   }
 
   /// Set cookie userId
-  public setCookie(token: string) {
-    const tok = this.cookieService.set('token', `Cookie Saved ${token}`);
-    console.log(tok);
+  public setCookie(_key: string, jwtToken: string) {
+    this.cookieService.set('jwtToken', jwtToken);
   }
 
   /// get Cookie userId
 
   public getSingleCookie(key: string) {
-    this.cookieService.get(key);
+    const token = this.cookieService.get(key);
+    return token;
   }
 
   /// Delete single cookie token or userId

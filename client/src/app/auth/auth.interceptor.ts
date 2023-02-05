@@ -5,15 +5,20 @@ import {
   HttpEvent,
   HttpInterceptor,
   HttpErrorResponse,
+  HttpResponse,
 } from '@angular/common/http';
-import { catchError, Observable, throwError } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
+import { map, catchError, tap } from 'rxjs/operators';
 import { UserAuthService } from '../services/user-auth.service';
 import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
+import { HttpHeaders } from '@angular/common/http';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   constructor(
     private userAuthService: UserAuthService,
+    private cookieService: CookieService,
     private router: Router
   ) {
     /* TODO document why this constructor is empty */
@@ -23,36 +28,38 @@ export class AuthInterceptor implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    if (req.headers.get('No-Auth') === 'true') {
-      return next.handle(req.clone());
+    const jwt = this.userAuthService.getSingleCookie('jwt');
+    const jwtUser = this.userAuthService.getUserData();
+    if (jwt) {
+      req = req.clone({
+        setHeaders: { cookies: jwt },
+      });
     }
-    const token = this.userAuthService.getToken();
 
-    req = this.addToken(req, token);
+    if (!req.headers.has('Content-Type')) {
+      req = req.clone({
+        setHeaders: { 'Content-Type': 'application/json' },
+      });
+    }
+
+    req = req.clone({ headers: req.headers.set('Accept', 'application/json') });
 
     return next.handle(req).pipe(
-      catchError((err: HttpErrorResponse) => {
-        console.log(err.status);
-        if (err.status === 401) {
-          this.router.navigate(['/signin']);
-        } else if (err.status === 403) {
-          this.router.navigate(['/forbidden']);
+      map((event: HttpEvent<any>) => {
+        if (event instanceof HttpResponse) {
+          console.log('event --->>>', event);
         }
-        const error = new Error('test');
-        return throwError(() => error);
+        return event;
+      }),
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === 401) {
+          this.router.navigate(['/signin']);
+        }
+        if (error.status === 400) {
+          alert(error.error);
+        }
+        return throwError(error);
       })
     );
   }
-
-  private addToken(request: HttpRequest<any>, token: string) {
-    return request.clone({
-      setHeaders: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-  }
 }
-
-// 'throwError' is deprecated. Support for passing an error value will be removed in v8. Instead, pass a factory function to `throwError(() => new Error('test'))`. This is
-// because it will create the error at the moment it should be created and capture a more appropriate stack trace. If
-// for some reason you need to create the error ahead of time, you can still do that: `const err = new Error('test'); throwError(() => err);`.
