@@ -16,7 +16,7 @@ export class SellerService {
   /// Add Category Api Service
   addCategory(category: string) {
     return this.httpClient.post(
-      'http://localhost:3700/api/category/test',
+      'http://localhost:3700/addcategory',
       category,
       this.httpOptions
     );

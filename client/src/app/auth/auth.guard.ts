@@ -30,7 +30,10 @@ export class AuthGuard implements CanActivate {
     | UrlTree {
     /// Check localstorage if token is available or not
     /// if gettoken is not null
-    if (this.userAuthService.getToken() !== null) {
+    if (
+      this.userAuthService.getToken() &&
+      this.userAuthService.getSingleCookie('key') !== null
+    ) {
       /// get role from active user by ActivatedRouteSnapshot
       const role = route.data['role'] as string;
 

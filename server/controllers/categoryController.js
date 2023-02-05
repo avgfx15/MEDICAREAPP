@@ -1,6 +1,6 @@
 const Category = require("../models/categoryModel");
 
-exports.test = async (req, res) => {
+exports.addCategory = async (req, res) => {
   const { category } = req.body;
   try {
     const checkCategory = await Category.findOne({ category });
@@ -15,7 +15,7 @@ exports.test = async (req, res) => {
     newCategory.category = category;
     newCategory = await newCategory.save();
     res.status(200).json({
-      successMessage: "new Category Added",
+      successMessage: `${newCategory.category}` + ` New Category Added`,
       resStatus: true,
       category: newCategory,
     });

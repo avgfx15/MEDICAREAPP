@@ -23,7 +23,7 @@ app.use(cookieParser());
 
 app.use("/route", userRoute);
 app.use("/admin", adminRoute);
-app.use("/api/category", categoryRoute);
+app.use("/", categoryRoute);
 
 app.get("/", (req, res) => res.send("Hello World!"));
 app.listen(port, () =>

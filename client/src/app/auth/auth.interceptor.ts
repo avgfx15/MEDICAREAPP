@@ -29,7 +29,7 @@ export class AuthInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     const jwt = this.userAuthService.getSingleCookie('jwt');
-    const jwtUser = this.userAuthService.getUserData();
+    this.userAuthService.getUserData();
     if (jwt) {
       req = req.clone({
         setHeaders: { cookies: jwt },
