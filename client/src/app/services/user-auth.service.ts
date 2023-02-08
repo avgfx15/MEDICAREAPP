@@ -48,7 +48,7 @@ export class UserAuthService {
 
   /// Set cookie userId
   public setCookie(_key: string, jwtToken: string) {
-    this.cookieService.set('jwtToken', jwtToken);
+    this.cookieService.set('jwtToken', jwtToken, 0.25);
   }
 
   /// get Cookie userId

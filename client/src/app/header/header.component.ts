@@ -30,6 +30,7 @@ export class HeaderComponent {
   logout() {
     this.userAuthService.clearStorage();
     this.userAuthService.deleteAllCookies();
+    this.userAuthService.deleteAllCookies();
     this.router.navigate(['']);
   }
 }

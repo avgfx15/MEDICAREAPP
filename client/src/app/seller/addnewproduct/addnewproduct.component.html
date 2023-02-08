@@ -15,7 +15,7 @@
         Add Category
       </button>
 
-      <!-- Modal -->
+      <!-- New Category Modal -->
       <div
         class="modal fade"
         id="addcategory"
@@ -50,7 +50,7 @@
               #categoryForm="ngForm"
               (ngSubmit)="addCategory(categoryForm.value)"
             >
-              <div class="modal-body text-left">
+              <div class="modal-body text-start text-bolder">
                 <div class="mb-3">
                   <label for="exampleFormControlInput1" class="form-label"
                     >Category</label
@@ -107,7 +107,7 @@
         aria-labelledby="staticBackdropLabel"
         aria-hidden="true"
       >
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
           <div class="modal-content">
             <div class="modal-header bg-warning">
               <h1 class="modal-title fs-5" id="addproduct">Add New Product</h1>
@@ -118,17 +118,131 @@
                 aria-label="Close"
               ></button>
             </div>
-            <div class="modal-body">...</div>
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Close
-              </button>
-              <button type="button" class="btn btn-primary">Add Product</button>
+            <div
+              class="alert alert-primary m-3 p-2"
+              role="alert"
+              *ngIf="isDisabled"
+              [ngClass]="success === true ? 'alert-primary' : 'alert-danger'"
+            >
+              {{ showMsg }}
             </div>
+            <form
+              #addNewProductForm="ngForm"
+              (ngSubmit)="addNewProduct(addNewProductForm.value)"
+            >
+              <div class="modal-body text-start text-bolder">
+                <!-- Product Image -->
+
+                <div class="mb-3">
+                  <label for="formFile" class="form-label">Product Image</label>
+                  <input
+                    class="form-control"
+                    type="file"
+                    id="formFile"
+                    name="pImage"
+                    ngModel
+                  />
+                </div>
+
+                <!-- Product Name  -->
+
+                <div class="mb-3">
+                  <label for="formFile" class="form-label">Product Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="exampleFormControlInput1"
+                    placeholder="Input Product Name"
+                    name="pName"
+                    ngModel
+                  />
+                </div>
+
+                <!-- Product Description  -->
+
+                <div class="mb-3">
+                  <label for="formFile" class="form-label"
+                    >Product Description</label
+                  >
+                  <textarea
+                    type="text"
+                    class="form-control"
+                    id="exampleFormControlInput1"
+                    placeholder="Input Product Description"
+                    name="pDescription"
+                    ngModel
+                  ></textarea>
+                </div>
+
+                <!-- Product Category  -->
+
+                <div class="mb-3">
+                  <label for="formFile" class="form-label"
+                    >Product Category</label
+                  >
+                  <div class="input-group mb-3">
+                    <label class="input-group-text" for="inputGroupSelect01"
+                      >Category</label
+                    >
+                    <select
+                      class="form-select"
+                      id="inputGroupSelect01"
+                      name="pCategory"
+                      ngModel
+                    >
+                      <option selected>Select Product Category</option>
+                      <option value="1">One</option>
+                      <option value="2">Two</option>
+                      <option value="3">Three</option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- Product Price  -->
+
+                <div class="mb-3">
+                  <label for="formFile" class="form-label col-6"
+                    >Product Price</label
+                  >
+                  <label for="formFile" class="form-label">Product Qty</label>
+                  <div class="row">
+                    <div class="col-6">
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="exampleFormControlInput1"
+                        placeholder="Input Product Name"
+                        name="pPrice"
+                        ngModel
+                      />
+                    </div>
+                    <div class="col-6">
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="exampleFormControlInput1"
+                        placeholder="Input Product Name"
+                        name="pQty"
+                        ngModel
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button type="submit" class="btn btn-primary">
+                  Add Product
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       </div>

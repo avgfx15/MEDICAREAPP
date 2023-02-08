@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { CategoryModel } from 'src/app/models/category';
+import { ProductModel } from 'src/app/models/product';
 import { SellerService } from 'src/app/services/seller.service';
 import { UserAuthService } from 'src/app/services/user-auth.service';
 
@@ -14,13 +16,10 @@ export class AddnewproductComponent {
   showMsg: string = '';
   isDisabled: boolean = false;
   success: boolean = false;
-  constructor(
-    private sellerService: SellerService,
-    private userAuthService: UserAuthService,
-    private cookieService: CookieService,
-    private router: Router
-  ) {}
-  addCategory(categoryForm: any) {
+  constructor(private sellerService: SellerService, private router: Router) {}
+
+  /// Add New Category Form
+  addCategory(categoryForm: CategoryModel) {
     this.sellerService.addCategory(categoryForm).subscribe({
       next: (res) => {
         this.resData = res;
@@ -42,6 +41,15 @@ export class AddnewproductComponent {
         }
       },
       error: () => {},
+    });
+  }
+
+  /// Add New Product Form
+  addNewProduct(addNewProductFormData: ProductModel) {
+    console.log(addNewProductFormData);
+
+    this.sellerService.addNewProduct(addNewProductFormData).subscribe((res) => {
+      console.log(res);
     });
   }
 }
