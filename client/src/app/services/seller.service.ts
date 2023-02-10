@@ -9,7 +9,7 @@ import { ProductModel } from '../models/product';
 export class SellerService {
   /// Variables Declaration
 
-  baseUrl = 'http://localhost:3700/addcategory';
+  baseUrl = 'http://localhost:3700/';
   constructor(private httpClient: HttpClient) {
     /* TODO document why this constructor is empty */
   }
@@ -20,12 +20,26 @@ export class SellerService {
 
   /// Add Category Api Service
   addCategory(category: CategoryModel) {
-    return this.httpClient.post(this.baseUrl, category, this.httpOptions);
+    return this.httpClient.post(
+      this.baseUrl + 'addcategory',
+      category,
+      this.httpOptions
+    );
+  }
+
+  /// GET ALL Categories
+
+  getAllCategories() {
+    return this.httpClient.get(this.baseUrl + 'allcategories');
   }
 
   /// Add New Product Api Service
 
   addNewProduct(productData: ProductModel) {
-    return this.httpClient.post(this.baseUrl, productData, this.httpOptions);
+    return this.httpClient.post(
+      this.baseUrl + 'addnewproduct',
+      productData,
+      this.httpOptions
+    );
   }
 }

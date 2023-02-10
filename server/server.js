@@ -15,6 +15,7 @@ const cookieParser = require("cookie-parser");
 const userRoute = require("./routes/userRoutes");
 const categoryRoute = require("./routes/categoryRoutes");
 const adminRoute = require("./routes/adminRoutes");
+const sellerRoute = require("./routes/sellerRoutes");
 
 ///` Middleware
 app.use(cors());
@@ -24,6 +25,7 @@ app.use(cookieParser());
 app.use("/route", userRoute);
 app.use("/admin", adminRoute);
 app.use("/", categoryRoute);
+app.use("/", sellerRoute);
 
 app.get("/", (req, res) => res.send("Hello World!"));
 app.listen(port, () =>

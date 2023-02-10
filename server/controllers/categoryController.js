@@ -25,3 +25,13 @@ exports.addCategory = async (req, res) => {
       .json({ errorMessage: "Server error", resStatus: false, error });
   }
 };
+
+/// Get All CaTEGORIES
+
+exports.getAllCategories = async (req, res) => {
+  const categories = await Category.find();
+  if (!categories) {
+    return res.json({ errorMessage: "No Category found", resStatus: false });
+  }
+  res.status(200).json(categories);
+};

@@ -16,7 +16,13 @@ export class AddnewproductComponent {
   showMsg: string = '';
   isDisabled: boolean = false;
   success: boolean = false;
+  Categories: any;
   constructor(private sellerService: SellerService, private router: Router) {}
+  ngOnInit(): void {
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    //Add 'implements OnInit' to the class.
+    this.getAllCategories();
+  }
 
   /// Add New Category Form
   addCategory(categoryForm: CategoryModel) {
@@ -40,16 +46,65 @@ export class AddnewproductComponent {
           }, 3000);
         }
       },
-      error: () => {},
+      error: (error) => {
+        this.isDisabled = true;
+        this.success = false;
+        this.showMsg = error;
+        setTimeout(() => {
+          this.isDisabled = false;
+        }, 3000);
+      },
+    });
+  }
+
+  ///GET AL CATEGORIES
+
+  getAllCategories() {
+    this.sellerService.getAllCategories().subscribe({
+      next: (res) => {
+        this.Categories = res;
+      },
+      error: (error) => {
+        this.isDisabled = true;
+        this.success = false;
+        this.showMsg = error;
+        setTimeout(() => {
+          this.isDisabled = false;
+        }, 3000);
+      },
     });
   }
 
   /// Add New Product Form
   addNewProduct(addNewProductFormData: ProductModel) {
-    console.log(addNewProductFormData);
+    this.sellerService.addNewProduct(addNewProductFormData).subscribe({
+      next: (res) => {
+        this.resData = res;
 
-    this.sellerService.addNewProduct(addNewProductFormData).subscribe((res) => {
-      console.log(res);
+        if (this.resData.resStatus === false) {
+          this.isDisabled = true;
+          this.success = false;
+          this.showMsg = this.resData.errorMessage;
+          setTimeout(() => {
+            this.isDisabled = false;
+          }, 3000);
+        } else {
+          this.isDisabled = true;
+          this.success = true;
+          this.showMsg = this.resData.successMessage;
+          setTimeout(() => {
+            this.isDisabled = false;
+          }, 3000);
+        }
+      },
+      error: (error) => {
+        this.isDisabled = true;
+        this.success = false;
+        this.showMsg = error;
+        setTimeout(() => {
+          this.isDisabled = false;
+        }, 3000);
+      },
     });
   }
 }
