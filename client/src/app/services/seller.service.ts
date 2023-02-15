@@ -42,4 +42,10 @@ export class SellerService {
       this.httpOptions
     );
   }
+
+  ///Get All Products from DB
+
+  getAllProducts() {
+    return this.httpClient.get(this.baseUrl + 'getallproducts');
+  }
 }

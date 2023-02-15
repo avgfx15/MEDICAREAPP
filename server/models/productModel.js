@@ -11,14 +11,17 @@ const productSchema = new mongoose.Schema(
       type: String,
       required: true,
       unique: true,
+      trim: true,
     },
     productDescription: {
       type: String,
       required: true,
+      trim: true,
     },
     productCategory: {
-      type: String,
-      required: true,
+      type: mongoose.Schema.Types.String,
+      ref: "categoryModel",
+      // required: true,
     },
     productPrice: {
       type: Number,
@@ -28,11 +31,10 @@ const productSchema = new mongoose.Schema(
       type: Number,
       default: 1,
     },
-    sellerDetails: [
-      {
-        user: {},
-      },
-    ],
+    sellerDetails: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
   },
   { timestamps: true }
 );

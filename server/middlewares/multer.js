@@ -1,17 +1,43 @@
 const multer = require("multer");
-
 const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "./uploads/");
+  destination: function (_req, file, cb) {
+    cb(null, "uploads/");
+    console.log("Destination Folder Created");
   },
-  filename: function (req, file, cb) {
-    cb(null, new Date().toISOString() + file.originalname);
+  filename: function (_req, file, cb) {
+    cb(null, `${Date.now()}.jpg`);
+    console.log("File name created");
   },
 });
 
 const upload = multer({
   storage: storage,
+  fileFilter: (req, file, cb) => {
+    console.log("upload function run");
+    if (
+      file.mimetype == "image/png" ||
+      file.mimetype == "image/jpg" ||
+      file.mimetype == "image/jpeg"
+    ) {
+      cb(null, true);
+    } else {
+      cb(null, false);
+      return cb(new Error("Only .png, .jpg and .jpeg format allowed!"));
+    }
+  },
   limits: { filesize: 1024 * 1024 * 5 },
 });
 
+// const storage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     cb(null, "uploads");
+//     console.log("Destination setup complete");
+//   },
+//   filename: (req, file, cb) => {
+//     cb(null, `${Date.now()}.jpg`);
+//     console.log("file name created");
+//   },
+// });
+
+// const upload = multer({ storage: storage });
 module.exports = upload;

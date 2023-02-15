@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 const config = require("../config/configSecret");
 
 exports.authenticate = (req, res, next) => {
+  console.log("Authenticated with middleware");
   const token = req.headers.cookies;
 
   if (!token) {

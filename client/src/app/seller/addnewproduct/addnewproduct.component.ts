@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { CookieService } from 'ngx-cookie-service';
+
 import { CategoryModel } from 'src/app/models/category';
 import { ProductModel } from 'src/app/models/product';
 import { SellerService } from 'src/app/services/seller.service';
-import { UserAuthService } from 'src/app/services/user-auth.service';
 
 @Component({
   selector: 'app-addnewproduct',
@@ -17,6 +16,7 @@ export class AddnewproductComponent {
   isDisabled: boolean = false;
   success: boolean = false;
   Categories: any;
+  Images: any;
   constructor(private sellerService: SellerService, private router: Router) {}
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
@@ -80,6 +80,7 @@ export class AddnewproductComponent {
     this.sellerService.addNewProduct(addNewProductFormData).subscribe({
       next: (res) => {
         this.resData = res;
+        console.log(addNewProductFormData);
 
         if (this.resData.resStatus === false) {
           this.isDisabled = true;
@@ -92,6 +93,7 @@ export class AddnewproductComponent {
           this.isDisabled = true;
           this.success = true;
           this.showMsg = this.resData.successMessage;
+
           setTimeout(() => {
             this.isDisabled = false;
           }, 3000);
@@ -106,5 +108,10 @@ export class AddnewproductComponent {
         }, 3000);
       },
     });
+  }
+
+  selectImage() {
+    // const file = event.target.files[0];
+    // console.log(file);
   }
 }

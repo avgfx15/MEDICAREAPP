@@ -1,6 +1,21 @@
 <div class="container">
   <div class="row">
     <h1 class="text-center my-3">All Users</h1>
+    <div
+      class="alert alert-primary m-3 p-2"
+      *ngIf="isDisabled"
+      [ngClass]="success === true ? 'alert-primary' : 'alert-danger'"
+    >
+      {{ showMsg }}
+    </div>
+    <div
+      class="alert alert-primary m-3 p-2"
+      role="alert"
+      *ngIf="isDisabled"
+      [ngClass]="success === true ? 'alert-primary' : 'alert-danger'"
+    >
+      {{ showMsg }}
+    </div>
     <table class="table">
       <caption>
         All users from database
@@ -15,28 +30,17 @@
           <th scope="col">Options</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody *ngFor="let user of allUserList">
         <tr>
           <th scope="row">1</th>
-          <td>Ajay</td>
-          <td>1a@gmail.com</td>
-          <td>9408962999</td>
-          <td>Admin</td>
-          <td>Admin</td>
-        </tr>
-        <tr>
-          <th scope="row">2</th>
-          <td>Hitesh</td>
-          <td>2a@gmail.com</td>
-          <td>9408962998</td>
-          <td>Seller</td>
-        </tr>
-        <tr>
-          <th scope="row">3</th>
-          <td>Dhvani</td>
-          <td>3a@gmail.com</td>
-          <td>9408962997</td>
-          <td>User</td>
+          <td>{{ user.name }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.mobile }}</td>
+          <td>{{ user.role }}</td>
+          <td>
+            <span>Edit</span>
+            <span>Delete</span>
+          </td>
         </tr>
       </tbody>
     </table>

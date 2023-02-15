@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const multer = require("multer");
 
 // Config Secret for PORT
 const config = require("./config/configSecret");

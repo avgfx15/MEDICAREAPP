@@ -67,4 +67,9 @@ export class UserService {
       return isMatch;
     }
   }
+
+  /// Get All Users Data
+  getAllUsers() {
+    return this.httpClient.get(this.baseUrl + 'route/allusers');
+  }
 }

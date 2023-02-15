@@ -1,6 +1,12 @@
 const express = require("express");
 const userRoute = express.Router();
-const { test, signup, signin } = require("../controllers/userControllers");
+const {
+  test,
+  signup,
+  signin,
+  getAllUsers,
+} = require("../controllers/userControllers");
+const { authenticate } = require("../middlewares/authenticate");
 const {
   signupvalidator,
   signinvalidator,
@@ -14,5 +20,6 @@ userRoute.get("/test", test);
 
 userRoute.post("/signup", signupvalidator, validatorResult, signup);
 userRoute.post("/signin", signinvalidator, validatorResult, signin);
+userRoute.get("/allusers", authenticate, getAllUsers);
 
 module.exports = userRoute;

@@ -111,3 +111,27 @@ exports.signin = async (req, res) => {
       .json({ errorMessage: "Server error", resStatus: false, error });
   }
 };
+
+exports.getAllUsers = async (req, res) => {
+  try {
+    const userSignIn = req.user;
+
+    if (userSignIn.role === "user") {
+      return res.json({
+        errorMessage: "You are not authorized.",
+        resStatus: false,
+      });
+    } else {
+      const allUsers = await User.find();
+      return res.json({
+        successMessage: "All registered users",
+        resStatus: true,
+        AllUsers: allUsers,
+      });
+    }
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ errorMessage: "Server error", resStatus: false, error });
+  }
+};
