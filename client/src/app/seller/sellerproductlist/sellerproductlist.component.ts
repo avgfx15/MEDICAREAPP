@@ -24,7 +24,7 @@ export class SellerproductlistComponent {
 
   /// Get All Products List
   getAllProductList() {
-    this.sellerService.getAllProducts().subscribe({
+    this.sellerService.getAllProductsBySellerAdded().subscribe({
       next: (res) => {
         this.resData = res;
         if (this.resData.resStatus === false) {
@@ -47,5 +47,32 @@ export class SellerproductlistComponent {
   /// Update Product
   updateProduct(id: string) {
     console.log(id);
+  }
+
+  /// Delete Product By Id
+  deleteProduct(id: string) {
+    this.sellerService.deleteProductById(id).subscribe({
+      next: (res) => {
+        this.resData = res;
+        if (this.resData.resStatus === false) {
+          this.isDisabled = true;
+          this.success = false;
+          this.showMsg = this.resData.errorMessage;
+          setTimeout(() => {
+            this.isDisabled = false;
+          }, 3000);
+        }
+        this.isDisabled = true;
+        this.success = true;
+        this.showMsg = this.resData.successMessage;
+        this.getAllProductList();
+        setTimeout(() => {
+          this.isDisabled = false;
+        }, 3000);
+      },
+      error: (error) => {
+        console.log(error);
+      },
+    });
   }
 }

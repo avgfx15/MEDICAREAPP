@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { CategoryModel } from 'src/app/models/category';
@@ -17,6 +18,8 @@ export class AddnewproductComponent {
   success: boolean = false;
   Categories: any;
   Images: any;
+  imageData: string = '';
+  addNewProductFormData: any;
   constructor(private sellerService: SellerService, private router: Router) {}
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
@@ -80,7 +83,6 @@ export class AddnewproductComponent {
     this.sellerService.addNewProduct(addNewProductFormData).subscribe({
       next: (res) => {
         this.resData = res;
-        console.log(addNewProductFormData);
 
         if (this.resData.resStatus === false) {
           this.isDisabled = true;
@@ -108,10 +110,5 @@ export class AddnewproductComponent {
         }, 3000);
       },
     });
-  }
-
-  selectImage() {
-    // const file = event.target.files[0];
-    // console.log(file);
   }
 }

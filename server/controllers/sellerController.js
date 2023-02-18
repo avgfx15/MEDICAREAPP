@@ -9,9 +9,9 @@ exports.testController = async (req, res) => {
 
 exports.addNewProductController = async (req, res) => {
   const signInUser = req.user.id;
-  const productImage = req.file.filename;
-  const path = "../uploads/";
+
   const {
+    productImage,
     productName,
     productDescription,
     productCategory,
@@ -31,7 +31,7 @@ exports.addNewProductController = async (req, res) => {
       });
     } else {
       const newProduct = new ProductModel({
-        productImage: path + productImage,
+        productImage: productImage,
         productName: productName,
         productDescription: productDescription,
         productCategory: productCategory,
@@ -71,12 +71,74 @@ exports.getAllProducts = async (req, res) => {
   }
 };
 
-exports.getProductsByProductId = async (req, res) => {
-  const user = req.user.id;
-  console.log(user);
+/// Get Product By ProductId Seller Controller
+
+exports.getProductByProductId = async (req, res) => {
   const productId = req.params.id;
+
   try {
     const product = await ProductModel.findById(productId);
+
+    if (!product) {
+      return res.json({
+        errorMessage: "You are not authorized",
+        resStatus: false,
+      });
+    }
+
+    return res.json({
+      successMessage: "Product Details",
+      resStatus: true,
+      Product: product,
+    });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ errorMessage: "Server error", resStatus: false, error });
+  }
+};
+
+/// Get Products By Seller Logged In
+
+exports.getProductsByUserLoggedIn = async (req, res) => {
+  const loggedInUser = req.user.id;
+  try {
+    const products = await ProductModel.find({
+      sellerDetails: loggedInUser,
+    });
+    if (!products) {
+      return res.json({
+        errorMessage: "No Product Available",
+        resStatus: false,
+      });
+    }
+    return res.json({
+      successMessage: "Product Added By You.",
+      resStatus: true,
+      Products: products,
+    });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ errorMessage: "Server error", resStatus: false, error });
+  }
+};
+
+/// Delete Product By Authentic Seller By Product Id Seller Controller
+
+exports.deleteProductByProductId = async (req, res) => {
+  const user = req.user.id;
+
+  const productId = req.params.id;
+
+  try {
+    const product = await ProductModel.findById(productId);
+    if (!product) {
+      return res.json({
+        errorMessage: "Product not Available",
+        resStatus: false,
+      });
+    }
 
     if (user != product.sellerDetails.toString()) {
       return res.json({
@@ -84,8 +146,10 @@ exports.getProductsByProductId = async (req, res) => {
         resStatus: false,
       });
     }
+
+    await ProductModel.findByIdAndDelete(productId);
     return res.json({
-      successMessage: "Product Delete Successfully",
+      successMessage: "Product Deleted",
       resStatus: true,
     });
   } catch (error) {
@@ -95,4 +159,39 @@ exports.getProductsByProductId = async (req, res) => {
   }
 };
 
-exports.getProductsByUserLoggedIn = async (req, res) => {};
+/// Update Product By Seller Added Product Seller Controller
+
+exports.updateProductBySeller = async (req, res) => {
+  const user = req.user.id;
+  const productId = req.params.id;
+  const product = await ProductModel.findById(productId);
+
+  if (!product) {
+    return res.json({ errorMessage: "Product not found", resStatus: false });
+  }
+  if (user != product.sellerDetails.toString()) {
+    return res.json({
+      errorMessage: "You are not authorized",
+      resStatus: false,
+    });
+  }
+  const {
+    productImage,
+    productName,
+    productDescription,
+    productCategory,
+    productPrice,
+    productQty,
+  } = req.body;
+  const updateProduct = await ProductModel.findByIdAndUpdate(productId, {
+    $set: {
+      productImage: productImage,
+      productName: productName,
+      productDescription: productDescription,
+      productCategory: productCategory,
+      productPrice: productPrice,
+      productQty: productQty,
+    }
+  }, { new: true });
+  console.log(updateProduct);
+};

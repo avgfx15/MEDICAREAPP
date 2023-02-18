@@ -28,16 +28,4 @@ const upload = multer({
   limits: { filesize: 1024 * 1024 * 5 },
 });
 
-// const storage = multer.diskStorage({
-//   destination: (req, file, cb) => {
-//     cb(null, "uploads");
-//     console.log("Destination setup complete");
-//   },
-//   filename: (req, file, cb) => {
-//     cb(null, `${Date.now()}.jpg`);
-//     console.log("file name created");
-//   },
-// });
-
-// const upload = multer({ storage: storage });
 module.exports = upload;

@@ -3,3 +3,33 @@
   height: 15vw;
   object-fit: cover;
 }
+
+.collapsed {
+  display: -webkit-inline-box;
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+
+.readMore {
+  margin-top: -3px !important;
+  line-height: 1.4 !important;
+}
+
+.isCollapsed {
+  width: 100%;
+}
+.cb {
+  clear: both;
+  height: 0;
+}
+
+.pull-down {
+  float: right;
+}
+
+.pull-up {
+  float: left;
+}

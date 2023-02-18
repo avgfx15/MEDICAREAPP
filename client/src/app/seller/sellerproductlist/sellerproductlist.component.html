@@ -11,12 +11,12 @@
       >
         {{ showMsg }}
       </div>
-      <table class="table">
+      <table class="table table-bordered">
         <caption>
           All Products from database
         </caption>
         <thead>
-          <tr>
+          <tr class="align-middle p-1 text-center">
             <th scope="col">No</th>
             <th scope="col">Product Image</th>
             <th scope="col">Product Name</th>
@@ -30,20 +30,31 @@
         <tbody *ngFor="let product of allProductList">
           <tr>
             <th scope="row">1</th>
-            <td>{{ product.productImage }}</td>
+            <td class="align-middle py-1 pe-2 text-center">
+              <img src="{{ product.productImage }}" alt="" class="pImage" />
+            </td>
             <td>{{ product.productName }}</td>
             <td>{{ product.productDescription }}</td>
-            <td>{{ product.productCategory }}</td>
-            <td>{{ product.productPrice }}</td>
-            <td>{{ product.productQty }}</td>
+            <td class="align-middle p-1 text-center">
+              {{ product.productCategory }}
+            </td>
+            <td class="align-middle p-1 text-center">
+              {{ product.productPrice }}
+            </td>
+            <td class="align-middle p-1 text-center">
+              {{ product.productQty }}
+            </td>
             <td>
               <button
-                (click)="updateProduct(product._id)"
-                class="btn btn-primary me-2 d-inline-block"
+                routerLink="/seller/updateproduct/{{ product._id }}"
+                class="btn btn-primary me-2"
               >
                 Edit
               </button>
-              <button class="btn btn-warning ms-2 d-inline-block">
+              <button
+                class="btn btn-warning ms-2"
+                (click)="deleteProduct(product._id)"
+              >
                 Delete
               </button>
             </td>

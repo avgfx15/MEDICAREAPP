@@ -139,11 +139,10 @@
                   <label for="formFile" class="form-label">Product Image</label>
                   <input
                     class="form-control"
-                    type="file"
+                    type="text"
                     id="formFile"
                     name="productImage"
                     multiple
-                    (change)="selectImage()"
                     ngModel
                   />
                 </div>
@@ -217,7 +216,7 @@
                         type="number"
                         class="form-control"
                         id="exampleFormControlInput1"
-                        placeholder="Input Product Name"
+                        placeholder="Input Product Price"
                         name="productPrice"
                         ngModel
                       />
@@ -227,7 +226,7 @@
                         type="number"
                         class="form-control"
                         id="exampleFormControlInput1"
-                        placeholder="Input Product Name"
+                        placeholder="Input Product Qty"
                         name="productQty"
                         ngModel
                       />

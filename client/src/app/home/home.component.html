@@ -3,18 +3,25 @@
   <div class="row row-cols-1 row-cols-md-3 g-4 mb-3">
     <div class="col" *ngFor="let product of allProducts">
       <div class="card">
-        <img
-          src="../../../../server/uploads/{{ product.productImage }}"
-          class="card-img-top"
-          alt="..."
-        />
+        <img src="{{ product.productImage }}" class="card-img-top" alt="..." />
         <div class="card-body">
           <h5 class="card-title">{{ product.productName }}</h5>
           <h5 class="card-title">{{ product.productCategory }}</h5>
           <h5 class="card-title">{{ product.productPrice }}</h5>
-          <p class="card-text">
+          <p
+            class="card-text pull-down readMore"
+            [ngClass]="{ isCollapsed: !isCollapsed, collapsed: isCollapsed }"
+          >
             {{ product.productDescription }}
           </p>
+          <button
+            class="btn btn-primary pull-up"
+            *ngIf="isCollapsed"
+            [hidden]="isReadMore"
+            routerLink="/productdetail/{{ product._id }}"
+          >
+            Read More
+          </button>
         </div>
       </div>
     </div>

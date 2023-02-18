@@ -46,6 +46,28 @@ export class SellerService {
   ///Get All Products from DB
 
   getAllProducts() {
-    return this.httpClient.get(this.baseUrl + 'getallproducts');
+    return this.httpClient.get<ProductModel>(this.baseUrl + 'getallproducts');
+  }
+
+  /// Get All Product By Added By LoggedIn Seller
+  getAllProductsBySellerAdded() {
+    return this.httpClient.get<ProductModel>(
+      this.baseUrl + 'getsellerproducts'
+    );
+  }
+
+  /// Get Product By Product Id
+
+  getProductByProductId(id: string) {
+    return this.httpClient.get<ProductModel>(
+      this.baseUrl + `getproductbyproductid/${id}`
+    );
+  }
+
+  /// Delete Product By Product By Id By Authentic User
+  deleteProductById(id: string) {
+    return this.httpClient.delete<ProductModel>(
+      this.baseUrl + `deleteproductbyproductid/${id}`
+    );
   }
 }

@@ -10,7 +10,7 @@ import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { FooterComponent } from './footer/footer.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminHomeComponent } from './admin/admin-home/admin-home.component';
 import { SellerHomeComponent } from './seller/seller-home/seller-home.component';
 import { UserHomeComponent } from './user/user-home/user-home.component';
@@ -33,6 +33,9 @@ import { AddnewproductComponent } from './seller/addnewproduct/addnewproduct.com
 import { SellerproductlistComponent } from './seller/sellerproductlist/sellerproductlist.component';
 import { CartComponent } from './user/cart/cart.component';
 import { MyordersComponent } from './user/myorders/myorders.component';
+import { FileUploadModule } from 'ng2-file-upload';
+import { ProductDetailComponent } from './product-detail/product-detail.component';
+import { UpdateproductComponent } from './seller/updateproduct/updateproduct.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +59,8 @@ import { MyordersComponent } from './user/myorders/myorders.component';
     SellerproductlistComponent,
     CartComponent,
     MyordersComponent,
+    ProductDetailComponent,
+    UpdateproductComponent,
   ],
   imports: [
     BrowserModule,
@@ -63,6 +68,8 @@ import { MyordersComponent } from './user/myorders/myorders.component';
     HttpClientModule,
     FormsModule,
     RouterModule,
+    FileUploadModule,
+    ReactiveFormsModule,
   ],
   providers: [
     AuthGuard,

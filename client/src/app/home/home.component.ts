@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ProductModel } from '../models/product';
 import { SellerService } from '../services/seller.service';
 
@@ -7,13 +8,19 @@ import { SellerService } from '../services/seller.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
+  @Input() isReadMore: boolean = false;
+  isCollapsed: boolean = true;
+  isTextMoreThen: boolean = false;
+  productDescription: string = '';
+
   resData: any = [];
   isDisabled: boolean = false;
   success: boolean = false;
   showMsg: string = '';
   allProducts: ProductModel[] = [];
-  constructor(private sellerService: SellerService) {
+
+  constructor(private sellerService: SellerService, private router: Router) {
     /* TODO document why this constructor is empty */
   }
   ngOnInit(): void {
@@ -46,5 +53,11 @@ export class HomeComponent {
         }, 3000);
       },
     });
+  }
+
+  /// Navigate to Product Detail Page
+  navigateToProductDetail(id: string) {
+    return this.router.navigate(['productdetail']);
+    
   }
 }

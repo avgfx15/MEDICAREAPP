@@ -18,12 +18,15 @@ import { SellerOrdersComponent } from './seller/seller-orders/seller-orders.comp
 import { AddnewproductComponent } from './seller/addnewproduct/addnewproduct.component';
 import { CartComponent } from './user/cart/cart.component';
 import { MyordersComponent } from './user/myorders/myorders.component';
+import { ProductDetailComponent } from './product-detail/product-detail.component';
+import { UpdateproductComponent } from './seller/updateproduct/updateproduct.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'signin', component: SignUpComponent },
   { path: 'about', component: AboutComponent },
   { path: 'contact', component: ContactComponent },
+  { path: 'productdetail/:id', component: ProductDetailComponent },
   { path: 'forbidden', component: ForbiddenComponent },
   //` Admin routes
   {
@@ -78,6 +81,12 @@ const routes: Routes = [
   {
     path: 'seller/addnewproduct',
     component: AddnewproductComponent,
+    canActivate: [AuthGuard],
+    data: { role: 'seller' },
+  },
+  {
+    path: 'seller/updateproduct/:id',
+    component: UpdateproductComponent,
     canActivate: [AuthGuard],
     data: { role: 'seller' },
   },
