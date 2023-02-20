@@ -18,7 +18,7 @@ export class SellerService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
 
-  /// Add Category Api Service
+  //+ Add Category Api Service
   addCategory(category: CategoryModel) {
     return this.httpClient.post(
       this.baseUrl + 'addcategory',
@@ -27,13 +27,13 @@ export class SellerService {
     );
   }
 
-  /// GET ALL Categories
+  //? GET ALL Categories
 
   getAllCategories() {
     return this.httpClient.get(this.baseUrl + 'allcategories');
   }
 
-  /// Add New Product Api Service
+  //+ Add New Product Api Service
 
   addNewProduct(productData: ProductModel) {
     return this.httpClient.post(
@@ -43,20 +43,20 @@ export class SellerService {
     );
   }
 
-  ///Get All Products from DB
+  //? Get All Products from DB
 
   getAllProducts() {
     return this.httpClient.get<ProductModel>(this.baseUrl + 'getallproducts');
   }
 
-  /// Get All Product By Added By LoggedIn Seller
+  //? Get All Product By Added By LoggedIn Seller
   getAllProductsBySellerAdded() {
     return this.httpClient.get<ProductModel>(
       this.baseUrl + 'getsellerproducts'
     );
   }
 
-  /// Get Product By Product Id
+  //? Get Product By Product Id
 
   getProductByProductId(id: string) {
     return this.httpClient.get<ProductModel>(
@@ -64,10 +64,19 @@ export class SellerService {
     );
   }
 
-  /// Delete Product By Product By Id By Authentic User
+  //- Delete Product By Product By Id By Authentic User
   deleteProductById(id: string) {
     return this.httpClient.delete<ProductModel>(
       this.baseUrl + `deleteproductbyproductid/${id}`
+    );
+  }
+
+  //* Update Product By Authentic User by Product Id
+
+  updateProductByProductIdByAuthenticUser(productData: ProductModel) {
+    return this.httpClient.put<ProductModel>(
+      this.baseUrl + `updateproductbyproductid/${productData._id}`,
+      productData
     );
   }
 }

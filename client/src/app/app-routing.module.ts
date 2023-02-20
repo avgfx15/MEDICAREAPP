@@ -22,13 +22,16 @@ import { ProductDetailComponent } from './product-detail/product-detail.componen
 import { UpdateproductComponent } from './seller/updateproduct/updateproduct.component';
 
 const routes: Routes = [
+  //! Common Routes
+
   { path: '', component: HomeComponent },
   { path: 'signin', component: SignUpComponent },
   { path: 'about', component: AboutComponent },
   { path: 'contact', component: ContactComponent },
   { path: 'productdetail/:id', component: ProductDetailComponent },
   { path: 'forbidden', component: ForbiddenComponent },
-  //` Admin routes
+
+  //! Admin routes
   {
     path: 'admin',
     component: AdminHomeComponent,
@@ -59,7 +62,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     data: { role: 'admin' },
   },
-  //` Seller routes
+  //! Seller routes
   {
     path: 'seller',
     component: SellerHomeComponent,
@@ -91,7 +94,7 @@ const routes: Routes = [
     data: { role: 'seller' },
   },
 
-  //` User routes
+  //! User routes
   {
     path: 'user',
     component: UserHomeComponent,

@@ -5,7 +5,7 @@ exports.testController = async (req, res) => {
   console.log("Seller Test Route");
 };
 
-/// Add New Product in DB
+//+ Add New Product in DB
 
 exports.addNewProductController = async (req, res) => {
   const signInUser = req.user.id;
@@ -53,7 +53,7 @@ exports.addNewProductController = async (req, res) => {
   }
 };
 
-/// Get All Products from DB
+//*? Get All Products from DB
 
 exports.getAllProducts = async (req, res) => {
   try {
@@ -71,7 +71,7 @@ exports.getAllProducts = async (req, res) => {
   }
 };
 
-/// Get Product By ProductId Seller Controller
+//*? Get Product By ProductId Seller Controller
 
 exports.getProductByProductId = async (req, res) => {
   const productId = req.params.id;
@@ -98,7 +98,7 @@ exports.getProductByProductId = async (req, res) => {
   }
 };
 
-/// Get Products By Seller Logged In
+///*? Get Products By Seller Logged In
 
 exports.getProductsByUserLoggedIn = async (req, res) => {
   const loggedInUser = req.user.id;
@@ -124,7 +124,7 @@ exports.getProductsByUserLoggedIn = async (req, res) => {
   }
 };
 
-/// Delete Product By Authentic Seller By Product Id Seller Controller
+//- Delete Product By Authentic Seller By Product Id Seller Controller
 
 exports.deleteProductByProductId = async (req, res) => {
   const user = req.user.id;
@@ -159,7 +159,7 @@ exports.deleteProductByProductId = async (req, res) => {
   }
 };
 
-/// Update Product By Seller Added Product Seller Controller
+//* Update Product By Seller Added Product Seller Controller
 
 exports.updateProductBySeller = async (req, res) => {
   const user = req.user.id;
@@ -183,15 +183,23 @@ exports.updateProductBySeller = async (req, res) => {
     productPrice,
     productQty,
   } = req.body;
-  const updateProduct = await ProductModel.findByIdAndUpdate(productId, {
-    $set: {
-      productImage: productImage,
-      productName: productName,
-      productDescription: productDescription,
-      productCategory: productCategory,
-      productPrice: productPrice,
-      productQty: productQty,
-    }
-  }, { new: true });
-  console.log(updateProduct);
+  const updateProduct = await ProductModel.findByIdAndUpdate(
+    productId,
+    {
+      $set: {
+        productImage: productImage,
+        productName: productName,
+        productDescription: productDescription,
+        productCategory: productCategory,
+        productPrice: productPrice,
+        productQty: productQty,
+      },
+    },
+    { new: true }
+  );
+  return res.json({
+    successMessage: "Product Updated successfully",
+    reqStatus: true,
+    Product: updateProduct,
+  });
 };

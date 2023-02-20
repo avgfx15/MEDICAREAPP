@@ -4,12 +4,12 @@ const cookieParser = require("cookie-parser");
 const config = require("../config/configSecret");
 const User = require("../models/userModel");
 
-//` User Route Test route
+/// User Route Test route
 exports.test = async (req, res) => {
   res.json({ message: "User Routes Working" });
 };
 
-//` User Sign up route
+//+ User Sign up route
 exports.signup = async (req, res) => {
   try {
     /// Destructure data
@@ -48,7 +48,7 @@ exports.signup = async (req, res) => {
   }
 };
 
-//` User Sign In route
+//* User Sign In route
 exports.signin = async (req, res) => {
   try {
     /// Destructure data
@@ -112,6 +112,8 @@ exports.signin = async (req, res) => {
   }
 };
 
+
+//*? Get All Users data and check role
 exports.getAllUsers = async (req, res) => {
   try {
     const userSignIn = req.user;
