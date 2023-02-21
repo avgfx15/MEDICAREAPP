@@ -27,7 +27,7 @@ export class AddnewproductComponent {
     this.getAllCategories();
   }
 
-  /// Add New Category Form
+  //? Add New Category Form
   addCategory(categoryForm: CategoryModel) {
     this.sellerService.addCategory(categoryForm).subscribe({
       next: (res) => {
@@ -60,7 +60,7 @@ export class AddnewproductComponent {
     });
   }
 
-  ///GET AL CATEGORIES
+  //? GET ALL CATEGORIES
 
   getAllCategories() {
     this.sellerService.getAllCategories().subscribe({
@@ -78,7 +78,7 @@ export class AddnewproductComponent {
     });
   }
 
-  /// Add New Product Form
+  //+ Add New Product Form
   addNewProduct(addNewProductFormData: ProductModel) {
     this.sellerService.addNewProduct(addNewProductFormData).subscribe({
       next: (res) => {

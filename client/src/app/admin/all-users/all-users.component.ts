@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { UserModel } from 'src/app/models/user-model';
-import { UserService } from 'src/app/services/user.service';
+import { AdminService } from 'src/app/services/admin.service';
 
 @Component({
   selector: 'app-all-users',
@@ -13,15 +14,26 @@ export class AllUsersComponent {
   isDisabled: boolean = false;
   showMsg: string = '';
   allUserList: UserModel[] = [];
-  constructor(private userService: UserService) {}
+  allRoles: any = [];
+  constructor(
+    private adminService: AdminService,
+    private activatedRoute: ActivatedRoute
+  ) {}
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
     this.getAllUsersList();
+
+    // const userId = this.activatedRoute.snapshot.paramMap.get('id');
+
+    // userId && this.getUserByUserId(userId);
+
+    this.getAllRoles();
   }
 
+  //? Get All Users Data
   getAllUsersList() {
-    this.userService.getAllUsers().subscribe({
+    this.adminService.getAllUsers().subscribe({
       next: (res) => {
         this.resData = res;
         if (this.resData.resStatus === false) {
@@ -43,5 +55,45 @@ export class AllUsersComponent {
         }, 3000);
       },
     });
+  }
+
+  // ? Get USerData By UserId
+  getUserByUserId(id: string) {
+    this.adminService.getUserByUserId(id).subscribe({
+      next: (res) => {
+        this.resData = res;
+        console.log(this.resData);
+      },
+      error: (error) => {
+        console.log(error);
+      },
+    });
+  }
+
+  // ? Get All Roles
+
+  getAllRoles() {
+    this.adminService.getAllRoles().subscribe({
+      next: (res) => {
+        this.resData = res;
+        console.log(this.resData);
+
+        if (this.resData.resStatus === false) {
+          this.isDisabled = true;
+          this.success = false;
+          this.showMsg = this.resData.errorMessage;
+          setTimeout(() => {
+            this.isDisabled = false;
+          }, 3000);
+        }
+        this.allRoles = this.resData.AllRoles;
+      },
+      error: (error) => {
+        console.log(error);
+      },
+    });
+  }
+  changeRole(role: string) {
+    console.log(role);
   }
 }

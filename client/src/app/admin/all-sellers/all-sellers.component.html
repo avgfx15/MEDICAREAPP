@@ -1,3 +1,48 @@
 <div class="container">
-  <h1>All Sellers</h1>
+  <div class="row">
+    <h1 class="text-center my-3">All Users</h1>
+    <div
+      class="alert alert-primary m-3 p-2"
+      *ngIf="isDisabled"
+      [ngClass]="success === true ? 'alert-primary' : 'alert-danger'"
+    >
+      {{ showMsg }}
+    </div>
+    <div
+      class="alert alert-primary m-3 p-2"
+      role="alert"
+      *ngIf="isDisabled"
+      [ngClass]="success === true ? 'alert-primary' : 'alert-danger'"
+    >
+      {{ showMsg }}
+    </div>
+    <table class="table">
+      <caption>
+        All users from database
+      </caption>
+      <thead>
+        <tr>
+          <th scope="col">No</th>
+          <th scope="col">User Name</th>
+          <th scope="col">Email</th>
+          <th scope="col">Mobile</th>
+          <th scope="col">Role</th>
+          <th scope="col">Options</th>
+        </tr>
+      </thead>
+      <tbody *ngFor="let seller of allSellers">
+        <tr>
+          <th scope="row">{{ index }}</th>
+          <td>{{ seller.name }}</td>
+          <td>{{ seller.email }}</td>
+          <td>{{ seller.mobile }}</td>
+          <td>{{ seller.role }}</td>
+          <td>
+            <span>Edit</span>
+            <span>Delete</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>

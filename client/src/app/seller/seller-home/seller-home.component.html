@@ -2,14 +2,12 @@
   <h1 class="text-center p-2 bg-info">Seller Home</h1>
   <div class="row">
     <div class="container">
-      <h1>
-        Total Product Added By Seller : -
-        <p>48</p>
-      </h1>
-      <h1>
-        Total Order Of My Product : -
-        <p>107</p>
-      </h1>
+      <h3>Total Product Added By Seller : - {{ totalProducts }}</h3>
+      <h3>Total Order Of My Product : - {{ totalOrders }}</h3>
+      <h3>Get All Categories : -</h3>
+      <div *ngFor="let product of allProducts">
+        <p>{{ product.productName }}</p>
+      </div>
     </div>
   </div>
 </div>

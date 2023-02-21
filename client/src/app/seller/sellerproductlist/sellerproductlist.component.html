@@ -44,19 +44,16 @@
             <td class="align-middle p-1 text-center">
               {{ product.productQty }}
             </td>
-            <td>
-              <button
+            <td class="align-middle p-1 text-center">
+              <i
+                class="fa-solid fa-pen-to-square fa-sm me-2"
                 routerLink="/seller/updateproduct/{{ product._id }}"
-                class="btn btn-primary me-2"
-              >
-                <i class="fa-solid fa-pen-to-square fa-sm"></i>
-              </button>
-              <button
-                class="btn btn-warning ms-2"
+              ></i>
+
+              <i
+                class="fa-solid fa-trash fa-sm"
                 (click)="deleteProduct(product._id)"
-              >
-                <i class="fa-solid fa-trash fa-sm"></i>
-              </button>
+              ></i>
             </td>
           </tr>
         </tbody>

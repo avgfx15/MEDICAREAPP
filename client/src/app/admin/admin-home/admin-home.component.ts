@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { ProductModel } from 'src/app/models/product';
 import { UserModel } from 'src/app/models/user-model';
+import { AdminService } from 'src/app/services/admin.service';
 import { SellerService } from 'src/app/services/seller.service';
-import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-admin-home',
@@ -12,7 +12,9 @@ import { UserService } from 'src/app/services/user.service';
 export class AdminHomeComponent {
   resData: any = [];
   allUsers: UserModel[] = [];
+  allSellers: UserModel[] = [];
   noOfUsers: number = 0;
+  noOfSellers: number = 0;
   allProducts: ProductModel[] = [];
   noOfProducts: number = 0;
   noOfOrders: number = 0;
@@ -20,7 +22,7 @@ export class AdminHomeComponent {
   success: boolean = false;
   showMsg: string = '';
   constructor(
-    private userService: UserService,
+    private adminService: AdminService,
     private sellerService: SellerService
   ) {}
   ngOnInit(): void {
@@ -28,13 +30,15 @@ export class AdminHomeComponent {
     //Add 'implements OnInit' to the class.
     /// No Of All Users reloadedon page loading
     this.noOfAllUsers();
+    /// No Of All Sellers reloadedon page loading
+    this.noOfAllSellers();
     /// No Of All Products reloadedon page loading
     this.noOfAllProducts();
   }
 
-  /// No Of All Users data
+  //? No Of All Users data
   noOfAllUsers() {
-    this.userService.getAllUsers().subscribe({
+    this.adminService.getAllUsers().subscribe({
       next: (res) => {
         this.resData = res;
         if (this.resData.resStatus === false) {
@@ -55,7 +59,30 @@ export class AdminHomeComponent {
     });
   }
 
-  /// No of All Products Data get
+  //? No Of All Users data
+  noOfAllSellers() {
+    this.adminService.getAllSellers().subscribe({
+      next: (res) => {
+        this.resData = res;
+        if (this.resData.resStatus === false) {
+          this.noOfUsers = 0;
+        }
+        this.allSellers = this.resData.AllSellers;
+
+        this.noOfSellers = this.allSellers.length;
+      },
+      error: (error) => {
+        this.isDisabled = true;
+        this.success = false;
+        this.showMsg = this.resData.errorMessage || error;
+        setTimeout(() => {
+          this.isDisabled = false;
+        }, 3000);
+      },
+    });
+  }
+
+  //? No of All Products Data get
   noOfAllProducts() {
     this.sellerService.getAllProducts().subscribe({
       next: (res) => {

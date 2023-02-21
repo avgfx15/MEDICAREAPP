@@ -20,6 +20,5 @@ userRoute.get("/test", test);
 
 userRoute.post("/signup", signupvalidator, validatorResult, signup);
 userRoute.post("/signin", signinvalidator, validatorResult, signin);
-userRoute.get("/allusers", authenticate, getAllUsers);
 
 module.exports = userRoute;

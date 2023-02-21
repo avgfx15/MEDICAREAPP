@@ -24,7 +24,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use("/route", userRoute);
-app.use("/admin", adminRoute);
+app.use("/", adminRoute);
 app.use("/", categoryRoute);
 app.use("/", sellerRoute);
 

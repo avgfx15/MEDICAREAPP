@@ -44,11 +44,6 @@ export class SellerproductlistComponent {
     });
   }
 
-  /// Update Product
-  updateProduct(id: string) {
-    console.log(id);
-  }
-
   /// Delete Product By Id
   deleteProduct(id: string) {
     this.sellerService.deleteProductById(id).subscribe({
