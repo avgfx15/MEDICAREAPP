@@ -14,7 +14,7 @@ export class ProductDetailComponent implements OnInit {
   isDisabled: boolean = false;
   success: boolean = false;
   showMsg: string = '';
-  productDetails: any = {};
+  productDetails: ProductModel | undefined;
   constructor(
     private sellerService: SellerService,
     private activedRoute: ActivatedRoute
@@ -28,10 +28,13 @@ export class ProductDetailComponent implements OnInit {
 
     productId && this.getProductByProductId(productId);
   }
+
+  //? Get Product Details By Product Id From Params
   getProductByProductId(id: string) {
     this.sellerService.getProductByProductId(id).subscribe({
       next: (res) => {
         this.resData = res;
+
         if (this.resData.resStatus === false) {
           this.isDisabled = true;
           this.success = false;
@@ -40,15 +43,16 @@ export class ProductDetailComponent implements OnInit {
             this.isDisabled = false;
           }, 3000);
         }
-        this.isDisabled = true;
-        this.success = true;
-        this.showMsg = this.resData.successMessage;
-        this.productDetails = this.resData.Product;
-        console.log(this.resData.Product.productName);
+        if (this.resData.Product != undefined) {
+          this.isDisabled = true;
+          this.success = true;
+          this.showMsg = this.resData.successMessage;
+          this.productDetails = this.resData.Product;
 
-        setTimeout(() => {
-          this.isDisabled = false;
-        }, 3000);
+          setTimeout(() => {
+            this.isDisabled = false;
+          }, 3000);
+        }
       },
       error: (error) => {
         console.log(error);

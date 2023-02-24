@@ -12,6 +12,12 @@ exports.testadmin = async (req, res) => {
 exports.getAllUsers = async (req, res) => {
   try {
     const userSignIn = req.user;
+    if (!userSignIn) {
+      return res.json({
+        errorMessage: "User not Authorized",
+        resStatus: false,
+      });
+    }
 
     if (userSignIn.role === "user") {
       return res.json({
@@ -38,9 +44,13 @@ exports.getAllUsers = async (req, res) => {
 exports.getAllRole = async (req, res) => {
   console.log("Get Rolls Trigger");
   const userSignIn = req.user.role;
+  if (!userSignIn) {
+    return res.json({ errorMessage: "User not Authorized", resStatus: false });
+  }
+
   try {
     const getAllRole = await User.find().select("role").limit(3);
-    console.log(getAllRole);
+
     if (!getAllRole) {
       return res.json({
         errorMessage: "Role not assigned",
@@ -63,14 +73,11 @@ exports.getAllRole = async (req, res) => {
 
 exports.getAllSellersData = async (req, res) => {
   const userSignIn = req.user.role;
+  if (!userSignIn) {
+    return res.json({ errorMessage: "User not Authorized", resStatus: false });
+  }
 
   try {
-    if (userSignIn != "admin") {
-      return res.json({
-        errorMessage: "Seller Data not Found",
-        resStatus: false,
-      });
-    }
     const allSellers = await User.find({ role: "seller" });
     return res.json({
       successMessage: "All Sellers Data",
@@ -88,19 +95,51 @@ exports.getAllSellersData = async (req, res) => {
 
 // ? Get User By User Id
 exports.getUserByUserId = async (req, res) => {
-  const authUser = req.user.id;
+  const userSignIn = req.user.id;
+  if (!userSignIn) {
+    return res.json({ errorMessage: "User not Authorized", resStatus: false });
+  }
   const userId = req.params.id;
   try {
     const userData = await User.findById(userId);
     if (!userData) {
       return res.json({ errorMessage: "User not found", resStatus: false });
     }
-    const userRoleUpdate = await User.findByIdAndUpdate(
+    return res.json({
+      successMessage: "User found",
+      resStatus: true,
+      User: userData,
+    });
+  } catch (error) {
+    return res.status(500).json({ errorMessage: "Server error", error });
+  }
+};
+
+//? Update User Data
+
+exports.updateUserByUserId = async (req, res) => {
+  const userSignIn = req.user.id;
+  if (!userSignIn) {
+    return res.json({ errorMessage: "User not Authorized", resStatus: false });
+  }
+  const userId = req.params.id;
+  const { name, email, mobile, role } = req.body;
+  try {
+    const userData = await User.findByIdAndUpdate(
       userId,
-      { $set: { role: req.body.role } },
-      { new: true }
+      { $set: { name: name, email: email, mobile: mobile, role: role } },
+      {
+        new: true,
+      }
     );
-    console.log(userRoleUpdate);
+    if (!userData) {
+      return res.json({ errorMessage: "User not found", resStatus: false });
+    }
+    return res.json({
+      successMessage: "User updated",
+      resStatus: true,
+      User: userData,
+    });
   } catch (error) {
     return res.status(500).json({ errorMessage: "Server error", error });
   }

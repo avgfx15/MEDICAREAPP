@@ -37,6 +37,8 @@ import { FileUploadModule } from 'ng2-file-upload';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { UpdateproductComponent } from './seller/updateproduct/updateproduct.component';
 
+import { UpdateUserComponent } from './admin/update-user/update-user.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -61,6 +63,7 @@ import { UpdateproductComponent } from './seller/updateproduct/updateproduct.com
     MyordersComponent,
     ProductDetailComponent,
     UpdateproductComponent,
+    UpdateUserComponent,
   ],
   imports: [
     BrowserModule,

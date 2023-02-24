@@ -40,26 +40,12 @@
           <td>
             <i
               class="fa-solid fa-pen-to-square fa-sm me-2"
+              routerLink="/admin/updateuser/{{ user._id }}"
+            ></i>
+            <i
+              class="fa-solid fa-trash fa-sm"
               (click)="getUserByUserId(user._id)"
             ></i>
-
-            <div
-              class="form-check form-check-inline"
-              *ngFor="let role of allRoles"
-            >
-              <input
-                mdbRadio
-                class="form-check-input"
-                type="radio"
-                name="inlineRadioOptions"
-                id="inlineRadio2"
-                value="{{ user.role }}"
-                (click)="changeRole(role)"
-              />
-              <label class="form-check-label" for="inlineRadio2">{{
-                role.role
-              }}</label>
-            </div>
           </td>
         </tr>
       </tbody>

@@ -39,4 +39,8 @@ export class AllSellersComponent implements OnInit {
       },
     });
   }
+
+  getUserByUserId(id: string) {
+    console.log(id);
+  }
 }

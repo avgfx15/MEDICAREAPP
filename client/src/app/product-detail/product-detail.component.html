@@ -1,22 +1,51 @@
-<div class="card mb-3" style="max-width: 540px">
-  <h1>Product Details</h1>
-  <div class="row g-0" *ngFor="let product of productDetails">
-    <div class="col-md-4">
-      <img
-        src="{{ productDetails.productImage }}"
-        class="img-fluid rounded-start"
-        alt="..."
-      />
-    </div>
-    <div class="col-md-8">
-      <div class="card-body">
-        <h5 class="card-title">{{ productDetails?.productName }}</h5>
-        <p class="card-text">
-          {{ productDetails?.productDescription }}
-        </p>
-        <p class="card-text">
-          <small class="text-muted">{{ product?.productCatogory }}</small>
-        </p>
+<div class="container">
+  <div class="row">
+    <h3 class="mt-3">Product Details Page</h3>
+    <div class="card my-3" style="max-width: 900px">
+      <div class="row g-0">
+        <div class="col-md-4">
+          <img
+            src="{{ productDetails?.productImage }}"
+            class="img-fluid rounded-start"
+            alt="..."
+          />
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <div class="mb-3">
+              <h5>Product Name :</h5>
+              <h6 class="card-title ms-3">{{ productDetails?.productName }}</h6>
+            </div>
+            <div class="mb-3">
+              <h5>Product Category :</h5>
+              <h6 class="card-title ms-3">
+                {{ productDetails?.productCategory }}
+              </h6>
+            </div>
+            <div class="mb-3">
+              <h5>Product Description :</h5>
+              <p class="card-text ms-3">
+                {{ productDetails?.productDescription }}
+              </p>
+            </div>
+            <div class="mb-3">
+              <h5 class="d-inline">Product Price :</h5>
+              <p class="card-text ms-3 d-inline">
+                {{ productDetails?.productPrice | currency : "$ " }}
+              </p>
+            </div>
+            <div class="mb-3">
+              <h5 class="d-inline">Product Qty :</h5>
+              <p class="card-text ms-3 d-inline">
+                {{ productDetails?.productQty }}
+              </p>
+            </div>
+            <div class="mb-3">
+              <button class="btn btn-primary">Add To Cart</button>
+              <button class="btn btn-primary ms-3">Buy Now</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

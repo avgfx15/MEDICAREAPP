@@ -24,11 +24,9 @@ export class AllUsersComponent {
     //Add 'implements OnInit' to the class.
     this.getAllUsersList();
 
-    // const userId = this.activatedRoute.snapshot.paramMap.get('id');
+    const userId = this.activatedRoute.snapshot.paramMap.get('id');
 
-    // userId && this.getUserByUserId(userId);
-
-    this.getAllRoles();
+    userId && this.getUserByUserId(userId);
   }
 
   //? Get All Users Data
@@ -68,32 +66,5 @@ export class AllUsersComponent {
         console.log(error);
       },
     });
-  }
-
-  // ? Get All Roles
-
-  getAllRoles() {
-    this.adminService.getAllRoles().subscribe({
-      next: (res) => {
-        this.resData = res;
-        console.log(this.resData);
-
-        if (this.resData.resStatus === false) {
-          this.isDisabled = true;
-          this.success = false;
-          this.showMsg = this.resData.errorMessage;
-          setTimeout(() => {
-            this.isDisabled = false;
-          }, 3000);
-        }
-        this.allRoles = this.resData.AllRoles;
-      },
-      error: (error) => {
-        console.log(error);
-      },
-    });
-  }
-  changeRole(role: string) {
-    console.log(role);
   }
 }

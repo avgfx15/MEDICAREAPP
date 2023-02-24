@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CategoryModel } from '../models/category';
 import { ProductModel } from '../models/product';
+import { Observable, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -58,10 +59,10 @@ export class SellerService {
 
   //? Get Product By Product Id
 
-  getProductByProductId(id: string) {
-    return this.httpClient.get<ProductModel>(
-      this.baseUrl + `getproductbyproductid/${id}`
-    );
+  getProductByProductId(id: string): Observable<ProductModel[]> {
+    return this.httpClient
+      .get<ProductModel[]>(this.baseUrl + `getproductbyproductid/${id}`)
+      .pipe(map((response) => response));
   }
 
   //- Delete Product By Product By Id By Authentic User

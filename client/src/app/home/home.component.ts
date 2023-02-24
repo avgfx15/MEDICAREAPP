@@ -58,6 +58,5 @@ export class HomeComponent implements OnInit {
   /// Navigate to Product Detail Page
   navigateToProductDetail(id: string) {
     return this.router.navigate(['productdetail']);
-    
   }
 }

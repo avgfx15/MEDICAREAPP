@@ -1,6 +1,6 @@
 <div class="container">
   <div class="row">
-    <h1 class="text-center my-3">All Users</h1>
+    <h1 class="text-center my-3">All Sellers</h1>
     <div
       class="alert alert-primary m-3 p-2"
       *ngIf="isDisabled"
@@ -18,12 +18,12 @@
     </div>
     <table class="table">
       <caption>
-        All users from database
+        All Seller from database
       </caption>
       <thead>
-        <tr>
+        <tr class="align-middle p-1 text-center">
           <th scope="col">No</th>
-          <th scope="col">User Name</th>
+          <th scope="col">Seller Name</th>
           <th scope="col">Email</th>
           <th scope="col">Mobile</th>
           <th scope="col">Role</th>
@@ -31,15 +31,21 @@
         </tr>
       </thead>
       <tbody *ngFor="let seller of allSellers">
-        <tr>
+        <tr class="align-middle p-1 text-center">
           <th scope="row">{{ index }}</th>
           <td>{{ seller.name }}</td>
           <td>{{ seller.email }}</td>
           <td>{{ seller.mobile }}</td>
           <td>{{ seller.role }}</td>
-          <td>
-            <span>Edit</span>
-            <span>Delete</span>
+          <td class="align-middle p-1 text-center">
+            <i
+              class="fa-solid fa-pen-to-square fa-sm me-2"
+              (click)="getUserByUserId(seller._id)"
+            ></i>
+            <i
+              class="fa-solid fa-trash fa-sm"
+              (click)="getUserByUserId(seller._id)"
+            ></i>
           </td>
         </tr>
       </tbody>

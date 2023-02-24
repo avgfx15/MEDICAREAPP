@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { UserModel } from '../models/user-model';
 
 @Injectable({
   providedIn: 'root',
@@ -21,6 +22,8 @@ export class AdminService {
   //? Get User By userId
 
   getUserByUserId(id: string) {
+    console.log('admin Route');
+
     return this.httpClient.get(this.baseUrl + `getuser/${id}`);
   }
 
@@ -32,5 +35,13 @@ export class AdminService {
   // +? Get All Roles
   getAllRoles() {
     return this.httpClient.get(this.baseUrl + 'getallroles');
+  }
+
+  //? Update User By UserId
+  updateUserByUserId(userData: UserModel) {
+    return this.httpClient.put<UserModel>(
+      this.baseUrl + `updateuser/${userData._id}`,
+      userData
+    );
   }
 }
