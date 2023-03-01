@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ProductModel } from 'src/app/models/product';
 import { SellerService } from '../../services/seller.service';
+import { UserModel } from 'src/app/models/user-model';
 
 @Component({
   selector: 'app-allproductlist',
@@ -13,6 +14,7 @@ export class AllproductlistComponent {
   isDisabled: boolean = false;
   success: boolean = false;
   showMsg: any = '';
+
   constructor(private sellerService: SellerService) {}
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
@@ -21,7 +23,7 @@ export class AllproductlistComponent {
     this.getAllProductList();
   }
 
-  /// Get All Products List
+  // ? Get All Products List
   getAllProductList() {
     this.sellerService.getAllProducts().subscribe({
       next: (res) => {
@@ -42,4 +44,34 @@ export class AllproductlistComponent {
       },
     });
   }
+  // - Delete Product By Product Id
+  deleteProduct(id: string) {
+    this.sellerService.deleteProductById(id).subscribe({
+      next: (res) => {
+        this.resData = res;
+        if (this.resData.resStatus === false) {
+          this.isDisabled = true;
+          this.success = false;
+          this.showMsg = this.resData.errorMessage;
+          setTimeout(() => {
+            this.isDisabled = false;
+          }, 3000);
+        } else {
+          this.isDisabled = true;
+          this.success = true;
+          this.showMsg = this.resData.successMessage;
+          setTimeout(() => {
+            this.isDisabled = false;
+            this.getAllProductList();    
+          }, 3000);
+        }
+      },
+      error: (error) => {
+        console.log(error);
+      },
+    });
+  }
+
+  //* Update Product By Admin
+
 }

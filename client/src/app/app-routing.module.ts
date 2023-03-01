@@ -21,6 +21,7 @@ import { MyordersComponent } from './user/myorders/myorders.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { UpdateproductComponent } from './seller/updateproduct/updateproduct.component';
 import { UpdateUserComponent } from './admin/update-user/update-user.component';
+import { AdminUpdateProductComponent } from './admin/admin-update-product/admin-update-product.component';
 
 const routes: Routes = [
   //! Common Routes
@@ -66,6 +67,12 @@ const routes: Routes = [
   {
     path: 'admin/updateuser/:id',
     component: UpdateUserComponent,
+    canActivate: [AuthGuard],
+    data: { role: 'admin' },
+  },
+  {
+    path: 'admin/updateproduct/:id',
+    component: AdminUpdateProductComponent,
     canActivate: [AuthGuard],
     data: { role: 'admin' },
   },

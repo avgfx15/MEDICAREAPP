@@ -7,6 +7,7 @@ const {
   getUserByUserId,
   getAllRole,
   updateUserByUserId,
+  deleteUserByUserId,
 } = require("../controllers/adminController");
 
 const { authenticate } = require("../middlewares/authenticate");
@@ -16,6 +17,7 @@ adminRoute.get("/test", testadmin);
 adminRoute.get("/allusers", authenticate, getAllUsers);
 adminRoute.get("/getuser/:id", authenticate, getUserByUserId);
 adminRoute.put("/updateuser/:id", authenticate, updateUserByUserId);
+adminRoute.delete("/deleteuser/:id", authenticate, deleteUserByUserId);
 adminRoute.get("/allsellers", authenticate, getAllSellersData);
 adminRoute.get("/getallroles", authenticate, getAllRole);
 

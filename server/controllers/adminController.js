@@ -1,11 +1,7 @@
 const User = require("../models/userModel");
 
 exports.testadmin = async (req, res) => {
-  console.log("2");
-  const userId = req.params.id;
-  console.log(userId);
-  const user = await User.findOne({ _id: userId });
-  console.log(user);
+  console.log("Admin Testing route is working");
 };
 
 //*? Get All Users data and check role
@@ -123,8 +119,14 @@ exports.updateUserByUserId = async (req, res) => {
     return res.json({ errorMessage: "User not Authorized", resStatus: false });
   }
   const userId = req.params.id;
-  const { name, email, mobile, role } = req.body;
   try {
+    const checkUser = await User.findById(userId);
+
+    if (!checkUser) {
+      return res.json({ errorMessage: "User not found", resStatus: false });
+    }
+    const { name, email, mobile, role } = req.body;
+
     const userData = await User.findByIdAndUpdate(
       userId,
       { $set: { name: name, email: email, mobile: mobile, role: role } },
@@ -132,13 +134,38 @@ exports.updateUserByUserId = async (req, res) => {
         new: true,
       }
     );
-    if (!userData) {
-      return res.json({ errorMessage: "User not found", resStatus: false });
-    }
+
     return res.json({
       successMessage: "User updated",
       resStatus: true,
       User: userData,
+    });
+  } catch (error) {
+    return res.status(500).json({ errorMessage: "Server error", error });
+  }
+};
+
+//-Delete User Bu UserIdAjay gandhi
+exports.deleteUserByUserId = async (req, res) => {
+  const user = req.user;
+
+  if (!user) {
+    return res.json({ errorMessage: "User not Authorized", resStatus: false });
+  }
+  const userId = req.params.id;
+
+  if (user.role != "admin") {
+    return res.json({ errorMessage: "User not Authorized", resStatus: false });
+  }
+  try {
+    const userExist = await User.findById(userId);
+    if (!userExist) {
+      return res.json({ errorMessage: "User not found", resStatus: false });
+    }
+    await User.findByIdAndDelete(userId);
+    return res.json({
+      successMessage: "User Deleted Successfully",
+      resStatus: true,
     });
   } catch (error) {
     return res.status(500).json({ errorMessage: "Server error", error });

@@ -14,7 +14,7 @@ export class UpdateUserComponent implements OnInit {
   showMsg: string = '';
   resData: any;
   userData: UserModel | undefined;
-  allRoles: any;
+  allRoles: any = ['admin', 'seller', 'user'];
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -22,13 +22,14 @@ export class UpdateUserComponent implements OnInit {
     private router: Router
   ) {
     /* TODO document why this constructor is empty */
+
+    //TODO Pending workaround 
   }
   ngOnInit() {
     /* TODO document why this method 'ngOnInit' is empty */
     let userId = this.activatedRoute.snapshot.paramMap.get('id');
 
     userId && this.getUserByUserId(userId);
-    this.getAllRoles();
   }
 
   // ? Update User Data
@@ -77,35 +78,6 @@ export class UpdateUserComponent implements OnInit {
           }, 3000);
         }
         this.userData = this.resData.User;
-      },
-      error: (error) => {
-        console.log(error);
-      },
-    });
-  }
-
-  //? Get All Roles
-
-  getAllRoles() {
-    this.adminService.getAllRoles().subscribe({
-      next: (res) => {
-        this.resData = res;
-
-        if (this.resData.resStatus === false) {
-          this.isDisabled = true;
-          this.success = false;
-          this.showMsg = this.resData.errorMessage;
-          setTimeout(() => {
-            this.isDisabled = false;
-          }, 3000);
-        }
-        // this.isDisabled = true;
-        // this.success = true;
-        // this.showMsg = this.resData.successMessage;
-        this.allRoles = this.resData.AllRoles;
-        setTimeout(() => {
-          this.isDisabled = false;
-        }, 3000);
       },
       error: (error) => {
         console.log(error);

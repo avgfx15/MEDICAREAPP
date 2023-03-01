@@ -4,7 +4,7 @@
     <div class="row">
       <h1 class="text-center my-3">All Users</h1>
       <div
-        class="alert alert-primary m-3 p-2"
+        class="alert alert-primary"
         role="alert"
         *ngIf="isDisabled"
         [ngClass]="success === true ? 'alert-primary' : 'alert-danger'"
@@ -30,15 +30,29 @@
         <tbody *ngFor="let product of allProductList">
           <tr>
             <th scope="row">1</th>
-            <td>{{ product.productImage }}</td>
+            <td>
+              <img
+                src="{{ product.productImage }}"
+                alt=""
+                class="img-fluid rounded-start productImg"
+              />
+            </td>
             <td>{{ product.productName }}</td>
             <td>{{ product.productDescription }}</td>
             <td>{{ product.productCategory }}</td>
             <td>{{ product.productPrice }}</td>
             <td>{{ product.productQty }}</td>
+
             <td>
-              <button class="me-2">Edit</button>
-              <button class="ms-2">Delete</button>
+              <i
+                class="fa-solid fa-pen-to-square fa-sm me-2"
+                routerLink="/admin/updateproduct/{{ product._id }}"
+              ></i>
+
+              <i
+                class="fa-solid fa-trash fa-sm"
+                (click)="deleteProduct(product._id)"
+              ></i>
             </td>
           </tr>
         </tbody>

@@ -14,6 +14,7 @@ export class AllUsersComponent {
   isDisabled: boolean = false;
   showMsg: string = '';
   allUserList: UserModel[] = [];
+  userData: UserModel | undefined;
   allRoles: any = [];
   constructor(
     private adminService: AdminService,
@@ -60,7 +61,44 @@ export class AllUsersComponent {
     this.adminService.getUserByUserId(id).subscribe({
       next: (res) => {
         this.resData = res;
-        console.log(this.resData);
+        if (this.resData.resStatus === false) {
+          this.isDisabled = true;
+          this.success = false;
+          this.showMsg = this.resData.errorMessage;
+          setTimeout(() => {
+            this.isDisabled = false;
+          }, 3000);
+        }
+        this.isDisabled = true;
+        this.success = true;
+        // this.showMsg = this.resData.successMessage;
+        this.userData = this.resData.User;
+      },
+      error: (error) => {
+        console.log(error);
+      },
+    });
+  }
+
+  //- Delete User By UserId
+  deleteUserByUserId(id: string) {
+    this.adminService.deleteUserByUserId(id).subscribe({
+      next: (res) => {
+        this.resData = res;
+        if (this.resData.resStatus === false) {
+          this.isDisabled = true;
+          this.success = false;
+          this.showMsg = this.resData.errorMessage;
+          setTimeout(() => {
+            this.isDisabled = false;
+          }, 3000);
+        }
+        this.isDisabled = true;
+        this.success = true;
+        this.showMsg = this.resData.successMessage;
+        setTimeout(() => {
+          this.getAllUsersList();
+        }, 3000);
       },
       error: (error) => {
         console.log(error);

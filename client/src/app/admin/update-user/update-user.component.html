@@ -64,11 +64,11 @@
         <select
           class="form-select text-black"
           id="inputGroupSelect01"
-          name="productCategory"
+          name="role"
           ngModel="{{ userData?.role }}"
         >
-          <option *ngFor="let role of allRoles" value="{{ role.role }}">
-            {{ role.role }}
+          <option *ngFor="let role of allRoles" value="{{ role }}">
+            {{ role }}
           </option>
         </select>
       </div>

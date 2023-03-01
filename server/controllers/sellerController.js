@@ -1,4 +1,5 @@
 const ProductModel = require("../models/ProductModel");
+const User = require("../models/userModel");
 
 /// Product Model Testing route
 exports.testController = async (req, res) => {
@@ -75,26 +76,26 @@ exports.getAllProducts = async (req, res) => {
 
 exports.getProductByProductId = async (req, res) => {
   const productId = req.params.id;
-
   try {
     const product = await ProductModel.findById(productId);
 
     if (!product) {
       return res.json({
-        errorMessage: "You are not authorized",
+        errorMessage: "Product not found",
         resStatus: false,
       });
     }
+    const productuser = product.sellerDetails;
 
+    const userData = await User.findById(productuser);
     return res.json({
       successMessage: "Product Details",
       resStatus: true,
       Product: product,
+      User: userData,
     });
   } catch (error) {
-    return res
-      .status(500)
-      .json({ errorMessage: "Server error", resStatus: false, error });
+    return res.status(500).json({ errorMessage: "Server error", error: error });
   }
 };
 
@@ -127,7 +128,13 @@ exports.getProductsByUserLoggedIn = async (req, res) => {
 //- Delete Product By Authentic Seller By Product Id Seller Controller
 
 exports.deleteProductByProductId = async (req, res) => {
-  const user = req.user.id;
+  const user = req.user;
+  if (user.role === "user") {
+    return res.json({
+      errorMessage: "You are not authorized",
+      resStatus: false,
+    });
+  }
 
   const productId = req.params.id;
 
@@ -139,8 +146,7 @@ exports.deleteProductByProductId = async (req, res) => {
         resStatus: false,
       });
     }
-
-    if (user != product.sellerDetails.toString()) {
+    if (user.role != "admin" && user.id != product.sellerDetails.toString()) {
       return res.json({
         errorMessage: "You are not authorized",
         resStatus: false,
@@ -169,12 +175,19 @@ exports.updateProductBySeller = async (req, res) => {
   if (!product) {
     return res.json({ errorMessage: "Product not found", resStatus: false });
   }
-  if (user != product.sellerDetails.toString()) {
+  if (user.role != "admin" && user.id != product.sellerDetails.toString()) {
     return res.json({
       errorMessage: "You are not authorized",
       resStatus: false,
     });
   }
+
+  // if (user != product.sellerDetails.toString()) {
+  //   return res.json({
+  //     errorMessage: "You are not authorized",
+  //     resStatus: false,
+  //   });
+  // }
   const {
     productImage,
     productName,

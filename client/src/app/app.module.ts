@@ -38,6 +38,7 @@ import { ProductDetailComponent } from './product-detail/product-detail.componen
 import { UpdateproductComponent } from './seller/updateproduct/updateproduct.component';
 
 import { UpdateUserComponent } from './admin/update-user/update-user.component';
+import { AdminUpdateProductComponent } from './admin/admin-update-product/admin-update-product.component';
 
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import { UpdateUserComponent } from './admin/update-user/update-user.component';
     ProductDetailComponent,
     UpdateproductComponent,
     UpdateUserComponent,
+    AdminUpdateProductComponent,
   ],
   imports: [
     BrowserModule,

@@ -44,4 +44,9 @@ export class AdminService {
       userData
     );
   }
+
+  //- Delete User By UserId
+  deleteUserByUserId(id: string) {
+    return this.httpClient.delete(this.baseUrl + `deleteuser/${id}`);
+  }
 }

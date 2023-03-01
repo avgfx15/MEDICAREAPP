@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ProductModel } from '../models/product';
 
 import { SellerService } from '../services/seller.service';
+import { UserModel } from '../models/user-model';
 
 @Component({
   selector: 'app-product-detail',
@@ -15,6 +16,7 @@ export class ProductDetailComponent implements OnInit {
   success: boolean = false;
   showMsg: string = '';
   productDetails: ProductModel | undefined;
+  sellerName: UserModel | undefined;
   constructor(
     private sellerService: SellerService,
     private activedRoute: ActivatedRoute
@@ -48,6 +50,7 @@ export class ProductDetailComponent implements OnInit {
           this.success = true;
           this.showMsg = this.resData.successMessage;
           this.productDetails = this.resData.Product;
+          this.sellerName = this.resData.User;
 
           setTimeout(() => {
             this.isDisabled = false;
