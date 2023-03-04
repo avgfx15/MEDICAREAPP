@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { ProductModel } from 'src/app/models/product';
+import { UserModel } from 'src/app/models/user-model';
 import { SellerService } from 'src/app/services/seller.service';
 import { UserAuthService } from 'src/app/services/user-auth.service';
 
@@ -14,7 +16,11 @@ export class SellerproductlistComponent {
   isDisabled: boolean = false;
   success: boolean = false;
   showMsg: any = '';
-  constructor(private sellerService: SellerService) {}
+  sellerDetails: UserModel | undefined;
+  constructor(
+    private sellerService: SellerService,
+    private activatedRoute: ActivatedRoute
+  ) {}
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.

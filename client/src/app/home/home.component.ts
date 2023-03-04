@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProductModel } from '../models/product';
 import { SellerService } from '../services/seller.service';
+import { UserAuthService } from '../services/user-auth.service';
 
 @Component({
   selector: 'app-home',
@@ -20,7 +21,11 @@ export class HomeComponent implements OnInit {
   showMsg: string = '';
   allProducts: ProductModel[] = [];
 
-  constructor(private sellerService: SellerService, private router: Router) {
+  constructor(
+    private sellerService: SellerService,
+    private router: Router,
+    private userAuthService: UserAuthService
+  ) {
     /* TODO document why this constructor is empty */
   }
   ngOnInit(): void {
@@ -42,6 +47,11 @@ export class HomeComponent implements OnInit {
           }, 3000);
         } else {
           this.allProducts = this.resData.Products;
+          console.log(this.resData.Products);
+
+          this.userAuthService.setAllProductInLocalStorage(
+            this.resData.Products
+          );
         }
       },
       error: (error) => {

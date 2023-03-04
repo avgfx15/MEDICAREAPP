@@ -1,11 +1,19 @@
 import { Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
+import { ProductModel } from '../models/product';
+import { AdminService } from './admin.service';
+import { SellerService } from './seller.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserAuthService {
-  constructor(private cookieService: CookieService) {
+  Products: ProductModel[] = [];
+  constructor(
+    private cookieService: CookieService,
+    private adminService: AdminService,
+    private sellerService: SellerService
+  ) {
     /* TODO document why this constructor is empty */
   }
 
@@ -71,5 +79,27 @@ export class UserAuthService {
   /// Check if userData stored in localStoragethen userLoogedIn then no need to display signin Navigation
   public userLoggedIn() {
     return this.getUserData();
+  }
+
+  //+ Set Product In Localstorage
+  public setProduct(product: ProductModel) {
+    localStorage.setItem('Product', JSON.stringify(product));
+  }
+
+  // ? Get Product From Localstorage
+  public getProduct() {
+    const product = JSON.parse(localStorage.getItem('product') || '{}');
+    return product;
+  }
+
+  public setAllProductsInLocalstorage(Products: ProductModel) {
+    localStorage.setItem('products', JSON.stringify(Products));
+  }
+  public getAllProductsFromLocalstorage() {
+    const Products = JSON.parse(localStorage.getItem('products') || '[]');
+    return Products;
+  }
+  public setAllProductInLocalStorage(Products: ProductModel) {
+    localStorage.setItem('All Product', JSON.stringify(Products));
   }
 }

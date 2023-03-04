@@ -17,6 +17,7 @@ const userRoute = require("./routes/userRoutes");
 const categoryRoute = require("./routes/categoryRoutes");
 const adminRoute = require("./routes/adminRoutes");
 const sellerRoute = require("./routes/sellerRoutes");
+const orderRoutes = require("./routes/orderRoutes");
 
 ///` Middleware
 app.use(cors());
@@ -27,6 +28,7 @@ app.use("/route", userRoute);
 app.use("/", adminRoute);
 app.use("/", categoryRoute);
 app.use("/", sellerRoute);
+app.use("/", orderRoutes);
 
 app.get("/", (req, res) => res.send("Hello World!"));
 app.listen(port, () =>

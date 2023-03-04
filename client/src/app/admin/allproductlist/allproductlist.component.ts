@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ProductModel } from 'src/app/models/product';
 import { SellerService } from '../../services/seller.service';
+import { AdminService } from 'src/app/services/admin.service';
 import { UserModel } from 'src/app/models/user-model';
 
 @Component({
@@ -14,8 +15,12 @@ export class AllproductlistComponent {
   isDisabled: boolean = false;
   success: boolean = false;
   showMsg: any = '';
-
-  constructor(private sellerService: SellerService) {}
+  sellerId: string = '';
+  userdata: UserModel | undefined;
+  constructor(
+    private sellerService: SellerService,
+    public adminService: AdminService
+  ) {}
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
@@ -62,7 +67,7 @@ export class AllproductlistComponent {
           this.showMsg = this.resData.successMessage;
           setTimeout(() => {
             this.isDisabled = false;
-            this.getAllProductList();    
+            this.getAllProductList();
           }, 3000);
         }
       },
@@ -72,6 +77,26 @@ export class AllproductlistComponent {
     });
   }
 
-  //* Update Product By Admin
+  // ? Get User By UserId
 
+  getUserByUserId(userId: string) {
+    this.adminService.getUserByUserId(userId).subscribe({
+      next: (res) => {
+        this.resData = res;
+        if (this.resData.resStatus === false) {
+          this.isDisabled = true;
+          this.success = false;
+          this.showMsg = this.resData.errorMessage;
+          setTimeout(() => {
+            this.isDisabled = false;
+          }, 3000);
+        }
+        this.userdata = this.resData.User;
+        console.log(this.userdata);
+      },
+      error: (error) => {
+        console.log(error);
+      },
+    });
+  }
 }

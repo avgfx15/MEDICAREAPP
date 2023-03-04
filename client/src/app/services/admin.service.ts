@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UserModel } from '../models/user-model';
+import { ProductModel } from '../models/product';
 
 @Injectable({
   providedIn: 'root',
@@ -48,5 +49,13 @@ export class AdminService {
   //- Delete User By UserId
   deleteUserByUserId(id: string) {
     return this.httpClient.delete(this.baseUrl + `deleteuser/${id}`);
+  }
+
+  // * Update Product By ProductId
+  updateProductByProductIdByAdminUser(productData: ProductModel) {
+    return this.httpClient.put<ProductModel>(
+      this.baseUrl + `updateproductbyadmin/${productData._id}`,
+      productData
+    );
   }
 }

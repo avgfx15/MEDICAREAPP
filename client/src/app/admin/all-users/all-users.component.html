@@ -22,9 +22,9 @@
           <th scope="col">Options</th>
         </tr>
       </thead>
-      <tbody *ngFor="let user of allUserList">
+      <tbody *ngFor="let user of allUserList; let ndx = index">
         <tr>
-          <th scope="row">1</th>
+          <th scope="row">{{ ndx + 1 }}</th>
           <td>{{ user.name }}</td>
           <td>{{ user.email }}</td>
           <td>{{ user.mobile }}</td>

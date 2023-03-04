@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { CategoryModel } from 'src/app/models/category';
 import { ProductModel } from 'src/app/models/product';
 import { SellerService } from 'src/app/services/seller.service';
+import { UserAuthService } from 'src/app/services/user-auth.service';
 
 @Component({
   selector: 'app-addnewproduct',
@@ -20,7 +21,11 @@ export class AddnewproductComponent {
   Images: any;
   imageData: string = '';
   addNewProductFormData: any;
-  constructor(private sellerService: SellerService, private router: Router) {}
+  constructor(
+    private sellerService: SellerService,
+    private router: Router,
+    private userAuthService: UserAuthService
+  ) {}
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
@@ -44,6 +49,7 @@ export class AddnewproductComponent {
           this.isDisabled = true;
           this.success = true;
           this.showMsg = this.resData.successMessage;
+
           setTimeout(() => {
             this.isDisabled = false;
           }, 3000);
@@ -95,7 +101,7 @@ export class AddnewproductComponent {
           this.isDisabled = true;
           this.success = true;
           this.showMsg = this.resData.successMessage;
-
+          this.userAuthService.setProduct(this.resData.product);
           setTimeout(() => {
             this.isDisabled = false;
           }, 3000);

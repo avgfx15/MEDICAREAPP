@@ -15,6 +15,8 @@ export class HeaderComponent {
   ) {}
   ngOnInit(): void {
     /* TODO document why this method 'ngOnInit' is empty */
+
+    this.userAuthService.getAllProductsFromLocalstorage();
   }
   /// Display User name after login in Navbar
   /// Get userdata and user name from local storage

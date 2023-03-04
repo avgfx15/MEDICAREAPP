@@ -1,4 +1,5 @@
 const User = require("../models/userModel");
+const ProductModel = require("../models/productModel");
 
 exports.testadmin = async (req, res) => {
   console.log("Admin Testing route is working");
@@ -38,7 +39,6 @@ exports.getAllUsers = async (req, res) => {
 // ? Get Only role From Users
 
 exports.getAllRole = async (req, res) => {
-  console.log("Get Rolls Trigger");
   const userSignIn = req.user.role;
   if (!userSignIn) {
     return res.json({ errorMessage: "User not Authorized", resStatus: false });
@@ -170,4 +170,49 @@ exports.deleteUserByUserId = async (req, res) => {
   } catch (error) {
     return res.status(500).json({ errorMessage: "Server error", error });
   }
+};
+
+// ? Update Product By Admin User
+exports.updateProductByAdmin = async (req, res) => {
+  const loggedInUser = req.user;
+
+  if (!loggedInUser) {
+    return res.json({ errorMessage: "User not Authorized", resStatus: false });
+  }
+  if (loggedInUser.role != "admin") {
+    return res.json({ errorMessage: "User not Authorized", resStatus: false });
+  }
+  const productId = req.params.id;
+
+  const product = await ProductModel.findById(productId);
+  if (!product) {
+    return res.json({ errorMessage: "Product not found", resStatus: false });
+  }
+  const {
+    productImage,
+    productName,
+    productDescription,
+    productCategory,
+    productPrice,
+    productQty,
+  } = req.body;
+  const updateProduct = await ProductModel.findByIdAndUpdate(
+    productId,
+    {
+      $set: {
+        productImage: productImage,
+        productName: productName,
+        productDescription: productDescription,
+        productCategory: productCategory,
+        productPrice: productPrice,
+        productQty: productQty,
+      },
+    },
+    { new: true }
+  );
+  return res.json({
+    successMessage: "Product Updated Successfully",
+    resStatus: true,
+    Product: updateProduct,
+  });
 };

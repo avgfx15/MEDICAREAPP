@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductModel } from 'src/app/models/product';
 import { SellerService } from 'src/app/services/seller.service';
+import { UserAuthService } from '../../services/user-auth.service';
 
 @Component({
   selector: 'app-seller-home',
@@ -12,7 +13,10 @@ export class SellerHomeComponent implements OnInit {
   allProducts: ProductModel[] = [];
   totalProducts: number = 0;
   totalOrders: number = 0;
-  constructor(private sellerService: SellerService) {}
+  constructor(
+    private sellerService: SellerService,
+    private userAuthService: UserAuthService
+  ) {}
   ngOnInit() {
     this.getAllProductsAddedBySellerLoggedIn();
   }
@@ -27,6 +31,7 @@ export class SellerHomeComponent implements OnInit {
           this.totalOrders = 0;
         }
         this.allProducts = this.resData.Products;
+
         this.totalProducts = this.resData.Products.length;
       },
       error: (error) => {

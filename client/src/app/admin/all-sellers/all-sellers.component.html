@@ -27,20 +27,15 @@
           <th scope="col">Email</th>
           <th scope="col">Mobile</th>
           <th scope="col">Role</th>
-          <th scope="col">Options</th>
         </tr>
       </thead>
-      <tbody *ngFor="let seller of allSellers">
+      <tbody *ngFor="let seller of allSellers; let ndx = index">
         <tr class="align-middle p-1 text-center">
-          <th scope="row">{{ index }}</th>
+          <th scope="row">{{ ndx + 1 }}</th>
           <td>{{ seller.name }}</td>
           <td>{{ seller.email }}</td>
           <td>{{ seller.mobile }}</td>
           <td>{{ seller.role }}</td>
-          <td class="align-middle p-1 text-center">
-            <i class="fa-solid fa-pen-to-square fa-sm me-2"></i>
-            <i class="fa-solid fa-trash fa-sm"></i>
-          </td>
         </tr>
       </tbody>
     </table>

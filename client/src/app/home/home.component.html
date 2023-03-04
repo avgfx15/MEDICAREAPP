@@ -2,10 +2,14 @@
   <h1>Home Page</h1>
   <div class="row row-cols-1 row-cols-md-4 g-4 mb-3">
     <div class="col" *ngFor="let product of allProducts">
-      <div class="card">
-        <img src="{{ product.productImage }}" class="card-img-top" alt="..." />
+      <div class="card productCard border border-dark">
+        <img
+          src="{{ product.productImage }}"
+          class="card-img-top p-2 border"
+          alt="Product Image"
+        />
         <div class="card-body">
-          <h5 class="card-title">{{ product.productName }}</h5>
+          <h5 class="card-title productData">{{ product.productName }}</h5>
           <h5 class="card-title">{{ product.productCategory }}</h5>
           <h5 class="card-title">{{ product.productPrice }}</h5>
           <p
@@ -15,12 +19,18 @@
             {{ product.productDescription }}
           </p>
           <button
-            class="btn btn-primary pull-up"
+            class="btn btn-primary pull-up me-2"
             *ngIf="isCollapsed"
             [hidden]="isReadMore"
             routerLink="/productdetail/{{ product._id }}"
           >
             Read More
+          </button>
+          <button
+            class="btn btn-primary"
+            routerLink="/productdetail/{{ product._id }}"
+          >
+            Add To Cart
           </button>
         </div>
       </div>

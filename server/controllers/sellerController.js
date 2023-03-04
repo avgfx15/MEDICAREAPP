@@ -1,4 +1,4 @@
-const ProductModel = require("../models/ProductModel");
+const ProductModel = require("../models/productModel");
 const User = require("../models/userModel");
 
 /// Product Model Testing route
@@ -168,13 +168,14 @@ exports.deleteProductByProductId = async (req, res) => {
 //* Update Product By Seller Added Product Seller Controller
 
 exports.updateProductBySeller = async (req, res) => {
-  const user = req.user.id;
+  const user = req.user;
   const productId = req.params.id;
   const product = await ProductModel.findById(productId);
 
   if (!product) {
     return res.json({ errorMessage: "Product not found", resStatus: false });
   }
+
   if (user.role != "admin" && user.id != product.sellerDetails.toString()) {
     return res.json({
       errorMessage: "You are not authorized",
@@ -182,12 +183,6 @@ exports.updateProductBySeller = async (req, res) => {
     });
   }
 
-  // if (user != product.sellerDetails.toString()) {
-  //   return res.json({
-  //     errorMessage: "You are not authorized",
-  //     resStatus: false,
-  //   });
-  // }
   const {
     productImage,
     productName,
