@@ -20,7 +20,7 @@ export class ProductDetailComponent implements OnInit {
   constructor(
     private sellerService: SellerService,
     private activedRoute: ActivatedRoute
-  ) {}
+  ) { }
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
@@ -61,5 +61,12 @@ export class ProductDetailComponent implements OnInit {
         console.log(error);
       },
     });
+  }
+
+  // + Add To Cart Product
+  addToCart() {
+    if (this.productDetails) {
+      console.log(this.productDetails);
+    }
   }
 }

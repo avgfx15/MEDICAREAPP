@@ -8,6 +8,7 @@ const {
   getProductByProductId,
   deleteProductByProductId,
   updateProductBySeller,
+  getProductBySearchQuery,
 } = require("../controllers/sellerController");
 const sellerRoute = express.Router();
 const { authenticate } = require("../middlewares/authenticate");
@@ -50,5 +51,7 @@ sellerRoute.put(
   // upload.single("productImage"),
   updateProductBySeller
 );
+
+sellerRoute.get("/search/:searchQuery", getProductBySearchQuery);
 
 module.exports = sellerRoute;

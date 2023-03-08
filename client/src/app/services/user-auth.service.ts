@@ -92,14 +92,14 @@ export class UserAuthService {
     return product;
   }
 
-  public setAllProductsInLocalstorage(Products: ProductModel) {
-    localStorage.setItem('products', JSON.stringify(Products));
+  // + Get All Products from LocalStorage
+  public setAllProductInLocalStorage(Products: ProductModel) {
+    localStorage.setItem('All Product', JSON.stringify(Products));
   }
+
+  // ? Set All Products in LocalStorage
   public getAllProductsFromLocalstorage() {
     const Products = JSON.parse(localStorage.getItem('products') || '[]');
     return Products;
-  }
-  public setAllProductInLocalStorage(Products: ProductModel) {
-    localStorage.setItem('All Product', JSON.stringify(Products));
   }
 }

@@ -80,4 +80,9 @@ export class SellerService {
       productData
     );
   }
+
+  // ? Search Product By Query
+  searchProductByQuery(searchQuery: any) {
+    return this.httpClient.get<ProductModel>(this.baseUrl + `search/${searchQuery}`);
+  }
 }

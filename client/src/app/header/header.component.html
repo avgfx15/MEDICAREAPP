@@ -11,12 +11,31 @@
       <div class="input-group me-3 text-center">
         <input
           type="text"
+          #searchInput
+          (keyup)="searchProduct($event)"
+          (blur)="hideSearch()"
           class="form-control"
           placeholder="Product's name"
           aria-label="Product's name"
           aria-describedby="button-addon2"
         />
-        <button class="btn btn-outline-success" type="submit">Search</button>
+        <button
+          class="btn btn-outline-success"
+          (click)="submitSearch(searchInput.value)"
+        >
+          Search
+        </button>
+        <p
+          [ngClass]="success === true ? 'alert-primary' : 'alert-danger'"
+          *ngIf="isDisabled"
+        >
+          {{ showMsg }}
+        </p>
+        <ul class="searchResult" *ngIf="searchResult">
+          <li *ngFor="let searchProduct of searchProducts">
+            <a href=""> {{ searchProduct.productName }}</a>
+          </li>
+        </ul>
       </div>
     </form>
     <button

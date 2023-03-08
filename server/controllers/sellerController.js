@@ -211,3 +211,35 @@ exports.updateProductBySeller = async (req, res) => {
     Product: updateProduct,
   });
 };
+
+// ? Get Product By Search Query
+
+exports.getProductBySearchQuery = async (req, res) => {
+  const { searchQuery } = req.params;
+  const searchText = searchQuery.charAt(0).toUpperCase() + searchQuery.slice(1);
+
+  try {
+    const products = await ProductModel.find({
+      $or: [
+        { productName: { $regex: searchText, $options: "i" } },
+        { productCategory: { $regex: searchText, $options: "i" } },
+        // { productPrice: { $regex: searchQuery, $options: "i" } },
+      ],
+    });
+    if (products.length < 1) {
+      return res.json({
+        errorMessage: "No Product Available",
+        resStatus: false,
+      });
+    }
+    return res.json({
+      successMessage: "Product Added By You.",
+      resStatus: true,
+      Products: products,
+    });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ errorMessage: "Server error", resStatus: false, error });
+  }
+};

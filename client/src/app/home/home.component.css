@@ -1,9 +1,9 @@
 .productCard {
-  height: 500px;
+  height: 425px;
 }
 .card-img-top {
   width: 100%;
-  height: 15vw;
+  height: 10vw;
   object-fit: cover;
 }
 

@@ -47,8 +47,6 @@ export class HomeComponent implements OnInit {
           }, 3000);
         } else {
           this.allProducts = this.resData.Products;
-          console.log(this.resData.Products);
-
           this.userAuthService.setAllProductInLocalStorage(
             this.resData.Products
           );

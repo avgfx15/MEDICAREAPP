@@ -39,6 +39,7 @@ import { UpdateproductComponent } from './seller/updateproduct/updateproduct.com
 
 import { UpdateUserComponent } from './admin/update-user/update-user.component';
 import { AdminUpdateProductComponent } from './admin/admin-update-product/admin-update-product.component';
+import { SearchProductPageComponent } from './search-product-page/search-product-page.component';
 
 @NgModule({
   declarations: [
@@ -66,6 +67,7 @@ import { AdminUpdateProductComponent } from './admin/admin-update-product/admin-
     UpdateproductComponent,
     UpdateUserComponent,
     AdminUpdateProductComponent,
+    SearchProductPageComponent,
   ],
   imports: [
     BrowserModule,

@@ -36,8 +36,10 @@
             </div>
             <div class="mb-3">
               <h5 class="d-inline">Product Qty :</h5>
-              <p class="card-text ms-3 d-inline">
-                {{ productDetails?.productQty }}
+              <p class="card-text ms-3 d-inline QtyGroup">
+                <button class="btn btn-outline-success">-</button>
+                <input type="text" value="1" class="QtyInput" />
+                <button class="btn btn-outline-success">+</button>
               </p>
             </div>
             <div class="mb-3">
@@ -50,7 +52,9 @@
               </p>
             </div>
             <div class="mb-3">
-              <button class="btn btn-primary">Add To Cart</button>
+              <button class="btn btn-primary" (click)="addToCart()">
+                Add To Cart
+              </button>
               <button class="btn btn-primary ms-3">Buy Now</button>
             </div>
           </div>

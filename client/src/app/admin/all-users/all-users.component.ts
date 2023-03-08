@@ -19,7 +19,7 @@ export class AllUsersComponent {
   constructor(
     private adminService: AdminService,
     private activatedRoute: ActivatedRoute
-  ) {}
+  ) { }
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
@@ -71,7 +71,6 @@ export class AllUsersComponent {
         }
         this.isDisabled = true;
         this.success = true;
-        // this.showMsg = this.resData.successMessage;
         this.userData = this.resData.User;
       },
       error: (error) => {

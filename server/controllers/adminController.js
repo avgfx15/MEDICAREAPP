@@ -75,6 +75,7 @@ exports.getAllSellersData = async (req, res) => {
 
   try {
     const allSellers = await User.find({ role: "seller" });
+
     return res.json({
       successMessage: "All Sellers Data",
       resStatus: true,
