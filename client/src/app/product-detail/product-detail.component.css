@@ -2,10 +2,12 @@
   padding: 10px;
 }
 .QtyGroup button {
-  font-size: 1.4rem;
+  /* font-size: 1.4rem; */
+  padding: 0.2rem 0.6rem;
 }
 .QtyInput {
   width: 40px;
+  padding: 0.2rem 0.6rem;
   padding: auto !important;
   text-align: center;
   font-weight: 500;

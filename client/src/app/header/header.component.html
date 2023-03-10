@@ -33,7 +33,9 @@
         </p>
         <ul class="searchResult" *ngIf="searchResult">
           <li *ngFor="let searchProduct of searchProducts">
-            <a href=""> {{ searchProduct.productName }}</a>
+            <a (mousedown)="redirectToproductDetails(searchProduct._id)">{{
+              searchProduct.productName
+            }}</a>
           </li>
         </ul>
       </div>

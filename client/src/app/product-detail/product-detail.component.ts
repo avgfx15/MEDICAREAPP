@@ -4,6 +4,9 @@ import { ProductModel } from '../models/product';
 
 import { SellerService } from '../services/seller.service';
 import { UserModel } from '../models/user-model';
+import { CookieService } from 'ngx-cookie-service';
+import { UserAuthService } from '../services/user-auth.service';
+import { ProductService } from '../services/product.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -17,9 +20,13 @@ export class ProductDetailComponent implements OnInit {
   showMsg: string = '';
   productDetails: ProductModel | undefined;
   sellerName: UserModel | undefined;
+  orderQty: number = 1;
   constructor(
     private sellerService: SellerService,
-    private activedRoute: ActivatedRoute
+    private activedRoute: ActivatedRoute,
+    private cookieService: CookieService,
+    private userAuthService: UserAuthService,
+    private productService: ProductService
   ) { }
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
@@ -66,7 +73,20 @@ export class ProductDetailComponent implements OnInit {
   // + Add To Cart Product
   addToCart() {
     if (this.productDetails) {
-      console.log(this.productDetails);
+      this.productDetails.productQty = this.orderQty;
+      if (!this.userAuthService.getSingleCookie('token')) {
+        this.productService.productAddTOLocalstorage(this.productDetails)
+      }
+    }
+  }
+
+  // + Product Qty Handle
+  handleQty(val: string) {
+    if (this.orderQty < 20 && val === 'plus') {
+      this.orderQty += 1;
+    }
+    if (this.orderQty > 1 && val === 'minus') {
+      this.orderQty -= 1;
     }
   }
 }

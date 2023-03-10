@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { UserAuthService } from '../services/user-auth.service';
 import { UserService } from '../services/user.service';
 import { SellerService } from '../services/seller.service';
-import { ProductModel } from '../models/product';
+
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -72,11 +72,18 @@ export class HeaderComponent {
     }
   }
 
+  // ? On Click outside Hide Search with blur in html tag
   hideSearch() {
     this.searchResult = false;
   }
 
+  // ? Search for products Click on Search Button redirect to SearchResult Page
   submitSearch(searchInput: string) {
     this.router.navigate([`/search/${searchInput}`]);
+  }
+
+  //? Search for products Suggestion Click on Search Result Product redirect to ProductDetails Page
+  redirectToproductDetails(productId: string) {
+    this.router.navigate([`/productdetail/` + productId]);
   }
 }
