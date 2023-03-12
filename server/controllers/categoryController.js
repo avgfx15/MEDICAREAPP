@@ -11,6 +11,7 @@ exports.addCategory = async (req, res) => {
           .json({ errorMessage: "Category Already Exist", resStatus: false })
       );
     }
+
     let newCategory = new Category();
     newCategory.category = category;
     newCategory = await newCategory.save();
