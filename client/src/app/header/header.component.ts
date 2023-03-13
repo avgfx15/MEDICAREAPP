@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { UserAuthService } from '../services/user-auth.service';
 import { UserService } from '../services/user.service';
 import { SellerService } from '../services/seller.service';
+import { ProductService } from '../services/product.service';
 
 @Component({
   selector: 'app-header',
@@ -16,17 +17,29 @@ export class HeaderComponent {
   resData: any;
   searchResult: boolean = false;
   searchProducts: any;
+  cartItems: number = 0;
   constructor(
     private userAuthService: UserAuthService,
     private router: Router,
     public userService: UserService,
-    private sellerService: SellerService
+    private sellerService: SellerService, private productService: ProductService,
   ) { }
   ngOnInit(): void {
     /* TODO document why this method 'ngOnInit' is empty */
-
+    // ? Get All Products From localstorage
     this.userAuthService.getAllProductsFromLocalstorage();
+
+    // / Check If cart or localstorage has Items or not
+
+    let cartData = localStorage.getItem('localStorageCart')
+    if (cartData) {
+      this.cartItems = JSON.parse(cartData).length
+    }
+    this.productService.cartData.subscribe(data => {
+      this.cartItems = data.length
+    })
   }
+
   /// Display User name after login in Navbar
   /// Get userdata and user name from local storage
   userData = JSON.parse(localStorage.getItem('userData') || '{}');

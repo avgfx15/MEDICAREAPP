@@ -56,7 +56,10 @@
         <ul class="navbar-nav ms-auto me-5 fs-5 mb-2 mb-lg-0 text-dark">
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="#">
-              <i class="fa-sharp fa-solid fa-cart-shopping"></i>
+              <i class="fa-sharp fa-solid fa-cart-shopping"></i>t<sup
+                class="badge badge-warning"
+                >{{ cartItems }}</sup
+              >
             </a>
           </li>
           <li
@@ -85,6 +88,11 @@
               >Contact Us</a
             >
           </li>
+          <!-- <li class="nav-item" *ngIf="!userService.roleMatch(['admin'])">
+            <a class="nav-link" routerLink="/cart"
+              >Cart<span class="badge badge-warning">({{ cartItems }})</span></a
+            >
+          </li> -->
           <li class="nav-item">
             <a *ngIf="!isUserLoggedIn()" class="nav-link" routerLink="/signin"
               >Sign In</a
@@ -142,9 +150,6 @@
           <!-- User MenuType Navbar  -->
           <!-- User sign in as an user then using role match function with *ngIf display navigation link  -->
 
-          <li class="nav-item" *ngIf="userService.roleMatch(['user'])">
-            <a class="nav-link" routerLink="/cart">Cart</a>
-          </li>
           <li class="nav-item" *ngIf="userService.roleMatch(['user'])">
             <a class="nav-link" routerLink="/myorder">My Orders</a>
           </li>

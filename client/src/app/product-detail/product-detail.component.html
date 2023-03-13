@@ -52,8 +52,19 @@
               </p>
             </div>
             <div class="mb-3">
-              <button class="btn btn-primary" (click)="addToCart()">
+              <button
+                *ngIf="!removeCart"
+                class="btn btn-primary"
+                (click)="addToCart()"
+              >
                 Add To Cart
+              </button>
+              <button
+                *ngIf="removeCart"
+                class="btn btn-primary"
+                (click)="removeFromCart(productDetails!._id)"
+              >
+                Remove From Cart
               </button>
               <button class="btn btn-primary ms-3">Buy Now</button>
             </div>

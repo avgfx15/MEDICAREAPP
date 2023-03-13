@@ -63,6 +63,7 @@ export class UserAuthService {
 
   public getSingleCookie(key: string) {
     const token = this.cookieService.get(key);
+
     return token;
   }
 
