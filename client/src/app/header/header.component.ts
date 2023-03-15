@@ -22,22 +22,23 @@ export class HeaderComponent {
     private userAuthService: UserAuthService,
     private router: Router,
     public userService: UserService,
-    private sellerService: SellerService, private productService: ProductService,
-  ) { }
+    private sellerService: SellerService,
+    private productService: ProductService
+  ) {}
   ngOnInit(): void {
     /* TODO document why this method 'ngOnInit' is empty */
     // ? Get All Products From localstorage
-    this.userAuthService.getAllProductsFromLocalstorage();
+    // this.userAuthService.getAllProductsFromLocalstorage();
 
     // / Check If cart or localstorage has Items or not
 
-    let cartData = localStorage.getItem('localStorageCart')
+    let cartData = localStorage.getItem('localStorageCart');
     if (cartData) {
-      this.cartItems = JSON.parse(cartData).length
+      this.cartItems = JSON.parse(cartData).length;
     }
-    this.productService.cartData.subscribe(data => {
-      this.cartItems = data.length
-    })
+    this.productService.cartData.subscribe((data) => {
+      this.cartItems = data.length;
+    });
   }
 
   /// Display User name after login in Navbar

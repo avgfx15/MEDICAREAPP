@@ -1,0 +1,76 @@
+<div class="container">
+  <h4 class="text-center py-2 bg-warning mt-2">Shipping Address</h4>
+  <div
+    class="alert alert-primary m-3 p-2"
+    role="alert"
+    *ngIf="isDisabled"
+    [ngClass]="success === true ? 'alert-primary' : 'alert-danger'"
+  >
+    {{ showMsg }}
+  </div>
+  <div class="modal-body text-start text-bolder">
+    <form
+      #shippingAddressForm="ngForm"
+      (ngSubmit)="addressForm(shippingAddressForm.value)"
+    >
+      <!-- Product Image -->
+
+      <div class="mb-3">
+        <label for="address" class="form-label">Address</label>
+        <input
+          class="form-control"
+          type="text"
+          id="address"
+          placeholder="Your address"
+          name="address"
+          ngModel
+        />
+      </div>
+
+      <!-- Product Name  -->
+
+      <div class="mb-3">
+        <label for="formFile" class="form-label">City</label>
+        <input
+          type="text"
+          class="form-control"
+          id="exampleFormControlInput1"
+          placeholder="Input City Name"
+          name="city"
+          ngModel
+        />
+      </div>
+
+      <!-- Product Description  -->
+
+      <div class="mb-3">
+        <label for="formFile" class="form-label">Postal Code</label>
+        <input
+          type="text"
+          class="form-control"
+          id="exampleFormControlInput1"
+          placeholder="Input Postal Code"
+          name="postalcode"
+          ngModel
+        />
+      </div>
+
+      <!-- Product Price  -->
+      <div class="mb-3">
+        <label for="formFile" class="form-label">Country</label>
+        <input
+          type="text"
+          class="form-control"
+          id="exampleFormControlInput1"
+          placeholder="Input City Name"
+          name="country"
+          ngModel
+        />
+      </div>
+
+      <div class="">
+        <button type="submit" class="btn btn-primary">Save Address</button>
+      </div>
+    </form>
+  </div>
+</div>

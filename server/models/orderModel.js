@@ -1,45 +1,76 @@
 const mongoose = require("mongoose"); // Erase if already required
 
 // Declare the Schema of the Mongo model
-const orderSchema = new mongoose.Schema(
+var orderModel = new mongoose.Schema(
   {
-    userData: {
-      id: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-      name: { type: mongoose.Schema.Types.String, ref: "User" },
-    },
-    sellerData: {
-      id: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-      name: { type: mongoose.Schema.Types.String, ref: "User" },
-    },
-    products: [
+    orderItems: [
       {
-        productId: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "ProductModel",
-        },
-        productName: {
-          type: mongoose.Schema.Types.String,
-          ref: "ProductModel",
-        },
-        productPrice: {
-          type: mongoose.Schema.Types.Number,
-          ref: "ProductModel",
-        },
-        productQty: { type: mongoose.Schema.Types.Number, ref: "ProductModel" },
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "OrderItemsModel",
       },
     ],
-    orderQty: {
-      type: Number,
-      default: 1,
+    orderDate: {
+      type: Date,
+      default: Date.now,
     },
-    totalAmt: {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+    shippingAddress1: {
+      type: String,
+    },
+    shippingAddress2: {
+      type: String,
+    },
+    city: {
+      type: String,
+    },
+    postalCode: {
       type: Number,
     },
+    country: {
+      type: String,
+    },
+    totalPrice: {
+      type: Number,
+    },
+    isPaid: {
+      type: Boolean,
+      default: false,
+    },
+    paidAt: {
+      type: Date,
+      default: Date.now,
+    },
+    isDelivered: {
+      type: Boolean,
+      default: false,
+    },
+    deliveredAt: {
+      type: Date,
+    },
+    paymentMethod: {
+      type: String,
+    },
+    // paymentResult: {
+    //   id: { type: String },
+    //   paymentStatus: { type: Boolean },
+    // },
+    // taxPrice: { type: Number },
+    // shippingPrice: { type: Number },
   },
   { timestamps: true }
 );
 
-//Export the model
-const OrderModel = mongoose.model("OrderModel", orderSchema);
+orderModel.virtual("id").get(function () {
+  return this._id.toHexString();
+});
 
+orderModel.set("toJSON", {
+  virtuals: true,
+});
+
+///Export the model
+const OrderModel = mongoose.model("OrderModel", orderModel);
 module.exports = OrderModel;

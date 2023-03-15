@@ -3,6 +3,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { ProductModel } from '../models/product';
 import { AdminService } from './admin.service';
 import { SellerService } from './seller.service';
+import { ProductService } from './product.service';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +13,8 @@ export class UserAuthService {
   constructor(
     private cookieService: CookieService,
     private adminService: AdminService,
-    private sellerService: SellerService
+    private sellerService: SellerService,
+    private productService: ProductService
   ) {
     /* TODO document why this constructor is empty */
   }
@@ -102,5 +104,35 @@ export class UserAuthService {
   public getAllProductsFromLocalstorage() {
     const Products = JSON.parse(localStorage.getItem('products') || '[]');
     return Products;
+  }
+
+  //+ LocalCart To Remote Database
+  localCartToRemoteDatabase() {
+    const cartData = localStorage.getItem('localStorageCart');
+    if (cartData) {
+      let orderItems: ProductModel[] = JSON.parse(cartData);
+      let user = localStorage.getItem('userData');
+      let userId = user && JSON.parse(user).id;
+      orderItems.forEach((product, index) => {
+        let cartToDb: any = {
+          ...product,
+          productId: product._id,
+          userId: userId,
+        };
+        delete cartToDb.id;
+        setTimeout(() => {
+          this.productService.addToCart(cartToDb).subscribe((res) => {
+            if (res) {
+              console.log(res);
+              console.log('LocalStorage To DB Success');
+            }
+            console.log('LocalStorage To DB Error');
+          });
+        }, 500);
+        if (orderItems.length === index) {
+          localStorage.removeItem('localStorageCart');
+        }
+      });
+    }
   }
 }

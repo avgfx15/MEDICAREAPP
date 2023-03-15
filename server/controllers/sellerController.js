@@ -58,10 +58,15 @@ exports.addNewProductController = async (req, res) => {
 
 exports.getAllProducts = async (req, res) => {
   try {
-    const allProducts = await ProductModel.find();
+    const allProducts = await ProductModel.find().populate(
+      "sellerDetails",
+      "name"
+    );
+
     if (!allProducts) {
       return res.json({ errorMessage: "Product not found", resStatus: false });
     }
+
     return res.json({
       successMessage: "All Products from DB",
       resStatus: true,

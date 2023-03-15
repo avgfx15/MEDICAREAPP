@@ -7,6 +7,7 @@ import { UserModel } from '../models/user-model';
 import { CookieService } from 'ngx-cookie-service';
 import { UserAuthService } from '../services/user-auth.service';
 import { ProductService } from '../services/product.service';
+import { Cart } from '../models/cart';
 
 @Component({
   selector: 'app-product-detail',
@@ -85,6 +86,7 @@ export class ProductDetailComponent implements OnInit {
       },
     });
   }
+  orderItems: any = [];
 
   // + Add To Cart Product
   addToCart() {
@@ -95,9 +97,34 @@ export class ProductDetailComponent implements OnInit {
         this.productService.productAddTOLocalstorage(this.productDetails);
         this.removeCart = true;
       } else {
+        console.log('User LoggedIn');
+
         let userData = localStorage.getItem('userData');
-        let userId = userData && JSON.parse(userData).user._id;
-        console.log(userId);
+        let user = userData && JSON.parse(userData);
+
+        let orderCartData: Cart = {
+          ...this.productDetails,
+          userId: user.user._id,
+          userName: user.user.name,
+          productId: this.productDetails._id,
+          orderQty: this.productDetails.productQty,
+          totalPrice: this.orderQty * this.productDetails.productPrice,
+        };
+        delete orderCartData._id;
+        delete orderCartData.productQty;
+
+        this.productService.addToCart(orderCartData).subscribe({
+          next: (res) => {
+            this.resData = res;
+            if (this.resData.resStatus === false) {
+              console.log('Product Not added');
+            }
+            console.log(this.resData);
+          },
+          error: (error) => {
+            console.log(error);
+          },
+        });
       }
     }
   }

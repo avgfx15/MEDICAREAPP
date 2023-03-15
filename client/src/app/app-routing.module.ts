@@ -23,6 +23,7 @@ import { UpdateproductComponent } from './seller/updateproduct/updateproduct.com
 import { UpdateUserComponent } from './admin/update-user/update-user.component';
 import { AdminUpdateProductComponent } from './admin/admin-update-product/admin-update-product.component';
 import { SearchProductPageComponent } from './search-product-page/search-product-page.component';
+import { ShippingAddressComponent } from './shipping-address/shipping-address.component';
 
 const routes: Routes = [
   //! Common Routes
@@ -34,6 +35,7 @@ const routes: Routes = [
   { path: 'productdetail/:id', component: ProductDetailComponent },
   { path: 'forbidden', component: ForbiddenComponent },
   { path: 'search/:searchquery', component: SearchProductPageComponent },
+  { path: 'shippingaddress', component: ShippingAddressComponent },
 
   //! Admin routes
   {
@@ -135,4 +137,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

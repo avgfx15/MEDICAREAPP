@@ -40,6 +40,7 @@ import { UpdateproductComponent } from './seller/updateproduct/updateproduct.com
 import { UpdateUserComponent } from './admin/update-user/update-user.component';
 import { AdminUpdateProductComponent } from './admin/admin-update-product/admin-update-product.component';
 import { SearchProductPageComponent } from './search-product-page/search-product-page.component';
+import { ShippingAddressComponent } from './shipping-address/shipping-address.component';
 
 @NgModule({
   declarations: [
@@ -68,6 +69,7 @@ import { SearchProductPageComponent } from './search-product-page/search-product
     UpdateUserComponent,
     AdminUpdateProductComponent,
     SearchProductPageComponent,
+    ShippingAddressComponent,
   ],
   imports: [
     BrowserModule,

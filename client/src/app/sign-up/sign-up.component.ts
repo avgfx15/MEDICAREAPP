@@ -85,6 +85,18 @@ export class SignUpComponent implements OnInit {
           /// Set Cookie
           this.cookieService.set('jwt', res.token);
           // this.userAuthService.setCookie('jwtToken', res.token);
+
+          /// Localcart To Remote Database
+          this.userAuthService.localCartToRemoteDatabase();
+
+          /// navigate to signin form
+          this.isDisabled = true;
+          this.success = true;
+          this.showMsg = res.successMessage;
+          setTimeout(() => {
+            this.isDisabled = false;
+            this.openToggleForm();
+          }, 3000);
           /// Get user role from backend response
           const role = res.user.role;
           /// If user role is admin then navigate to admin home page

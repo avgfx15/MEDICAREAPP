@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-
 import { CategoryModel } from 'src/app/models/category';
 import { ProductModel } from 'src/app/models/product';
 import { SellerService } from 'src/app/services/seller.service';
