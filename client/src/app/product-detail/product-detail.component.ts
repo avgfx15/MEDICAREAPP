@@ -4,10 +4,8 @@ import { ProductModel } from '../models/product';
 
 import { SellerService } from '../services/seller.service';
 import { UserModel } from '../models/user-model';
-import { CookieService } from 'ngx-cookie-service';
-import { UserAuthService } from '../services/user-auth.service';
-import { ProductService } from '../services/product.service';
-import { Cart } from '../models/cart';
+import { CartService } from '../services/cart.service';
+import { CartItemModel, CartModel } from '../models/cart';
 
 @Component({
   selector: 'app-product-detail',
@@ -23,12 +21,11 @@ export class ProductDetailComponent implements OnInit {
   sellerName: UserModel | undefined;
   orderQty: number = 1;
   removeCart: boolean = false;
+  productQuentity: number = 0;
   constructor(
     private sellerService: SellerService,
     private activedRoute: ActivatedRoute,
-    private cookieService: CookieService,
-    private userAuthService: UserAuthService,
-    private productService: ProductService
+    private cartService: CartService
   ) {}
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
@@ -39,14 +36,14 @@ export class ProductDetailComponent implements OnInit {
 
     productId && this.getProductByProductId(productId);
 
-    let cartData = localStorage.getItem('localStorageCart');
-
-    if (productId && cartData) {
-      let cartProducts = JSON.parse(cartData);
-      cartProducts = cartProducts.filter(
-        (product: ProductModel) => productId === product._id
-      );
-      if (cartProducts.length) {
+    let cartItemExist: CartModel = this.cartService.getCartData();
+    if (cartItemExist && productId) {
+      cartItemExist.items.forEach((item: CartItemModel) => {
+        productId === item.productId.toString();
+        console.log(productId);
+        console.log(item.productId);
+      });
+      if (cartItemExist.items.length) {
         this.removeCart = true;
       } else {
         this.removeCart = false;
@@ -73,7 +70,7 @@ export class ProductDetailComponent implements OnInit {
           this.success = true;
           this.showMsg = this.resData.successMessage;
           this.productDetails = this.resData.Product;
-
+          this.productQuentity = this.productDetails?.productQty ?? 0;
           this.sellerName = this.resData.User;
 
           setTimeout(() => {
@@ -86,62 +83,25 @@ export class ProductDetailComponent implements OnInit {
       },
     });
   }
-  orderItems: any = [];
-
-  // + Add To Cart Product
-  addToCart() {
-    if (this.productDetails) {
-      this.productDetails.productQty = this.orderQty;
-
-      if (!localStorage.getItem('userData')) {
-        this.productService.productAddTOLocalstorage(this.productDetails);
-        this.removeCart = true;
-      } else {
-        console.log('User LoggedIn');
-
-        let userData = localStorage.getItem('userData');
-        let user = userData && JSON.parse(userData);
-
-        let orderCartData: Cart = {
-          ...this.productDetails,
-          userId: user.user._id,
-          userName: user.user.name,
-          productId: this.productDetails._id,
-          orderQty: this.productDetails.productQty,
-          totalPrice: this.orderQty * this.productDetails.productPrice,
-        };
-        delete orderCartData._id;
-        delete orderCartData.productQty;
-
-        this.productService.addToCart(orderCartData).subscribe({
-          next: (res) => {
-            this.resData = res;
-            if (this.resData.resStatus === false) {
-              console.log('Product Not added');
-            }
-            console.log(this.resData);
-          },
-          error: (error) => {
-            console.log(error);
-          },
-        });
-      }
-    }
-  }
-
-  // - Remove From Cart Product
-  removeFromCart(id: string) {
-    this.productService.removeFromLocalstorage(id);
-    this.removeCart = false;
-  }
 
   // + Product Qty Handle
   handleQty(val: string) {
-    if (this.orderQty < 20 && val === 'plus') {
+    if (this.orderQty < this.productQuentity && val === 'plus') {
       this.orderQty += 1;
     }
     if (this.orderQty > 1 && val === 'minus') {
       this.orderQty -= 1;
     }
+  }
+
+  //+ Add To Cart
+
+  addToCart(productId: string) {
+    const cartItem: CartItemModel = {
+      productId: productId,
+      orderQty: this.orderQty,
+    };
+
+    this.cartService.setCartItems(cartItem);
   }
 }

@@ -81,7 +81,7 @@
             >
           </li>
           <li class="nav-item" *ngIf="!userService.roleMatch(['admin'])">
-            <a class="nav-link" routerLink="/cart"
+            <a class="nav-link" routerLink="/cartpage"
               >Cart <i class="fa-sharp fa-solid fa-cart-shopping"></i
               ><sup class="badge badge-danger">{{ cartItems }}</sup>
             </a>
@@ -117,7 +117,7 @@
             >
           </li>
           <li class="nav-item" *ngIf="userService.roleMatch(['admin'])">
-            <a class="nav-link" routerLink="/admin/allorders">All Orders</a>
+            <a class="nav-link" routerLink="/admin/orderlist">All Orders</a>
           </li>
 
           <!-- Seller MenuType Navbar  -->

@@ -36,8 +36,8 @@ var orderModel = new mongoose.Schema(
       type: Number,
     },
     isPaid: {
-      type: Boolean,
-      default: false,
+      type: String,
+      default: "Pending",
     },
     paidAt: {
       type: Date,

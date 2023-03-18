@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { ProductModel } from '../models/product';
 import { SellerService } from '../services/seller.service';
 import { UserAuthService } from '../services/user-auth.service';
+import { CartService } from '../services/cart.service';
+import { CartItemModel } from '../models/cart';
 
 @Component({
   selector: 'app-home',
@@ -10,7 +12,8 @@ import { UserAuthService } from '../services/user-auth.service';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-  @Input() isReadMore: boolean = false;
+  @Input() product: ProductModel | undefined;
+  isReadMore: boolean = false;
   isCollapsed: boolean = true;
   isTextMoreThen: boolean = false;
   productDescription: string = '';
@@ -24,7 +27,8 @@ export class HomeComponent implements OnInit {
   constructor(
     private sellerService: SellerService,
     private router: Router,
-    private userAuthService: UserAuthService
+    private userAuthService: UserAuthService,
+    private cartService: CartService
   ) {
     /* TODO document why this constructor is empty */
   }
@@ -47,9 +51,6 @@ export class HomeComponent implements OnInit {
           }, 3000);
         } else {
           this.allProducts = this.resData.Products;
-          this.userAuthService.setAllProductInLocalStorage(
-            this.resData.Products
-          );
         }
       },
       error: (error) => {
@@ -66,5 +67,16 @@ export class HomeComponent implements OnInit {
   /// Navigate to Product Detail Page
   navigateToProductDetail(id: string) {
     return this.router.navigate(['productdetail']);
+  }
+
+  //+ Add Product To Cart
+
+  addProductToCart(productId: string) {
+    const cartItem: CartItemModel = {
+      productId: productId,
+      orderQty: 1,
+    };
+
+    this.cartService.setCartItems(cartItem);
   }
 }

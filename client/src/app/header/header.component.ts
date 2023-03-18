@@ -4,6 +4,7 @@ import { UserAuthService } from '../services/user-auth.service';
 import { UserService } from '../services/user.service';
 import { SellerService } from '../services/seller.service';
 import { ProductService } from '../services/product.service';
+import { CartService } from '../services/cart.service';
 
 @Component({
   selector: 'app-header',
@@ -23,21 +24,14 @@ export class HeaderComponent {
     private router: Router,
     public userService: UserService,
     private sellerService: SellerService,
-    private productService: ProductService
+    private productService: ProductService,
+    private cartService: CartService
   ) {}
   ngOnInit(): void {
     /* TODO document why this method 'ngOnInit' is empty */
     // ? Get All Products From localstorage
-    // this.userAuthService.getAllProductsFromLocalstorage();
-
-    // / Check If cart or localstorage has Items or not
-
-    let cartData = localStorage.getItem('localStorageCart');
-    if (cartData) {
-      this.cartItems = JSON.parse(cartData).length;
-    }
-    this.productService.cartData.subscribe((data) => {
-      this.cartItems = data.length;
+    this.cartService.cart$.subscribe((cart) => {
+      this.cartItems = cart?.items.length ?? 0;
     });
   }
 
