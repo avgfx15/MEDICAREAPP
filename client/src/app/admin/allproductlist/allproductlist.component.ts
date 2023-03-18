@@ -43,9 +43,6 @@ export class AllproductlistComponent {
           }, 3000);
         } else {
           this.allProductList = this.resData.Products;
-          console.log(this.allProductList);
-
-          // this.sellerName = this.resData.Products;
         }
       },
       error: (error) => {

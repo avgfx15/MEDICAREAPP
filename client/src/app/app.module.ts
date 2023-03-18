@@ -40,7 +40,9 @@ import { UpdateproductComponent } from './seller/updateproduct/updateproduct.com
 import { UpdateUserComponent } from './admin/update-user/update-user.component';
 import { AdminUpdateProductComponent } from './admin/admin-update-product/admin-update-product.component';
 import { SearchProductPageComponent } from './search-product-page/search-product-page.component';
-import { ShippingAddressComponent } from './shipping-address/shipping-address.component';
+import { OrderListComponent } from './admin/order-list/order-list.component';
+import { OrderModule } from './order/order.module';
+import { CartPageComponent } from './cart-page/cart-page.component';
 
 @NgModule({
   declarations: [
@@ -69,7 +71,8 @@ import { ShippingAddressComponent } from './shipping-address/shipping-address.co
     UpdateUserComponent,
     AdminUpdateProductComponent,
     SearchProductPageComponent,
-    ShippingAddressComponent,
+    OrderListComponent,
+    CartPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -79,6 +82,7 @@ import { ShippingAddressComponent } from './shipping-address/shipping-address.co
     RouterModule,
     FileUploadModule,
     ReactiveFormsModule,
+    OrderModule,
   ],
   providers: [
     AuthGuard,

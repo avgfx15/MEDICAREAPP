@@ -105,13 +105,75 @@ exports.getAllOrders = async (req, res) => {
     }
     return res.json({
       successMessage: "All Order Listed Here",
-      Orders: orderList,
+      AllOrders: orderList,
       resStatus: true,
     });
   } catch (error) {
     return res.json({ errorMessage: "server error", resStatus: false, error });
   }
 };
+
+// ? GET TOTAL SALE PRICE OF ALL ORDERS IN DATABASE
+
+exports.getTotalSaleValue = async (req, res) => {
+  /// GET SIGNIN USER DETAILS
+  const userSignIn = req.user.id;
+  /// IF SIGNIN USER IS NOT AVAILABLE
+  if (!userSignIn) {
+    return res.json({
+      errorMessage: "User not Authorized",
+      resStatus: false,
+    });
+  }
+  const totalSalesValue = await OrderModel.aggregate([
+    { $group: { _id: null, totalSalesValue: { $sum: `$totalPrice` } } },
+  ]);
+
+  if (!totalSalesValue) {
+    return res.json({
+      errorMessage: "Total Sales Value Can't be generated",
+      resStatus: false,
+    });
+  }
+
+  return res.json({
+    successMessage: "Total Sales Value generated",
+    resStatus: true,
+    TotalSalesValue: totalSalesValue.pop().totalSalesValue,
+  });
+};
+
+// ? GET TOTAL ORDER COUNT FROM DB
+
+// exports.getTotalOrdersCount = async (req, res) => {
+//   /// GET SIGNIN USER DETAILS
+//   const userSignIn = req.user.id;
+//   /// IF SIGNIN USER IS NOT AVAILABLE
+//   if (!userSignIn) {
+//     return res.json({
+//       errorMessage: "User not Authorized",
+//       resStatus: false,
+//     });
+//   }
+//   console.log(userSignIn);
+//   const totalOrdersCount = await OrderModel.countDocuments((count) => {
+//     console.log(count);
+//     count;
+//   });
+
+//   if (!totalOrdersCount) {
+//     return res.json({
+//       errorMessage: "Total Order Count Can't be generated",
+//       resStatus: false,
+//     });
+//   }
+
+//   return res.json({
+//     successMessage: "Total Order Count",
+//     resStatus: true,
+//     TotalOrderCount: totalOrdersCount,
+//   });
+// };
 
 // ? GET ORDER DETAILS BY ORDER ID
 

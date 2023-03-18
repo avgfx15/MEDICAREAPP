@@ -23,7 +23,8 @@ import { UpdateproductComponent } from './seller/updateproduct/updateproduct.com
 import { UpdateUserComponent } from './admin/update-user/update-user.component';
 import { AdminUpdateProductComponent } from './admin/admin-update-product/admin-update-product.component';
 import { SearchProductPageComponent } from './search-product-page/search-product-page.component';
-import { ShippingAddressComponent } from './shipping-address/shipping-address.component';
+import { OrderListComponent } from './admin/order-list/order-list.component';
+import { CartPageComponent } from './cart-page/cart-page.component';
 
 const routes: Routes = [
   //! Common Routes
@@ -35,7 +36,7 @@ const routes: Routes = [
   { path: 'productdetail/:id', component: ProductDetailComponent },
   { path: 'forbidden', component: ForbiddenComponent },
   { path: 'search/:searchquery', component: SearchProductPageComponent },
-  { path: 'shippingaddress', component: ShippingAddressComponent },
+  { path: 'cartpage', component: CartPageComponent },
 
   //! Admin routes
   {
@@ -77,6 +78,12 @@ const routes: Routes = [
   {
     path: 'admin/updateproduct/:id',
     component: AdminUpdateProductComponent,
+    canActivate: [AuthGuard],
+    data: { role: 'admin' },
+  },
+  {
+    path: 'admin/orderlist',
+    component: OrderListComponent,
     canActivate: [AuthGuard],
     data: { role: 'admin' },
   },

@@ -1,6 +1,6 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { ProductModel } from '../models/product';
-import { Cart } from '../models/cart';
+
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -24,23 +24,6 @@ export class ProductService {
       localStorage.setItem('localStorageCart', JSON.stringify(cartData));
       this.cartData.emit(cartData);
     }
-  }
-
-  // + Add To Cart By User LoggedIn
-  addToCart(orderCartData: Cart) {
-    console.log('ProductService.addToCart');
-    return this.httpClient.post(
-      'http://localhost:3700/neworder',
-      orderCartData
-    );
-  }
-
-  //+ Add Shipping Address
-  addShippingAddress(addressForm: any) {
-    return this.httpClient.post(
-      'http://localhost:3700/shippingaddress',
-      addressForm
-    );
   }
 
   // - Product Remove From LocalStorage

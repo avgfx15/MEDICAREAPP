@@ -38,7 +38,13 @@
               <h5 class="d-inline">Product Qty :</h5>
               <p class="card-text ms-3 d-inline QtyGroup">
                 <button class="" (click)="handleQty('minus')">-</button>
-                <input type="text" value="{{ orderQty }}" class="QtyInput" />
+                <input
+                  type="text"
+                  value="{{ orderQty }}"
+                  class="QtyInput"
+                  [min]="1"
+                  [max]="[productDetails?.productQty]"
+                />
                 <button class="" (click)="handleQty('plus')">+</button>
               </p>
             </div>
@@ -53,17 +59,13 @@
             </div>
             <div class="mb-3">
               <button
-                *ngIf="!removeCart"
+                *ngIf="removeCart"
                 class="btn btn-primary"
-                (click)="addToCart()"
+                (click)="addToCart(productDetails?._id!)"
               >
                 Add To Cart
               </button>
-              <button
-                *ngIf="removeCart"
-                class="btn btn-primary"
-                (click)="removeFromCart(productDetails!._id)"
-              >
+              <button *ngIf="!removeCart" class="btn btn-primary">
                 Remove From Cart
               </button>
               <button class="btn btn-primary ms-3">Buy Now</button>

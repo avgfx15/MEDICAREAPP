@@ -120,15 +120,7 @@ export class UserAuthService {
           userId: userId,
         };
         delete cartToDb.id;
-        setTimeout(() => {
-          this.productService.addToCart(cartToDb).subscribe((res) => {
-            if (res) {
-              console.log(res);
-              console.log('LocalStorage To DB Success');
-            }
-            console.log('LocalStorage To DB Error');
-          });
-        }, 500);
+
         if (orderItems.length === index) {
           localStorage.removeItem('localStorageCart');
         }

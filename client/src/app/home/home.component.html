@@ -1,30 +1,45 @@
 <div class="container">
   <h3>Home Page</h3>
-  <div class="row row-cols-1 row-cols-md-5 g-4 mb-3">
+  <div class="row row-cols-1 row-cols-lg-5 g-3 mb-5">
     <div class="col" *ngFor="let product of allProducts">
       <div class="card productCard border border-dark">
         <img
           src="{{ product.productImage }}"
           class="card-img-top p-2 border"
           alt="Product Image"
+          role="button"
+          routerLink="/productdetail/{{ product._id }}"
         />
         <div class="card-body">
-          <h6 class="card-title productData">{{ product.productName }}</h6>
-          <h6 class="card-title">{{ product.productCategory }}</h6>
-          <h6 class="card-title">{{ product.productPrice }}</h6>
+          <h5
+            class="card-title productData"
+            role="button"
+            routerLink="/productdetail/{{ product._id }}"
+          >
+            {{ product.productName }}
+          </h5>
+          <h5 class="card-text">
+            {{ product.productPrice | currency : "₹ " }}
+          </h5>
+          <h6 class="card-text">
+            {{ product.productCategory }}
+          </h6>
           <p
             class="card-text pull-down readMore"
+            role="button"
             [ngClass]="{ isCollapsed: !isCollapsed, collapsed: isCollapsed }"
+            routerLink="/productdetail/{{ product._id }}"
           >
             {{ product.productDescription }}
           </p>
+        </div>
+        <div class="card-footer text-center">
           <button
+            href="#"
             class="btn btn-primary"
-            *ngIf="isCollapsed"
-            [hidden]="isReadMore"
-            routerLink="/productdetail/{{ product._id }}"
+            (click)="addProductToCart(product._id)"
           >
-            Read More
+            Add To Cart
           </button>
         </div>
       </div>
