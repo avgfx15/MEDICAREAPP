@@ -1,0 +1,256 @@
+<div class="container">
+  <h4 class="text-center py-2 bg-warning mt-2">Seller Add New Product</h4>
+
+  <div class="row text-center">
+    <!-- Button trigger modal Add Category -->
+
+    <div class="col-md-6">
+      <button
+        type="button"
+        class="btn btn-outline-info btn-block"
+        data-bs-toggle="modal"
+        data-bs-target="#addcategory"
+      >
+        <i class="fa-solid fa-plus"></i>
+        Add Category
+      </button>
+
+      <!-- New Category Modal -->
+      <div
+        class="modal fade"
+        id="addcategory"
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
+        tabindex="-1"
+        aria-labelledby="staticBackdropLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header bg-info">
+              <h1 class="modal-title fs-5" id="addcategory">
+                Add New Category
+              </h1>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div
+              class="alert alert-primary m-3 p-2"
+              role="alert"
+              *ngIf="isDisabled"
+              [ngClass]="success === true ? 'alert-primary' : 'alert-danger'"
+            >
+              {{ showMsg }}
+            </div>
+            <form
+              #categoryForm="ngForm"
+              (ngSubmit)="addCategory(categoryForm.value)"
+            >
+              <div class="modal-body text-start text-bolder">
+                <div class="mb-3">
+                  <label for="exampleFormControlInput1" class="form-label"
+                    >Category</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="exampleFormControlInput1"
+                    placeholder="Input Category"
+                    name="category"
+                    ngModel
+                  />
+                </div>
+              </div>
+
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button type="submit" class="btn btn-primary">
+                  Add Category
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Button trigger modal Add Product -->
+
+    <div class="col-md-6">
+      <button
+        type="button"
+        class="btn btn-outline-warning btn-block"
+        data-bs-toggle="modal"
+        data-bs-target="#addproduct"
+      >
+        <i class="fa-solid fa-plus"></i>
+        Add Product
+      </button>
+
+      <!-- Modal -->
+      <div
+        class="modal fade"
+        id="addproduct"
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
+        tabindex="-1"
+        aria-labelledby="staticBackdropLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header bg-warning">
+              <h1 class="modal-title fs-5" id="addproduct">Add New Product</h1>
+
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div
+              class="alert alert-primary m-3 p-2"
+              role="alert"
+              *ngIf="isDisabled"
+              [ngClass]="success === true ? 'alert-primary' : 'alert-danger'"
+            >
+              {{ showMsg }}
+            </div>
+            <div class="modal-body text-start text-bolder">
+              <form
+                #addNewProductForm="ngForm"
+                (ngSubmit)="addNewProduct(addNewProductForm.value)"
+                enctype="multipart/form-data"
+              >
+                <!-- Product Image -->
+
+                <div class="mb-3">
+                  <label for="formFile" class="form-label">Product Image</label>
+                  <input
+                    class="form-control"
+                    type="text"
+                    id="formFile"
+                    name="productImage"
+                    multiple
+                    ngModel
+                  />
+                </div>
+
+                <!-- Product Name  -->
+
+                <div class="mb-3">
+                  <label for="formFile" class="form-label">Product Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="exampleFormControlInput1"
+                    placeholder="Input Product Name"
+                    name="productName"
+                    ngModel
+                  />
+                </div>
+
+                <!-- Product Description  -->
+
+                <div class="mb-3">
+                  <label for="formFile" class="form-label"
+                    >Product Description</label
+                  >
+                  <textarea
+                    type="text"
+                    class="form-control"
+                    id="exampleFormControlInput1"
+                    placeholder="Input Product Description"
+                    name="productDescription"
+                    ngModel
+                  ></textarea>
+                </div>
+
+                <!-- Product Category  -->
+
+                <div class="mb-3">
+                  <label for="formFile" class="form-label"
+                    >Product Category</label
+                  >
+                  <div class="input-group mb-3">
+                    <label class="input-group-text" for="inputGroupSelect01"
+                      >Category</label
+                    >
+                    <select
+                      class="form-select"
+                      id="inputGroupSelect01"
+                      name="productCategory"
+                      ngModel
+                    >
+                      <option
+                        *ngFor="let category of Categories"
+                        value="{{ category.category }}"
+                      >
+                        {{ category.category }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- Product Price  -->
+
+                <div class="mb-3">
+                  <label for="formFile" class="form-label col-6"
+                    >Product Price</label
+                  >
+                  <label for="formFile" class="form-label">Product Qty</label>
+                  <div class="row">
+                    <div class="col-6">
+                      <input
+                        type="number"
+                        class="form-control"
+                        id="exampleFormControlInput1"
+                        placeholder="Input Product Price"
+                        name="productPrice"
+                        ngModel
+                      />
+                    </div>
+                    <div class="col-6">
+                      <input
+                        type="number"
+                        class="form-control"
+                        id="exampleFormControlInput1"
+                        placeholder="Input Product Qty"
+                        name="productQty"
+                        ngModel
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                  <button type="submit" class="btn btn-primary">
+                    Add Product
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

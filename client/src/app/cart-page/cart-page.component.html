@@ -1,0 +1,77 @@
+<div class="container-fluid pb-3 bg-body-secondary">
+  <div class="row">
+    <h3 class="text-center bg-danger-subtle py-2 rounded-2">Cart Page</h3>
+  </div>
+  <div class="row px-5 mx-auto">
+    <div class="col-8 p-3">
+      <button class="btn btn-warning d-inline-block" (click)="backToHome()">
+        <i class="fa-solid fa-arrow-left"></i> Back to Home Page
+      </button>
+      <div class="alert alert-primary" role="alert" *ngIf="isDisabled">
+        {{ showMsg }}
+      </div>
+      <p class="fs-6 fw-bolder mt-3 px-3">
+        My Cart : Total {{ cartCount }} items in the Cart.
+      </p>
+      <div
+        class="card mb-3 p-3"
+        *ngFor="let cartItemDetails of cartItemsDetails"
+      >
+        <div class="row g-0 px-2">
+          <div class="col-md-3 align-self-center">
+            <img
+              src="{{ cartItemDetails.product.productImage }}"
+              class="img-fluid rounded-start"
+              alt="..."
+            />
+          </div>
+          <div class="col-md-6">
+            <div class="card-body">
+              <h5 class="card-title">
+                {{ cartItemDetails.product.productName }}
+              </h5>
+              <p class="card-text fw-bold">
+                {{ cartItemDetails.product.productPrice | currency : "₹ " }}
+              </p>
+              <p class="card-text">
+                <i
+                  class="fa-solid fa-trash-can bg-warning p-2"
+                  (click)="deleteProductFromCart(cartItemDetails.product._id)"
+                ></i>
+              </p>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="orderQty float-end">
+              <label for="orderQty" class="fw-bolder mb-2 d-block"
+                >OrderQty </label
+              ><input
+                type="number"
+                class="text-center fw-bold"
+                ngModel="{{ cartItemDetails.orderQty }}"
+                name="{{ cartItemDetails.product._id }}"
+                (input)="updateOrderQty($event.target, cartItemDetails)"
+              />
+            </div>
+            <div class="my-2">
+              <p class="text-danger fw-bold">
+                <span class="fw-bolder ms-2">Sub Total : </span
+                >{{
+                  cartItemDetails.product.productPrice *
+                    cartItemDetails.orderQty! | currency : "₹ "
+                }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="fw-bold text-danger">
+        Shipping after Payment. Estimated delivery time : 2 to 3 working days.
+      </p>
+    </div>
+
+    <div class="col-4 p-3">
+      <app-order-summary></app-order-summary>
+    </div>
+  </div>
+</div>

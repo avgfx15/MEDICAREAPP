@@ -1,0 +1,28 @@
+<div class="card">
+  <h4 class="fw-bold p-3">Order Summary</h4>
+  <div class="card-body">
+    <p class="card-text fw-bolder">
+      Items Price :
+      <span class="fw-bold float-end me-2">{{
+        totalPrice | currency : "₹ "
+      }}</span>
+    </p>
+  </div>
+  <div class="card-body">
+    <p class="card-text fw-bolder">
+      Packing & Shipping charges :
+      <span class="fw-bold float-end me-2">{{ 00 | currency : "₹ " }}</span>
+    </p>
+  </div>
+  <div class="card-body">
+    <p class="card-text fw-bolder">
+      Total Order Price
+      <span class="fw-bold float-end me-2">{{
+        totalPrice | currency : "₹ "
+      }}</span>
+    </p>
+  </div>
+  <a (click)="gotToCheckoutPage()" class="btn btn-primary" *ngIf="!isCheckout"
+    >Checkout</a
+  >
+</div>

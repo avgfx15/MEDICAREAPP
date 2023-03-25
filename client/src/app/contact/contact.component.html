@@ -1,0 +1,41 @@
+<div class="container">
+  <h1>Contact Us</h1>
+  <form #contactForm="ngForm" (ngSubmit)="contactUs(contactForm.value)">
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">Name address</label>
+      <input
+        type="text"
+        class="form-control"
+        id="exampleInputEmail1"
+        aria-describedby="emailHelp"
+        name="name"
+        ngModel
+      />
+      <div id="emailHelp" class="form-text">
+        We'll never share your email with anyone else.
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">Email address</label>
+      <input
+        type="email"
+        class="form-control"
+        id="exampleInputEmail1"
+        aria-describedby="emailHelp"
+        name="email"
+        ngModel
+      />
+      <div id="emailHelp" class="form-text">
+        We'll never share your email with anyone else.
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="exampleInputText" class="form-label d-block">Message</label>
+      <textarea name="message" class="p-3 form-control"></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+
+

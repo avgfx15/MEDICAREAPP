@@ -1,0 +1,81 @@
+<div class="signup">
+  <div class="container align-self-center">
+    <h2 class="mb-3 text-center">User Update Form</h2>
+
+    <div
+      class="alert alert-primary"
+      role="alert"
+      *ngIf="isDisabled"
+      [ngClass]="success === true ? 'alert-primary' : 'alert-danger'"
+    >
+      {{ showMsg }}
+    </div>
+    <form
+      #userUpdateForm="ngForm"
+      (ngSubmit)="userUpdate(userUpdateForm.value)"
+    >
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1"
+          ><i class="fa-regular fa-user"></i
+        ></span>
+        <input
+          type="text"
+          class="form-control p-2"
+          placeholder="Please Enter Your Name"
+          aria-label="name"
+          name="name"
+          aria-describedby="basic-addon1"
+          ngModel="{{ userData?.name }}"
+        />
+      </div>
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1"
+          ><i class="fa-solid fa-envelope"></i
+        ></span>
+        <input
+          type="email"
+          class="form-control p-2"
+          placeholder="Please Enter Your Email"
+          aria-label="email"
+          name="email"
+          aria-describedby="basic-addon1"
+          ngModel="{{ userData?.email }}"
+        />
+      </div>
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1"
+          ><i class="fa-solid fa-mobile"></i
+        ></span>
+        <input
+          type="text"
+          class="form-control p-2"
+          placeholder="Please Enter Your Mobile No"
+          aria-label="mobile no"
+          name="mobile"
+          aria-describedby="basic-addon1"
+          ngModel="{{ userData?.mobile }}"
+        />
+      </div>
+
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1"
+          ><i class="fa-regular fa-user"></i
+        ></span>
+        <select
+          class="form-select text-black"
+          id="inputGroupSelect01"
+          name="role"
+          ngModel="{{ userData?.role }}"
+        >
+          <option *ngFor="let role of allRoles" value="{{ role }}">
+            {{ role }}
+          </option>
+        </select>
+      </div>
+
+      <div class="d-grid gap-2 d-md-block">
+        <button class="btn btn-primary me-3 px-4 py-2">Update User</button>
+      </div>
+    </form>
+  </div>
+</div>
