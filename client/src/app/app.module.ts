@@ -46,6 +46,8 @@ import { CartPageComponent } from './cart-page/cart-page.component';
 import { OrderSummaryComponent } from './order-summary/order-summary.component';
 import { CheckOutComponent } from './check-out/check-out.component';
 import { ThanksPageComponent } from './thanks-page/thanks-page.component';
+import { NgxStripeModule } from 'ngx-stripe';
+import { FailPaymentComponent } from './fail-payment/fail-payment.component';
 
 @NgModule({
   declarations: [
@@ -79,6 +81,7 @@ import { ThanksPageComponent } from './thanks-page/thanks-page.component';
     OrderSummaryComponent,
     CheckOutComponent,
     ThanksPageComponent,
+    FailPaymentComponent,
   ],
   imports: [
     BrowserModule,
@@ -90,6 +93,9 @@ import { ThanksPageComponent } from './thanks-page/thanks-page.component';
     FileUploadModule,
     ReactiveFormsModule,
     OrderModule,
+    NgxStripeModule.forRoot(
+      'pk_test_51Mpi6hSJqIJ0daJKdVY8jOYkSkd3xWQxMRBS0dFcLNxJavgi5HbGJfrdBy4zEpXIuRIlBAmIuXrqbqqD9CoeH9Dl007uPpbypR'
+    ),
   ],
   providers: [
     AuthGuard,

@@ -27,6 +27,7 @@ import { OrderListComponent } from './admin/order-list/order-list.component';
 import { CartPageComponent } from './cart-page/cart-page.component';
 import { CheckOutComponent } from './check-out/check-out.component';
 import { ThanksPageComponent } from './thanks-page/thanks-page.component';
+import { FailPaymentComponent } from './fail-payment/fail-payment.component';
 
 const routes: Routes = [
   //! Common Routes
@@ -40,6 +41,7 @@ const routes: Routes = [
   { path: 'search/:searchquery', component: SearchProductPageComponent },
   { path: 'cartpage', component: CartPageComponent },
   { path: 'thanks', component: ThanksPageComponent },
+  { path: 'failure', component: FailPaymentComponent },
 
   //! Admin routes
   {

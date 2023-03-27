@@ -26,7 +26,7 @@ export class UserAuthService {
 
   /// Get userData when required
   getUserData() {
-    return localStorage.getItem('userData');
+    return JSON.parse(localStorage.getItem('userData')!);
   }
 
   /// Set Role in localstorage when user after login
@@ -35,7 +35,7 @@ export class UserAuthService {
   }
   /// Get Role of user after login
   public getRole() {
-    const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+    const userData = JSON.parse(localStorage.getItem('userData')!);
     const role = userData?.user?.role;
     return role;
   }

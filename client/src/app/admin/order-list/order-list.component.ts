@@ -37,7 +37,6 @@ export class OrderListComponent implements OnInit {
     this.orderService.getAllOrders().subscribe({
       next: (res) => {
         this.resData = res;
-        console.log(this.resData);
 
         if (this.resData.resStatus === false) {
           this.isDisabled = true;

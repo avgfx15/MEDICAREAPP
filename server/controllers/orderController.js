@@ -1,5 +1,10 @@
+const { default: Stripe } = require("stripe");
 const OrderItemsModel = require("../models/orderItemsModel");
 const OrderModel = require("../models/orderModel");
+const stripe = require("stripe")(
+  "sk_test_51Mpi6hSJqIJ0daJKdAkyTeevR5zbwrxx7vb924GUfY9u4R7bcodfWNVNNYnc3jHObiKrGvKJ6IJZZ0nz1KBbVAu300rLRSFeTo"
+);
+const ProductModel = require("../models/productModel");
 
 /// TEST ROUTE FOR ORDER
 exports.orderroutesTest = async (req, res) => {
@@ -94,9 +99,53 @@ exports.newOrderByUser = async (req, res) => {
   }
 };
 
+// + CHECKOUT SESSION FOR PAYMENT
+
+exports.checkOutSessionForPayment = async (req, res) => {
+  const orderItems = req.body;
+  if (!orderItems) {
+    return res.json({
+      errorMessage: "Payment CheckOut Session can't be Created",
+      resStatus: false,
+    });
+  }
+  const line_items = await Promise.all(
+    orderItems.map(async (orderItem) => {
+      const product = await ProductModel.findById(orderItem.product);
+      return {
+        price_data: {
+          currency: "inr",
+          product_data: { name: product.productName },
+          unit_amount: product.productPrice * 100,
+        },
+        quantity: orderItem.orderQty,
+      };
+    })
+  );
+  const stripeSession = await stripe.checkout.sessions.create({
+    payment_method_types: ["card"],
+    line_items: line_items,
+    mode: "payment",
+    success_url: "http://localhost:4200/thanks",
+    cancel_url: "http://localhost:4200/failure",
+  });
+  res.json({ id: stripeSession.id });
+};
+
 // ? GET ALLORDER DETAILS
 
 exports.getAllOrders = async (req, res) => {
+  const userSignIn = req.user;
+  if (!userSignIn) {
+    return res.json({ errorMessage: "User not logged In", resStatus: false });
+  }
+  // / Check User Role
+
+  const userSignInRole = userSignIn.role;
+
+  if (userSignInRole !== "admin") {
+    return res.json({ errorMessage: "User not Authorized", resStatus: false });
+  }
   try {
     const orderList = await OrderModel.find()
       .populate("orderItems")

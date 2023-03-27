@@ -8,6 +8,8 @@ import { OrderModel } from '../models/order-model';
 import { OrderItems } from '../models/order-items';
 import { CartService } from '../services/cart.service';
 import { OrderService } from '../services/order.service';
+import { StripeService } from 'ngx-stripe';
+import { UserAuthService } from '../services/user-auth.service';
 
 @Component({
   selector: 'app-check-out',
@@ -21,9 +23,9 @@ export class CheckOutComponent implements OnInit {
   showMsg: string = '';
   changeToSeller: boolean = false;
   isSubmitted: boolean = false;
-  userModel: UserModel | undefined;
+  userData: UserModel | undefined;
   orderItems: OrderItems[] = [];
-  userId: UserModel | undefined;
+  userId: string = '';
 
   constructor(
     private router: Router,
@@ -31,11 +33,19 @@ export class CheckOutComponent implements OnInit {
     private adminService: AdminService,
     private userService: UserService,
     private cartService: CartService,
-    private orderService: OrderService
+    private orderService: OrderService,
+    private userAuthService: UserAuthService
   ) {}
 
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+
+    // / Get User Data From Header
+    const loggedInUser = this.userAuthService.getUserData();
+    this.userId = loggedInUser.user._id;
+
+    this.getUserDataById(this.userId);
+
     this.getCartItems();
   }
 
@@ -46,15 +56,15 @@ export class CheckOutComponent implements OnInit {
 
   // ? UserData By UserId
 
-  getUserDataById(id: string) {
-    this.adminService.getUserByUserId(id).subscribe({
+  getUserDataById(userId: string) {
+    this.adminService.getUserByUserId(userId).subscribe({
       next: (res) => {
         this.resData = res;
         if (this.resData.resStatus === false) {
           this.isDisabled = true;
           this.showMsg = this.resData.errorMessage;
         }
-        this.userModel = this.resData.User;
+        this.userData = this.resData.User;
       },
       error: (error) => {
         console.log(error);
@@ -71,12 +81,12 @@ export class CheckOutComponent implements OnInit {
         orderQty: item.orderQty,
       };
     });
-    console.log(this.orderItems);
   }
 
   //+ Place Order Order
 
   placeNewOrder(userDetailsForm: UserDetailsModel) {
+    /// Create Order & shipping Address
     const order: OrderModel = {
       orderItems: this.orderItems,
       shippingAddress1: userDetailsForm.street,
@@ -94,25 +104,18 @@ export class CheckOutComponent implements OnInit {
       // paymentMethod?: string;
     };
 
-    this.orderService.createNewOrder(order).subscribe({
-      next: (res) => {
-        this.resData = res;
-        if (this.resData.resStatus === false) {
-          this.isDisabled = true;
-          this.showMsg = this.resData.errorMessage;
-          this.success = false;
-          setTimeout(() => {
-            this.isDisabled = false;
-          }, 3000);
-        }
-        this.cartService.emptyCart();
-        this.router.navigate(['/thanks']);
-      },
-      error: (error) => {
-        console.log(error);
-      },
-    });
-  }
+    /// Store OrderData in Localstorage
 
-  // ? UserSignUpForm
+    this.orderService.cacheOrderData(order);
+
+    /// Redirect to Stripe Payment Getway API In OrderService file and Get Error if Any
+
+    this.orderService
+      .createpaymentCheckoutSession(this.orderItems)
+      .subscribe((error) => {
+        if (error) {
+          console.log('Error in redirect to payment');
+        }
+      });
+  }
 }

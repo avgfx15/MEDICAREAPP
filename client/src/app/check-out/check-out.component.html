@@ -24,7 +24,7 @@
                     name="name"
                     id="name"
                     class="form-control"
-                    ngModel
+                    ngModel="{{ userData?.name }}"
                     placeholder="Your Name"
                   />
                 </div>
@@ -44,7 +44,7 @@
                     name="email"
                     id="email"
                     class="form-control"
-                    ngModel
+                    ngModel="{{ userData?.email }}"
                     placeholder="Email"
                   />
                 </div>
@@ -64,7 +64,7 @@
                     name="mobile"
                     id="mobile"
                     class="form-control"
-                    ngModel
+                    ngModel="{{ userData?.mobile }}"
                     placeholder="Mobile"
                   />
                 </div>
@@ -74,7 +74,7 @@
                   >Mobile is required</small
                 >
               </div>
-              <div class="col-md-6 mb-3">
+              <!-- <div class="col-md-6 mb-3">
                 <div class="input-group">
                   <span class="input-group-text" id="basic-addon1"
                     ><i class="fa-solid fa-lock"></i
@@ -84,7 +84,7 @@
                     name="password"
                     id="password"
                     class="form-control"
-                    ngModel
+                    ngModel="{{ userData?.password }}"
                     placeholder="Password"
                   />
                 </div>
@@ -93,7 +93,7 @@
                   class="text-danger"
                   >Password is required</small
                 >
-              </div>
+              </div> -->
               <div class="col-md-6 mb-3">
                 <div class="input-group">
                   <span class="input-group-text" id="basic-addon1"
