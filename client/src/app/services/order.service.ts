@@ -65,4 +65,9 @@ export class OrderService {
   removeCachOrderData() {
     localStorage.removeItem('orderData');
   }
+
+  // ? Get Order Placed By LoggedIn User
+  getAllOrderPlacedByLoggedInUser() {
+    return this.httpClient.get(this.baseUrl + 'ordersbyuser');
+  }
 }

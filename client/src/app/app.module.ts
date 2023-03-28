@@ -48,6 +48,7 @@ import { CheckOutComponent } from './check-out/check-out.component';
 import { ThanksPageComponent } from './thanks-page/thanks-page.component';
 import { NgxStripeModule } from 'ngx-stripe';
 import { FailPaymentComponent } from './fail-payment/fail-payment.component';
+import { OrderViewComponent } from './order-view/order-view.component';
 
 @NgModule({
   declarations: [
@@ -82,6 +83,7 @@ import { FailPaymentComponent } from './fail-payment/fail-payment.component';
     CheckOutComponent,
     ThanksPageComponent,
     FailPaymentComponent,
+    OrderViewComponent,
   ],
   imports: [
     BrowserModule,

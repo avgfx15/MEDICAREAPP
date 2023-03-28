@@ -1,3 +1,77 @@
 <div class="container">
-  <h1>User My Order</h1>
+  <h1>My Order List</h1>
+  <div class="container">
+    <div class="row">
+      <h1 class="text-center my-3">Logged In User Order List</h1>
+      <div
+        class="alert alert-primary"
+        role="alert"
+        *ngIf="isDisabled"
+        [ngClass]="success === true ? 'alert-primary' : 'alert-danger'"
+      >
+        {{ showMsg }}
+      </div>
+      <table class="table table-bordered border-2">
+        <caption>
+          All Products from database
+        </caption>
+        <thead>
+          <tr class="text-center align-middle p-1">
+            <th scope="col">No</th>
+            <th scope="col">User Name</th>
+            <th scope="col">Order Id</th>
+            <th scope="col">Order Date</th>
+            <th scope="col">Total Price</th>
+            <th scope="col">Payment Status</th>
+            <th scope="col">Delivery Status</th>
+            <th scope="col">Delivery Date</th>
+            <th scope="col">Options</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let order of allOrderList; let ndx = index">
+          <tr class="text-center align-middle p-1">
+            <th scope="row">{{ ndx + 1 }}</th>
+
+            <td>{{ order.user?.name }}</td>
+            <td>
+              <a routerLink="/myorder/orderview/{{ order.id }}" role="button">
+                {{ order.id }}</a
+              >
+            </td>
+            <td class="text-center align-middle p-1">
+              {{ order.orderDate | date : "short" }}
+            </td>
+            <td class="text-center align-middle p-1">
+              {{ order.totalPrice }}
+            </td>
+            <td class="text-center align-middle p-1">
+              <span class="btn">{{ order.isPaid }}</span>
+            </td>
+            <td class="text-center align-middle p-1">
+              {{ order.isDelivered }}
+            </td>
+            <td class="text-center align-middle p-1">
+              {{ order.deliveredAt }}
+            </td>
+
+            <td class="text-center align-middle p-1">
+              <!-- <i
+                class="fa-solid fa-pen-to-square fa-sm me-2"
+                routerLink="/admin/updateproduct/{{ order.id }}"
+              ></i> -->
+
+              <i
+                class="fa-solid fa-trash fa-sm"
+                (click)="updateOrderByOrderId(order.id!)"
+              ></i>
+              <!-- <i
+                class="fa-solid fa-trash fa-sm"
+                (click)="deleteOrder(order.id)"
+              ></i> -->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>

@@ -55,6 +55,12 @@ export class UserService {
     );
   }
 
+  // ? Get Total Orders Count Placed By User
+
+  getCountOfAllOrdersByUser() {
+    return this.httpClient.get(this.baseUrl + 'getcountofallorders');
+  }
+
   // //` reload or refresh page reloaduser again
 
   //` Match user role for navbar

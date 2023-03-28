@@ -1,0 +1,102 @@
+<div class="container p-3">
+  <div class="row">
+    <h1>Order Details</h1>
+    <div class="">
+      <button
+        class="btn btn-warning d-inline-block mb-3"
+        (click)="backToMyOrdersPage()"
+      >
+        <i class="fa-solid fa-arrow-left"></i> Back to Cart Page
+      </button>
+
+      <div class="row border border-danger rounded-3 p-2">
+        <div class="col-md-8">
+          <p class="d-inline me-3">
+            <span class="fw-bolder">Ordered On : </span>
+            {{ orderData?.orderDate | date }}
+          </p>
+          <p class="d-inline">
+            <span class="fw-bolder">Ordered Id : </span> {{ orderData?.id }}
+          </p>
+        </div>
+        <div class="col-md-4">
+          <p><span class="fw-bolder">Invoice Details :</span> 2023327345</p>
+        </div>
+        <div class="orderData">
+          <div class="row border">
+            <div class="col-md-4">
+              <h4 class="border-bottom border-danger p-2 text-center">
+                Shipping Address
+              </h4>
+
+              <p class="fw-bolder">{{ orderData?.user.name }}</p>
+              <p>{{ orderData?.shippingAddress1 }}</p>
+              <p>{{ orderData?.shippingAddress2 }}</p>
+              <p class="d-inline me-2">{{ orderData?.city }},</p>
+              <p class="d-inline">{{ orderData?.country }}</p>
+            </div>
+            <div class="col-md-4">
+              <h4 class="border-bottom border-danger p-2 text-center">
+                Payment Method
+              </h4>
+              <p>
+                <span class="fw-bolder"> Payment Status :</span>
+                {{ orderData?.isPaid }}
+              </p>
+              <p><span class="fw-bolder"> Payment Date :</span></p>
+            </div>
+            <div class="col-md-4">
+              <h4 class="border-bottom border-danger p-2 text-center">
+                Order Summary
+              </h4>
+              <p>
+                <span class="fw-bolder"> Total Price : </span>
+                {{ orderData?.totalPrice | currency : "₹ " : true : "1.2-2" }}
+              </p>
+              <p>
+                <span class="fw-bolder"> Delivery Status : </span>
+                {{ orderData?.isDelivered }}
+              </p>
+              <p>
+                <span class="fw-bolder"> Delivery Date : </span>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div *ngFor="let product of productData">
+          <div class="row g-0 p-2 border-bottom border-3">
+            <div class="col-md-2 align-self-center">
+              <img
+                src="{{ product.productImage }}"
+                class="img-fluid productImage"
+                alt="..."
+              />
+            </div>
+            <div class="col-md-6">
+              <div class="card-body">
+                <h6 class="card-title">
+                  <a
+                    routerLink="/productdetail/{{ product._id }}"
+                    class="text-decoration-none text-black"
+                  >
+                    {{ product.productName }}
+                  </a>
+                </h6>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <p class="card-text fw-bold">
+                {{ product.productPrice | currency : "₹ " }}
+              </p>
+            </div>
+            <div class="col-md-2">
+              <p class="card-text fw-bold">
+                {{ product.productPrice | currency : "₹ " }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

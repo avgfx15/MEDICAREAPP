@@ -28,6 +28,7 @@ import { CartPageComponent } from './cart-page/cart-page.component';
 import { CheckOutComponent } from './check-out/check-out.component';
 import { ThanksPageComponent } from './thanks-page/thanks-page.component';
 import { FailPaymentComponent } from './fail-payment/fail-payment.component';
+import { OrderViewComponent } from './order-view/order-view.component';
 
 const routes: Routes = [
   //! Common Routes
@@ -146,6 +147,12 @@ const routes: Routes = [
   {
     path: 'checkout',
     component: CheckOutComponent,
+    canActivate: [AuthGuard],
+    data: { role: 'user' },
+  },
+  {
+    path: 'myorder/orderview/:id',
+    component: OrderViewComponent,
     canActivate: [AuthGuard],
     data: { role: 'user' },
   },
