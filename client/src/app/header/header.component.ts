@@ -24,7 +24,6 @@ export class HeaderComponent {
     private router: Router,
     public userService: UserService,
     private sellerService: SellerService,
-    private productService: ProductService,
     private cartService: CartService
   ) {}
   ngOnInit(): void {

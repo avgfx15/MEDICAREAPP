@@ -70,4 +70,11 @@ export class OrderService {
   getAllOrderPlacedByLoggedInUser() {
     return this.httpClient.get(this.baseUrl + 'ordersbyuser');
   }
+
+  // - Delete Order By Order Id
+  deleteOrderByOrderId(id: string) {
+    return this.httpClient.delete(
+      this.baseUrl + `order/deleteorder/` + `${id}`
+    );
+  }
 }

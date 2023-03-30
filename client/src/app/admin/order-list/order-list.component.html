@@ -33,7 +33,15 @@
             <th scope="row">{{ ndx + 1 }}</th>
 
             <td>{{ order.user?.name }}</td>
-            <td>{{ order.id }}</td>
+            <td>
+              <a
+                routerLink="/myorder/orderview/{{ order.id }}"
+                role="button"
+                class="text-decoration-none text-black"
+              >
+                {{ order.id }}</a
+              >
+            </td>
             <td class="text-center align-middle p-1">
               {{ order.orderDate | date : "short" }}
             </td>
@@ -51,19 +59,10 @@
             </td>
 
             <td class="text-center align-middle p-1">
-              <!-- <i
-                class="fa-solid fa-pen-to-square fa-sm me-2"
-                routerLink="/admin/updateproduct/{{ order.id }}"
-              ></i> -->
-
               <i
                 class="fa-solid fa-trash fa-sm"
-                (click)="updateOrderByOrderId(order.id!)"
+                (click)="deleteOrderByOrderId(order.id!)"
               ></i>
-              <!-- <i
-                class="fa-solid fa-trash fa-sm"
-                (click)="deleteOrder(order.id)"
-              ></i> -->
             </td>
           </tr>
         </tbody>

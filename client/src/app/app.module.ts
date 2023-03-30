@@ -31,12 +31,10 @@ import { SellerOrdersComponent } from './seller/seller-orders/seller-orders.comp
 
 import { AddnewproductComponent } from './seller/addnewproduct/addnewproduct.component';
 import { SellerproductlistComponent } from './seller/sellerproductlist/sellerproductlist.component';
-import { CartComponent } from './user/cart/cart.component';
 import { MyordersComponent } from './user/myorders/myorders.component';
 import { FileUploadModule } from 'ng2-file-upload';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { UpdateproductComponent } from './seller/updateproduct/updateproduct.component';
-
 import { UpdateUserComponent } from './admin/update-user/update-user.component';
 import { AdminUpdateProductComponent } from './admin/admin-update-product/admin-update-product.component';
 import { SearchProductPageComponent } from './search-product-page/search-product-page.component';
@@ -70,7 +68,6 @@ import { OrderViewComponent } from './order-view/order-view.component';
     SellerOrdersComponent,
     AddnewproductComponent,
     SellerproductlistComponent,
-    CartComponent,
     MyordersComponent,
     ProductDetailComponent,
     UpdateproductComponent,

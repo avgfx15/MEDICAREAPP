@@ -1,7 +1,7 @@
 const mongoose = require("mongoose"); // Erase if already required
 
 // Declare the Schema of the Mongo model
-var orderModel = new mongoose.Schema(
+const orderModel = new mongoose.Schema(
   {
     orderItems: [
       {

@@ -58,4 +58,9 @@ export class AdminService {
       productData
     );
   }
+
+  // ? Get All Orders Count
+  getAllOrdersCount() {
+    return this.httpClient.get(this.baseUrl + 'getallordercount');
+  }
 }

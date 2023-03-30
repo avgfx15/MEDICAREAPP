@@ -67,6 +67,16 @@ export class MyordersComponent implements OnInit {
     });
   }
 
-  // * Update Order By Order Id
-  updateOrderByOrderId(arg0: any) {}
+  // - Delete Order By Order Id
+  deleteOrderByOrderId(id: string) {
+    this.orderService.deleteOrderByOrderId(id).subscribe({
+      next: (res) => {
+        this.resData = res;
+        this.getAllOrderPlacedByUser();
+      },
+      error: (error) => {
+        console.log(error);
+      },
+    });
+  }
 }

@@ -16,7 +16,6 @@ import { ForbiddenComponent } from './forbidden/forbidden.component';
 import { SellerproductlistComponent } from './seller/sellerproductlist/sellerproductlist.component';
 import { SellerOrdersComponent } from './seller/seller-orders/seller-orders.component';
 import { AddnewproductComponent } from './seller/addnewproduct/addnewproduct.component';
-import { CartComponent } from './user/cart/cart.component';
 import { MyordersComponent } from './user/myorders/myorders.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { UpdateproductComponent } from './seller/updateproduct/updateproduct.component';
@@ -133,12 +132,6 @@ const routes: Routes = [
     data: { role: 'user' },
   },
   {
-    path: 'cart',
-    component: CartComponent,
-    canActivate: [AuthGuard],
-    data: { role: 'user' },
-  },
-  {
     path: 'myorder',
     component: MyordersComponent,
     canActivate: [AuthGuard],
@@ -154,7 +147,7 @@ const routes: Routes = [
     path: 'myorder/orderview/:id',
     component: OrderViewComponent,
     canActivate: [AuthGuard],
-    data: { role: 'user' },
+    data: { role: 'user' && 'admin' },
   },
 ];
 

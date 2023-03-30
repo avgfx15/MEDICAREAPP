@@ -74,26 +74,7 @@
                   >Mobile is required</small
                 >
               </div>
-              <!-- <div class="col-md-6 mb-3">
-                <div class="input-group">
-                  <span class="input-group-text" id="basic-addon1"
-                    ><i class="fa-solid fa-lock"></i
-                  ></span>
-                  <input
-                    type="text"
-                    name="password"
-                    id="password"
-                    class="form-control"
-                    ngModel="{{ userData?.password }}"
-                    placeholder="Password"
-                  />
-                </div>
-                <small
-                  *ngIf="userDetailsForm.controls?.['password']?.invalid && isSubmitted"
-                  class="text-danger"
-                  >Password is required</small
-                >
-              </div> -->
+
               <div class="col-md-6 mb-3">
                 <div class="input-group">
                   <span class="input-group-text" id="basic-addon1"
@@ -226,29 +207,6 @@
                   class="text-danger"
                   >EmZipcodeail is required</small
                 >
-              </div>
-              <div class="form-check form-switch mb-3 ms-3">
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  role="switch"
-                  id="flexSwitchCheckDefault"
-                  [checked]="changeToSeller"
-                />
-                <label class="form-check-label" for="flexSwitchCheckDefault"
-                  >Change Role User To Seller</label
-                >
-              </div>
-              <div class="col-md-6">
-                <div class="input-group mb-3">
-                  <button
-                    type="submit"
-                    class="btn btn-primary"
-                    (click)="placeNewOrder(userDetailsForm.value)"
-                  >
-                    Update Shipping Address
-                  </button>
-                </div>
               </div>
             </div>
           </form>

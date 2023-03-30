@@ -22,6 +22,7 @@ export class OrderListComponent implements OnInit {
   resData: any;
   allOrderList: OrderModel[] = [];
   orderStatus = OrderStatus;
+  isPaid: boolean = false;
 
   constructor(private orderService: OrderService) {}
 
@@ -56,22 +57,16 @@ export class OrderListComponent implements OnInit {
 
   // * Update Order By Order Id
 
-  updateOrderByOrderId(orderId: string) {
-    this.orderService.getOrderByOrderId(orderId).subscribe({
+  deleteOrderByOrderId(orderId: string) {
+    this.orderService.deleteOrderByOrderId(orderId).subscribe({
       next: (res) => {
         this.resData = res;
         console.log(this.resData);
+        this.getAllOrders();
       },
       error: (error) => {
         console.log(error);
       },
     });
   }
-
-  // - Delete Order By Order Id
-  deleteOrder() {}
-
-  /// Toggle Payment Status
-
-  togglePaymentStatus() {}
 }

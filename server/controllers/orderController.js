@@ -179,8 +179,6 @@ exports.getAllOrderPlacedByUser = async (req, res) => {
     if (!orderList) {
       return res.json({ errorMessage: "No Order Available", resStatus: false });
     }
-    const totalOrdersByUser = orderList.length;
-    console.log(totalOrdersByUser);
     return res.json({
       successMessage: "All Orders By Logged In User",
       resStatus: true,
@@ -221,13 +219,11 @@ exports.getTotalSaleValue = async (req, res) => {
   });
 };
 
-// ? GET TOTAL ORDER COUNT FROM DB
+// ? GET TOTAL ORDER COUNT FROM USER PLACED ORDERS
 
 exports.getCountAllOrdersPlacedByUser = async (req, res) => {
-  console.log("Get Count Of all Orders By User");
   /// GET SIGNIN USER DETAILS
   const userSignIn = req.user.id;
-  console.log(userSignIn);
 
   /// IF SIGNIN USER IS NOT AVAILABLE
   if (!userSignIn) {
@@ -239,11 +235,10 @@ exports.getCountAllOrdersPlacedByUser = async (req, res) => {
   const totalOrdersCount = await OrderModel.countDocuments({
     user: userSignIn,
   });
-  console.log(totalOrdersCount);
 
   if (!totalOrdersCount) {
     return res.json({
-      errorMessage: "Total Order Count Can't be generated",
+      errorMessage: "Still you have not placed any Order.",
       resStatus: false,
     });
   }
@@ -254,38 +249,6 @@ exports.getCountAllOrdersPlacedByUser = async (req, res) => {
     TotalOrderCount: totalOrdersCount,
   });
 };
-
-// exports.allOrdersCount = async (req, res) => {
-//   console.log("Total Order Count");
-/// GET SIGNIN USER DETAILS
-// const userSignIn = req.user.id;
-// console.log(userSignIn);
-
-// /// IF SIGNIN USER IS NOT AVAILABLE
-// if (!userSignIn) {
-//   return res.json({
-//     errorMessage: "User not Authorized",
-//     resStatus: false,
-//   });
-// }
-// const totalOrdersCount = await OrderModel.countDocuments((count) => {
-//   console.log(count);
-//   count;
-// });
-
-// if (!totalOrdersCount) {
-//   return res.json({
-//     errorMessage: "Total Order Count Can't be generated",
-//     resStatus: false,
-//   });
-// }
-
-// return res.json({
-//   successMessage: "Total Order Count",
-//   resStatus: true,
-//   TotalOrderCount: totalOrdersCount,
-// });
-// };
 
 // ? GET ORDER DETAILS BY ORDER ID
 
@@ -387,7 +350,7 @@ exports.deleteOrderByOrderId = async (req, res) => {
     return res.json({ errorMessage: "No Order available", resStatus: false });
   }
   try {
-    if (order.user.toString() != userSignIn.id) {
+    if (userSignIn.role != "admin" && order.user.toString() != userSignIn.id) {
       return res.json({
         errorMessage: "User Not Authorized",
         resStatus: false,
@@ -415,4 +378,63 @@ exports.deleteOrderByOrderId = async (req, res) => {
       error,
     });
   }
+};
+
+// ? Get All Orders Count ADMIN ROUTE
+
+exports.getAllOrdersCount = async (req, res) => {
+  const userSignIn = req.user;
+  if (!userSignIn) {
+    return res.json({ errorMessage: "User Not Looged In", resStatus: false });
+  }
+  try {
+    const userRole = userSignIn.role;
+    if (userRole != "admin") {
+      return res.json({
+        errorMessage: "You are not Authorized",
+        resStatus: false,
+      });
+    }
+    const totalOrdersCount = await OrderModel.countDocuments({});
+
+    if (!totalOrdersCount) {
+      return res.json({
+        errorMessage: "Total Order Count Can't be generated",
+        resStatus: false,
+      });
+    }
+
+    return res.json({
+      successMessage: "Total Order Count",
+      resStatus: true,
+      TotalOrderCount: totalOrdersCount,
+    });
+  } catch (error) {
+    return res.json({
+      errorMessage: "Server Error From Update Delivery Status",
+      resStatus: false,
+      error,
+    });
+  }
+};
+
+exports.sellerProductsFromOrder = async (req, res) => {
+  const userSignIn = req.user;
+  const sellerId = userSignIn.id;
+
+  const allOrders = await OrderModel.find();
+  console.log(allOrders);
+
+  await allOrders.orderItems.map(async (orderItem) => {
+    if (!orderItem) {
+      return res.json({
+        errorMessage: "Order Item Not Found",
+        resStatus: false,
+      });
+    }
+    const populateOrder = await OrderItemsModel.find(orderItem).populate(
+      "Product"
+    );
+    console.log(populateOrder);
+  });
 };

@@ -5,15 +5,23 @@
       <button
         class="btn btn-warning d-inline-block mb-3"
         (click)="backToMyOrdersPage()"
+        *ngIf="!isAdmin"
       >
         <i class="fa-solid fa-arrow-left"></i> Back to Cart Page
+      </button>
+      <button
+        class="btn btn-warning d-inline-block mb-3"
+        (click)="backToOrderList()"
+        *ngIf="isAdmin"
+      >
+        <i class="fa-solid fa-arrow-left"></i> Back to Order List
       </button>
 
       <div class="row border border-danger rounded-3 p-2">
         <div class="col-md-8">
           <p class="d-inline me-3">
             <span class="fw-bolder">Ordered On : </span>
-            {{ orderData?.orderDate | date }}
+            {{ orderData?.orderDate | date : "short" }}
           </p>
           <p class="d-inline">
             <span class="fw-bolder">Ordered Id : </span> {{ orderData?.id }}
@@ -90,9 +98,7 @@
               </p>
             </div>
             <div class="col-md-2">
-              <p class="card-text fw-bold">
-                {{ product.productPrice | currency : "₹ " }}
-              </p>
+              <p class="card-text fw-bold"></p>
             </div>
           </div>
         </div>

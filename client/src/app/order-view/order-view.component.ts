@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { OrderService } from '../services/order.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { OrderModel } from '../models/order-model';
+import { UserAuthService } from '../services/user-auth.service';
 
 @Component({
   selector: 'app-order-view',
@@ -12,13 +13,25 @@ export class OrderViewComponent implements OnInit {
   resData: any;
   orderData: OrderModel | undefined;
   productData: any;
+  orderedQty: any;
+  isAdmin: boolean = true;
+
   constructor(
     private orderService: OrderService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private userAuthService: UserAuthService,
+    private router: Router
   ) {}
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
+
+    const userRole = this.userAuthService.getRole();
+    if (userRole === 'admin') {
+      this.isAdmin = true;
+    } else {
+      this.isAdmin = false;
+    }
 
     const orderId = this.activatedRoute.snapshot.paramMap.get('id');
     orderId && this.getOrderByOrderId(orderId);
@@ -45,5 +58,10 @@ export class OrderViewComponent implements OnInit {
     });
   }
 
-  backToMyOrdersPage() {}
+  backToMyOrdersPage() {
+    this.router.navigate(['/myorder']);
+  }
+  backToOrderList() {
+    this.router.navigate(['/admin/orderlist']);
+  }
 }

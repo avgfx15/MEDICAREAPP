@@ -1,8 +1,54 @@
 <div class="container">
-  <h1>Admin Dashboard</h1>
-  <h3>Total Users : - {{ noOfUsers }}</h3>
-  <h3>Total Sellers : - {{ noOfSellers }}</h3>
-  <h3>Total Products : - {{ noOfProducts }}</h3>
-  <h3>Total Order Placed</h3>
-  <h3>Total Orders Delivered</h3>
+  <h3 class="text-center bg-warning my-2 py-2">Admin Dashboard</h3>
+
+  <div class="row row-cols-1 row-cols-md-4 g-4">
+    <div class="col">
+      <div class="card text-bg-primary mb-3 text-center">
+        <div class="card-body">
+          <div class="card-header">
+            <h3 class="card-title">Total Users</h3>
+          </div>
+          <p class="card-text fs-2 fw-bolder">
+            {{ noOfUsers }}
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card text-bg-success mb-3 text-center">
+        <div class="card-body">
+          <div class="card-header">
+            <h3 class="card-title">Total Sellers</h3>
+          </div>
+          <p class="card-text fs-2 fw-bolder">
+            {{ noOfSellers }}
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card text-bg-danger mb-3 text-center">
+        <div class="card-body">
+          <div class="card-header">
+            <h3 class="card-title">Total Products</h3>
+          </div>
+          <p class="card-text fs-2 fw-bolder">
+            {{ noOfProducts }}
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card text-bg-info mb-3 text-center">
+        <div class="card-body">
+          <div class="card-header">
+            <h3 class="card-title">Total Orders</h3>
+          </div>
+          <p class="card-text fs-2 fw-bolder">
+            {{ totalOrdersCount }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
