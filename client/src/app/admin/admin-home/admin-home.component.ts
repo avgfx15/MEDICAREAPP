@@ -3,6 +3,7 @@ import { ProductModel } from 'src/app/models/product';
 import { UserModel } from 'src/app/models/user-model';
 import { AdminService } from 'src/app/services/admin.service';
 import { SellerService } from 'src/app/services/seller.service';
+import { UserAuthService } from 'src/app/services/user-auth.service';
 
 @Component({
   selector: 'app-admin-home',
@@ -22,13 +23,17 @@ export class AdminHomeComponent {
   success: boolean = false;
   showMsg: string = '';
   totalOrdersCount: number = 0;
+  adminData: UserModel | undefined;
   constructor(
     private adminService: AdminService,
-    private sellerService: SellerService
+    private sellerService: SellerService,
+    private userAuthService: UserAuthService
   ) {}
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
+    this.adminData = this.userAuthService.getUserData().user;
+
     /// No Of All Users reloadedon page loading
     this.noOfAllUsers();
     /// No Of All Sellers reloadedon page loading

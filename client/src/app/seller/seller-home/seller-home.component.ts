@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProductModel } from 'src/app/models/product';
 import { SellerService } from 'src/app/services/seller.service';
 import { UserAuthService } from '../../services/user-auth.service';
+import { UserModel } from 'src/app/models/user-model';
 
 @Component({
   selector: 'app-seller-home',
@@ -13,12 +14,14 @@ export class SellerHomeComponent implements OnInit {
   allProducts: ProductModel[] = [];
   totalProducts: number = 0;
   totalOrders: number = 0;
+  userData: UserModel | undefined;
   constructor(
     private sellerService: SellerService,
     private userAuthService: UserAuthService
   ) {}
   ngOnInit() {
     this.getAllProductsAddedBySellerLoggedIn();
+    this.userData = this.userAuthService.getUserData().user;
   }
 
   //? Get All Product BY SellerLoggedIn And Total No Of Products

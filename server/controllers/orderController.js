@@ -201,22 +201,30 @@ exports.getTotalSaleValue = async (req, res) => {
       resStatus: false,
     });
   }
-  const totalSalesValue = await OrderModel.aggregate([
-    { $group: { _id: null, totalSalesValue: { $sum: `$totalPrice` } } },
-  ]);
+  try {
+    const totalSalesValue = await OrderModel.aggregate([
+      { $group: { _id: null, totalSalesValue: { $sum: `$totalPrice` } } },
+    ]);
 
-  if (!totalSalesValue) {
+    if (!totalSalesValue) {
+      return res.json({
+        errorMessage: "Total Sales Value Can't be generated",
+        resStatus: false,
+      });
+    }
+
     return res.json({
-      errorMessage: "Total Sales Value Can't be generated",
+      successMessage: "Total Sales Value generated",
+      resStatus: true,
+      TotalSalesValue: totalSalesValue.pop().totalSalesValue,
+    });
+  } catch (error) {
+    return res.json({
+      errorMessage: "server error",
       resStatus: false,
+      error,
     });
   }
-
-  return res.json({
-    successMessage: "Total Sales Value generated",
-    resStatus: true,
-    TotalSalesValue: totalSalesValue.pop().totalSalesValue,
-  });
 };
 
 // ? GET TOTAL ORDER COUNT FROM USER PLACED ORDERS
@@ -232,22 +240,32 @@ exports.getCountAllOrdersPlacedByUser = async (req, res) => {
       resStatus: false,
     });
   }
-  const totalOrdersCount = await OrderModel.countDocuments({
-    user: userSignIn,
-  });
 
-  if (!totalOrdersCount) {
+  try {
+    const totalOrdersCount = await OrderModel.countDocuments({
+      user: userSignIn,
+    });
+
+    if (!totalOrdersCount) {
+      return res.json({
+        errorMessage: "Still you have not placed any Order.",
+        resStatus: false,
+        TotalOrderCount: 0,
+      });
+    }
+
     return res.json({
-      errorMessage: "Still you have not placed any Order.",
+      successMessage: "Total Order Count",
+      resStatus: true,
+      TotalOrderCount: totalOrdersCount,
+    });
+  } catch (error) {
+    return res.json({
+      errorMessage: "server error",
       resStatus: false,
+      error,
     });
   }
-
-  return res.json({
-    successMessage: "Total Order Count",
-    resStatus: true,
-    TotalOrderCount: totalOrdersCount,
-  });
 };
 
 // ? GET ORDER DETAILS BY ORDER ID
@@ -418,23 +436,23 @@ exports.getAllOrdersCount = async (req, res) => {
   }
 };
 
+// ? Get Seller All Order Of Seller Products In Order
 exports.sellerProductsFromOrder = async (req, res) => {
   const userSignIn = req.user;
   const sellerId = userSignIn.id;
 
-  const allOrders = await OrderModel.find();
-  console.log(allOrders);
+  if (!userSignIn) {
+    return res.json({ errorMessage: "User Not Looged In", resStatus: false });
+  }
 
-  await allOrders.orderItems.map(async (orderItem) => {
-    if (!orderItem) {
-      return res.json({
-        errorMessage: "Order Item Not Found",
-        resStatus: false,
-      });
-    }
-    const populateOrder = await OrderItemsModel.find(orderItem).populate(
-      "Product"
-    );
-    console.log(populateOrder);
-  });
+  try {
+    const order = await OrderModel.find()
+      .populate("user")
+      .populate("orderItems")
+      .populate({ path: "orderItems", populate: "product" });
+
+    return res.json(order);
+  } catch (error) {
+    console.log(error);
+  }
 };

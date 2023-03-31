@@ -80,7 +80,7 @@
               >Contact Us</a
             >
           </li>
-          <li class="nav-item" *ngIf="!userService.roleMatch(['admin'])">
+          <li class="nav-item" *ngIf="userService.roleMatch(['user'])">
             <a class="nav-link" routerLink="/cartpage"
               >Cart <i class="fa-sharp fa-solid fa-cart-shopping"></i
               ><sup class="badge badge-danger">{{ cartItems }}</sup>
