@@ -9,7 +9,7 @@ services:
     ports:
       - 4200:4200
 
-    container_name: angular
+    container_name: angular-medicareapp
     environment:
       - WATCHPACK_POLLING=true
     networks:
@@ -27,7 +27,7 @@ services:
       dockerfile: Dockerfile
     ports:
       - 3700:3700
-    container_name: backend-container
+    container_name: backend-container-medicareapp
     links:
       - mongo
     networks:
@@ -39,7 +39,7 @@ services:
     environment:
       - PORT=3700
       - MONGODB_URI=mongodb://mongo:27017
-      - DB_NAME=Ecommerce
+      - DB_NAME=ONLINE MEDICAL STORE
       - NAME=Stacodev
 
   mongo:
@@ -47,7 +47,7 @@ services:
     restart: always
     ports:
       - 27017:27017
-    container_name: mongo-container
+    container_name: mongo-container-medicareapp
     networks:
       - angular-app-network
     volumes:
