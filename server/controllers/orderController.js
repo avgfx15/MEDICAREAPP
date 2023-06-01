@@ -439,7 +439,7 @@ exports.getAllOrdersCount = async (req, res) => {
 // ? Get Seller All Order Of Seller Products In Order
 exports.sellerProductsFromOrder = async (req, res) => {
   const userSignIn = req.user;
-  const sellerId = userSignIn.id;
+  // const sellerId = userSignIn.id;
 
   if (!userSignIn) {
     return res.json({ errorMessage: "User Not Looged In", resStatus: false });
