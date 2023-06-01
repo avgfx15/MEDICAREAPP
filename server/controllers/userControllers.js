@@ -53,7 +53,6 @@ exports.signin = async (req, res) => {
   try {
     /// Destructure data
     const { email, password } = req.body;
-
     /// check user is exist or not by email
     const user = await User.findOne({ email: email }).select("+password");
 
@@ -70,6 +69,7 @@ exports.signin = async (req, res) => {
 
     /// Check password is match or not compare password with bcryptjs
     const isMatch = await bcrypt.compare(password, user.password);
+
     if (!isMatch) {
       return (
         res
@@ -86,6 +86,7 @@ exports.signin = async (req, res) => {
         name: user.name,
       },
     };
+
     const token = await jwt.sign(payload, config.jwtSecret, {
       expiresIn: config.jwtExpire,
     });
@@ -95,6 +96,7 @@ exports.signin = async (req, res) => {
         .status(201)
         .json({ errorMessage: "No token generated", resStatus: false });
     }
+
     res.cookie("serverCookie", token, { httpOnly: true });
 
     const { _id, name, mobile, role } = user;
